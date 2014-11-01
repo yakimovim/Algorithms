@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CF8E0B7C-301F-4816-A7E2-D20D19F1CE40}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EdlinSoftware.Tests</RootNamespace>
+    <AssemblyName>EdlinSoftware.Algorithms.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Algorithms\Codes\HuffmanCodeBuilderTest.cs" />
+    <Compile Include="Algorithms\Codes\HuffmanCodeHeapBuilderTest.cs" />
+    <Compile Include="Algorithms\Codes\HuffmanCodeQueueBuilderTest.cs" />
+    <Compile Include="Algorithms\Collections\InversionsCounterTest.cs" />
+    <Compile Include="Algorithms\Collections\MaxWeightIndependentSetExtractorTest.cs" />
+    <Compile Include="Algorithms\Collections\Selection\BaseOrderStatisticSelectorTest.cs" />
+    <Compile Include="Algorithms\Collections\Selection\DeterministicOrderStatisticSelectorTest.cs" />
+    <Compile Include="Algorithms\Collections\Selection\OrderStatisticSelectorTest.cs" />
+    <Compile Include="Algorithms\Collections\Selection\RandomizedOrderStatisticSelectorTest.cs" />
+    <Compile Include="Algorithms\Collections\SequenceAlignerTest.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\MergerTest.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\MergeSorterTest.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\PartitionerTest.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\QuickSorterTest.cs" />
+    <Compile Include="Algorithms\Geometry\ClosestPairSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\GraphTestBase.cs" />
+    <Compile Include="Algorithms\Graphs\MinimumSpanningTree\KruskalAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Graphs\MinimumSpanningTree\MinimumSpanningTreeAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Graphs\MinimumSpanningTree\PrimAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Graphs\OptimalSearchTreeBuilderTest.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcherTestBase.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\DijkstraShortestPathSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\ShortestPathTestBase.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\SingleSourceShortestPathTestBase.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\YenBellmanFordShortestPathSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\Search\BreadthFirstSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\Search\DepthFirstSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\StronglyConnectedComponentsSearcherTest.cs" />
+    <Compile Include="Algorithms\KnapsackArrayFillerTest.cs" />
+    <Compile Include="Algorithms\KnapsackFillerTest.cs" />
+    <Compile Include="Algorithms\KnapsackHashFillerTest.cs" />
+    <Compile Include="Algorithms\Scheduling\WeightedCompletionTimeMinimizerTest.cs" />
+    <Compile Include="DataStructures\Codes\SymbolAndFrequency.cs" />
+    <Compile Include="DataStructures\Graphs\GraphEdge.cs" />
+    <Compile Include="DataStructures\Graphs\GraphNode.cs" />
+    <Compile Include="Algorithms\Graphs\Search\GraphSearcherTestBase.cs" />
+    <Compile Include="Algorithms\Graphs\TopologicalSorterTest.cs" />
+    <Compile Include="DataStructures\Graphs\SearchElement.cs" />
+    <Compile Include="DataStructures\Graphs\UndirectedEdgeWithCost.cs" />
+    <Compile Include="DataStructures\Heaps\BaseHeapTest.cs" />
+    <Compile Include="DataStructures\Heaps\HeapTest.cs" />
+    <Compile Include="DataStructures\Heaps\UniqueHeapTest.cs" />
+    <Compile Include="DataStructures\KnapsackItem.cs" />
+    <Compile Include="DataStructures\Scheduling\Job.cs" />
+    <Compile Include="DataStructures\UnionFindTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Algorithms\Algorithms.csproj">
+      <Project>{df0eee8e-8d50-4c39-a10d-f2559c792330}</Project>
+      <Name>Algorithms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

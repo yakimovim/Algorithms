@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DF0EEE8E-8D50-4C39-A10D-F2559C792330}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EdlinSoftware</RootNamespace>
+    <AssemblyName>EdlinSoftware.Algorithms</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithms\Codes\HuffmanCodeHeapBuilder.cs" />
+    <Compile Include="Algorithms\Codes\HuffmanCodeQueueBuilder.cs" />
+    <Compile Include="Algorithms\Codes\HuffmanTreeNode.cs" />
+    <Compile Include="Algorithms\Codes\IHuffmanCodeBuilder.cs" />
+    <Compile Include="Algorithms\Collections\InversionsCounter.cs" />
+    <Compile Include="Algorithms\Collections\MaxWeightIndependentSetExtractor.cs" />
+    <Compile Include="Algorithms\Collections\Selection\DeterministicOrderStatisticSelector.cs" />
+    <Compile Include="Algorithms\Collections\Selection\IOrderStatisticSelector.cs" />
+    <Compile Include="Algorithms\Collections\Selection\OrderStatisticSelector.cs" />
+    <Compile Include="Algorithms\Collections\Selection\RandomizedOrderStatisticSelector.cs" />
+    <Compile Include="Algorithms\Collections\SequenceAligner.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\Merger.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\MergeSorter.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\Partitioner.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\QuickSorter.cs" />
+    <Compile Include="Algorithms\Geometry\ClosestPairSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcherBase.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\DijkstraShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\ISingleSourceShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\ShortestPath.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\YenBellmanFordShortestPathSearcher.cs" />
+    <Compile Include="DataStructures\Collections\ISequenceAlignment.cs" />
+    <Compile Include="DataStructures\Geometry\PairOfPoints.cs" />
+    <Compile Include="Algorithms\Graphs\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
+    <Compile Include="Algorithms\Graphs\MinimumSpanningTree\KruskalAlgorithm.cs" />
+    <Compile Include="Algorithms\Graphs\MinimumSpanningTree\PrimAlgorithm.cs" />
+    <Compile Include="Algorithms\Graphs\OptimalSearchTreeBuilder.cs" />
+    <Compile Include="Algorithms\Graphs\Search\BreadthFirstSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Search\DepthFirstSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Search\GraphNodeVisitingArgs.cs" />
+    <Compile Include="Algorithms\Graphs\Search\IGraphSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\StronglyConnectedComponentsSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\TopologicalSorter.cs" />
+    <Compile Include="Algorithms\KnapsackArrayFiller.cs" />
+    <Compile Include="Algorithms\KnapsackFiller.cs" />
+    <Compile Include="Algorithms\KnapsackHashFiller.cs" />
+    <Compile Include="Algorithms\Scheduling\WeightedCompletionTimeMinimizer.cs" />
+    <Compile Include="DataStructures\Graphs\Graph.cs" />
+    <Compile Include="DataStructures\Graphs\GraphBuilders.cs" />
+    <Compile Include="DataStructures\Graphs\IBinaryTreeNode.cs" />
+    <Compile Include="DataStructures\Graphs\Edge.cs" />
+    <Compile Include="DataStructures\Graphs\Node.cs" />
+    <Compile Include="DataStructures\Graphs\Paths\IPath.cs" />
+    <Compile Include="DataStructures\Heaps\Heap.cs" />
+    <Compile Include="DataStructures\Heaps\HeapElement.cs" />
+    <Compile Include="DataStructures\Heaps\IHeap.cs" />
+    <Compile Include="DataStructures\Heaps\UniqueHeap.cs" />
+    <Compile Include="DataStructures\UnionFind.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
