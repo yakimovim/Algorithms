@@ -15,10 +15,10 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             public long? LastCorrectPathNode { get; set; }
         }
 
-        protected ILookup<long, IValuedEdge<long, double>> _inputEdges;
+        protected ILookup<long, IValuedEdge<long, double>> InputEdges;
 
-        protected double[,] _shortestPaths;
-        protected long?[,] _previousNodeInShortestPath;
+        protected double[,] ShortestPaths;
+        protected long?[,] PreviousNodeInShortestPath;
 
         ISingleSourcePaths<long, double, long> ISingleSourceShortestPathSearcher.GetShortestPaths(long numberOfNodes, long initialNode, params IValuedEdge<long, double>[] edges)
         {
@@ -38,7 +38,7 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
             var hasNegativeCircle = CheckForNegativeCircle(sliceIndex);
 
-            return new BellmanFordShortestPaths(initialNode, _shortestPaths, _previousNodeInShortestPath, sliceIndex)
+            return new BellmanFordShortestPaths(initialNode, ShortestPaths, PreviousNodeInShortestPath, sliceIndex)
             {
                 HasNegativeLoop = hasNegativeCircle
             };
@@ -46,21 +46,21 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
         private void InitializePathArrays(long numberOfNodes, long initialNode)
         {
-            _shortestPaths = new double[numberOfNodes, 2];
-            _previousNodeInShortestPath = new long?[numberOfNodes, 2];
+            ShortestPaths = new double[numberOfNodes, 2];
+            PreviousNodeInShortestPath = new long?[numberOfNodes, 2];
 
             for (long i = 0; i < numberOfNodes; i++)
             {
                 if (i == initialNode)
-                    _shortestPaths[i, 0] = 0;
+                    ShortestPaths[i, 0] = 0;
                 else
-                    _shortestPaths[i, 0] = double.PositiveInfinity;
+                    ShortestPaths[i, 0] = double.PositiveInfinity;
             }
         }
 
-        private void PrepareEdgesStorage(IValuedEdge<long, double>[] edges)
+        private void PrepareEdgesStorage(IEnumerable<IValuedEdge<long, double>> edges)
         {
-            _inputEdges = edges.ToLookup(e => e.End2);
+            InputEdges = edges.ToLookup(e => e.End2);
         }
 
         protected abstract int FindAllPaths();
@@ -77,10 +77,10 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
     internal class BellmanFordShortestPaths : ISingleSourcePathsWithoutNegativeLoop<long, double, long>
     {
-        private double[,] _pathMatrix;
-        private long?[,] _previousNodes;
-        private int _sliceIndex;
-        private long _initialNode;
+        private readonly double[,] _pathMatrix;
+        private readonly long?[,] _previousNodes;
+        private readonly int _sliceIndex;
+        private readonly long _initialNode;
 
         public bool HasNegativeLoop { get; set; }
 

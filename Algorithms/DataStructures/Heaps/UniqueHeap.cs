@@ -33,8 +33,8 @@ namespace EdlinSoftware.DataStructures.Heaps
     public class UniqueHeap<TKey, TValue> : IHeap<TKey, TValue>
     {
         private readonly IComparer<TKey> _comparer;
+        private readonly Dictionary<TValue, int> _valuesPositions = new Dictionary<TValue, int>();
         private HeapElement<TKey, TValue>[] _elements = new HeapElement<TKey, TValue>[5];
-        private Dictionary<TValue, int> _valuesPositions = new Dictionary<TValue, int>();
 
         public int Count { get; private set; }
 
@@ -225,13 +225,6 @@ namespace EdlinSoftware.DataStructures.Heaps
 
             RemoveAt(index);
             return true;
-        }
-
-        private bool ValuesEqual(TValue value1, TValue value2)
-        {
-            if (value1 == null && value2 == null) return true;
-            if (value1 == null || value2 == null) return false;
-            return value1.Equals(value2);
         }
 
         private void RemoveAt(int index)

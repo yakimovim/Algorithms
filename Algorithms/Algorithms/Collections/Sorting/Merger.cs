@@ -6,7 +6,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
     /// <summary>
     /// Represents merger of two sorted arrays.
     /// </summary>
-    public class Merger
+    public static class Merger
     {
         /// <summary>
         /// Merges two sorted arrays into one sorted array.
@@ -15,7 +15,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
         /// <param name="first">First sorted array.</param>
         /// <param name="second">Second sorted array.</param>
         /// <returns>Sorted array containing elements from both arrays.</returns>
-        public T[] Merge<T>(IList<T> first, IList<T> second)
+        public static T[] Merge<T>(IList<T> first, IList<T> second)
                     where T : IComparable<T>
         {
             return Merge(first, second, Comparer<T>.Default);
@@ -29,7 +29,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
         /// <param name="second">Second sorted array.</param>
         /// <param name="comparer">Comparer of elements.</param>
         /// <returns>Sorted array containing elements from both arrays.</returns>
-        public T[] Merge<T>(IList<T> first, IList<T> second, IComparer<T> comparer)
+        public static T[] Merge<T>(IList<T> first, IList<T> second, IComparer<T> comparer)
         {
             if (first == null) throw new ArgumentNullException("first");
             if (second == null) throw new ArgumentNullException("second");

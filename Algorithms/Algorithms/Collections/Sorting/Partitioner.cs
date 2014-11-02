@@ -7,7 +7,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
     /// <summary>
     /// Represents partitioner of array.
     /// </summary>
-    public class Partitioner
+    public static class Partitioner
     {
         public static Partitioner<T> New<T>()
             where T : IComparable<T>

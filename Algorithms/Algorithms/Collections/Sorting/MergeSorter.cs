@@ -9,8 +9,6 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
     /// </summary>
     public class MergeSorter
     {
-        private readonly Merger _merger = new Merger();
-
         /// <summary>
         /// Sorts input array.
         /// </summary>
@@ -49,7 +47,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
             var sortedLeft = InternalSort(left, comparer);
             var sortedRight = InternalSort(right, comparer);
 
-            return _merger.Merge(sortedLeft, sortedRight, comparer);
+            return Merger.Merge(sortedLeft, sortedRight, comparer);
         }
 
         private void SeparateArray<T>(IList<T> unsorted, out T[] left, out T[] right)

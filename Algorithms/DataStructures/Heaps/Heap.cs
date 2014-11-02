@@ -38,12 +38,7 @@ namespace EdlinSoftware.DataStructures.Heaps
         public int Count { get; private set; }
 
         [DebuggerStepThrough]
-        public Heap(IComparer<TKey> comparer)
-            : this(comparer, 5)
-        { }
-
-        [DebuggerStepThrough]
-        public Heap(IComparer<TKey> comparer, int initialCapacity)
+        public Heap(IComparer<TKey> comparer, int initialCapacity = 5)
         {
             if (initialCapacity < 1) throw new ArgumentOutOfRangeException("initialCapacity", "Initial capacity must be positive.");
             if (comparer == null) throw new ArgumentNullException("comparer");
@@ -198,8 +193,8 @@ namespace EdlinSoftware.DataStructures.Heaps
 
         private bool ValuesEqual(TValue value1, TValue value2)
         {
-            if (value1 == null && value2 == null) return true;
-            if (value1 == null || value2 == null) return false;
+            if (ReferenceEquals(value1, null) && ReferenceEquals(value2, null)) return true;
+            if (ReferenceEquals(value1, null) || ReferenceEquals(value2, null)) return false;
             return value1.Equals(value2);
         }
 

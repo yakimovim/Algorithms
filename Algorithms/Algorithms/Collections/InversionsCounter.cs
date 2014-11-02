@@ -4,7 +4,11 @@ using System.Linq;
 
 namespace EdlinSoftware.Algorithms.Collections
 {
-    public class InversionsCounter
+    /// <summary>
+    /// Represents counter of invertions in an array.
+    /// For an array A invertion is a pair of indexes (i,j) such that i &lt; j and A[i] &gt; A[j].
+    /// </summary>
+    public static class InversionsCounter
     {
         private class Holder<T>
         {
@@ -12,13 +16,26 @@ namespace EdlinSoftware.Algorithms.Collections
             public long InversionsCount;
         }
 
-        public long Count<T>(IList<T> array)
+        /// <summary>
+        /// Returns number of invertions in the given array.
+        /// </summary>
+        /// <typeparam name="T">Type of elements of the array.</typeparam>
+        /// <param name="array">Array of elements</param>
+        /// <returns>Number of invertions in the <paramref name="array"/>.</returns>
+        public static long Count<T>(IList<T> array)
             where T : IComparable<T>
         {
             return Count(array, Comparer<T>.Default);
         }
 
-        public long Count<T>(IList<T> array, IComparer<T> comparer)
+        /// <summary>
+        /// Returns number of invertions in the given array.
+        /// </summary>
+        /// <typeparam name="T">Type of elements of the array.</typeparam>
+        /// <param name="array">Array of elements</param>
+        /// <param name="comparer">Comparer of elements of the <paramref name="array"/>.</param>
+        /// <returns>Number of invertions in the <paramref name="array"/>.</returns>
+        public static long Count<T>(IList<T> array, IComparer<T> comparer)
         {
             if (array == null) throw new ArgumentNullException("array");
             if (comparer == null) throw new ArgumentNullException("comparer");

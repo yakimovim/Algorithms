@@ -7,6 +7,9 @@ using EdlinSoftware.DataStructures.Geometry;
 
 namespace EdlinSoftware.Algorithms.Geometry
 {
+    /// <summary>
+    /// Represents class returning from a list of 2D points a pair of closest points.
+    /// </summary>
     public class ClosestPairSearcher
     {
         private readonly MergeSorter _sorter = new MergeSorter(); 
@@ -27,6 +30,11 @@ namespace EdlinSoftware.Algorithms.Geometry
             }
         }
 
+        /// <summary>
+        /// Returns a pair of closest points from the list of 2D points.
+        /// </summary>
+        /// <param name="points">List of 2D points.</param>
+        /// <returns>A pair of closest points.</returns>
         public PairOfPoints Search(PointF[] points)
         {
             if (points == null) throw new ArgumentNullException("points");

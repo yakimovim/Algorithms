@@ -21,11 +21,12 @@ namespace EdlinSoftware.Algorithms.Graphs.MinimumSpanningTree
         /// <summary>
         /// Returns collection of edges in the graph.
         /// </summary>
+        /// <param name="mstSearcher">Minimum spanning tree searcher.</param>
         /// <param name="numberOfNodesInGraph">Number of nodes in the graph.</param>
         /// <param name="edgesOfGraph">Collection of edges in the graph. Nodes are numerated from 1 to <see cref="numberOfNodesInGraph"/></param>
         public static IEnumerable<IValuedEdge<long, long>> GetMinimumSpanningTree(this IMinimumSpanningTreeAlgorithm mstSearcher, long numberOfNodesInGraph, params IValuedEdge<long, long>[] edgesOfGraph)
         {
-            return mstSearcher.GetMinimumSpanningTree(numberOfNodesInGraph, (IEnumerable<IValuedEdge<long, long>>)edgesOfGraph);
+            return mstSearcher.GetMinimumSpanningTree(numberOfNodesInGraph, edgesOfGraph);
         }
     }
 }

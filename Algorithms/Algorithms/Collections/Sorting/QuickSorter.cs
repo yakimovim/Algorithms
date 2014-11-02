@@ -6,7 +6,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
     /// <summary>
     /// Represents sorter of array using Quick algorithm.
     /// </summary>
-    public class QuickSorter
+    public static class QuickSorter
     {
         public static QuickSorter<T> New<T>(Func<IList<T>, int, int, int> pivotIndexSelector)
             where T : IComparable<T>

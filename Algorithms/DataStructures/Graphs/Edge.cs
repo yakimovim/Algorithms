@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdlinSoftware.DataStructures.Graphs
 {
@@ -123,18 +120,16 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <returns>True, if the edge goes from given node. False, otherwise.</returns>
         public override bool GoesFrom(TNode node)
         {
-            if(node == null) return false;
+            if(ReferenceEquals(node, null)) return false;
 
             if (NodesComparer == null)
             {
                 return ReferenceEquals(node, End1)
                     || ReferenceEquals(node, End2);
             }
-            else
-            {
-                return NodesComparer.Equals(node, End1)
-                    || NodesComparer.Equals(node, End2);
-            }
+            
+            return NodesComparer.Equals(node, End1)
+                   || NodesComparer.Equals(node, End2);
         }
 
         /// <summary>
@@ -155,18 +150,16 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <returns>True, if the edge goes from one node to the other. False, otherwise.</returns>
         public override bool GoesFromTo(TNode from, TNode to)
         {
-            if (from == null || to == null) return false;
+            if (ReferenceEquals(from, null) || ReferenceEquals(to, null)) return false;
 
             if (NodesComparer == null)
             {
                 return (ReferenceEquals(from, End1) && ReferenceEquals(to, End2))
                     || (ReferenceEquals(from, End2) && ReferenceEquals(to, End1));
             }
-            else
-            {
-                return (NodesComparer.Equals(from, End1) && NodesComparer.Equals(to, End2))
-                    || (NodesComparer.Equals(from, End2) && NodesComparer.Equals(to, End1));
-            }
+            
+            return (NodesComparer.Equals(@from, End1) && NodesComparer.Equals(to, End2))
+                   || (NodesComparer.Equals(@from, End2) && NodesComparer.Equals(to, End1));
         }
     }
 
@@ -188,16 +181,14 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <returns>True, if the edge goes from given node. False, otherwise.</returns>
         public override bool GoesFrom(TNode node)
         {
-            if (node == null) return false;
+            if (ReferenceEquals(node, null)) return false;
 
             if (NodesComparer == null)
             {
                 return ReferenceEquals(node, End1);
             }
-            else
-            {
-                return NodesComparer.Equals(node, End1);
-            }
+            
+            return NodesComparer.Equals(node, End1);
         }
 
         /// <summary>
@@ -207,16 +198,14 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <returns>True, if the edge goes to given node. False, otherwise.</returns>
         public override bool GoesTo(TNode node)
         {
-            if (node == null) return false;
+            if (ReferenceEquals(node, null)) return false;
 
             if (NodesComparer == null)
             {
                 return ReferenceEquals(node, End2);
             }
-            else
-            {
-                return NodesComparer.Equals(node, End2);
-            }
+            
+            return NodesComparer.Equals(node, End2);
         }
 
         /// <summary>

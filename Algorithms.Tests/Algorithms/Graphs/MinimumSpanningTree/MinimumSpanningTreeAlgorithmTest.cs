@@ -73,5 +73,19 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.MinimumSpanningTree
 
             CollectionAssert.AreEquivalent(new[] { edge1, edge2, edge4 }, mst);
         }
+
+        [TestMethod]
+        public void GetMinimumSpanningTree_ShouldReturnCorrectEdges_IfGraphIsComplex_WithBigWeights()
+        {
+            var edge1 = new Edge(1, 2, 100);
+            var edge2 = new Edge(2, 3, 200);
+            var edge3 = new Edge(3, 4, 500);
+            var edge4 = new Edge(4, 1, 400);
+            var edge5 = new Edge(3, 1, 300);
+
+            var mst = _mstSearcher.GetMinimumSpanningTree(4, edge1, edge2, edge3, edge4, edge5).ToArray();
+
+            CollectionAssert.AreEquivalent(new[] { edge1, edge2, edge4 }, mst);
+        }
     }
 }

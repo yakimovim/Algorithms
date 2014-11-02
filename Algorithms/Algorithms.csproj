@@ -61,6 +61,8 @@
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcherBase.cs" />
     <Compile Include="Algorithms\Graphs\Paths\DijkstraShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\FloydWarshallShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\IMultiSourceShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ISingleSourceShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ShortestPath.cs" />
     <Compile Include="Algorithms\Graphs\Paths\YenBellmanFordShortestPathSearcher.cs" />
@@ -85,7 +87,9 @@
     <Compile Include="DataStructures\Graphs\IBinaryTreeNode.cs" />
     <Compile Include="DataStructures\Graphs\Edge.cs" />
     <Compile Include="DataStructures\Graphs\Node.cs" />
+    <Compile Include="DataStructures\Graphs\Paths\IMultiSourcePaths.cs" />
     <Compile Include="DataStructures\Graphs\Paths\IPath.cs" />
+    <Compile Include="DataStructures\Graphs\Paths\ISingleSourcePaths.cs" />
     <Compile Include="DataStructures\Heaps\Heap.cs" />
     <Compile Include="DataStructures\Heaps\HeapElement.cs" />
     <Compile Include="DataStructures\Heaps\IHeap.cs" />
