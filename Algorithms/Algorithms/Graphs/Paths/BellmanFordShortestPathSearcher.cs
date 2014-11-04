@@ -58,7 +58,7 @@
             {
                 var correctPathElement = GetCorrectedPath(node, sliceIndex);
 
-                if (ShortestPaths[node, sliceIndex] != correctPathElement.CorrectPathValue)
+                if (ShortestPaths[node, sliceIndex].Equals(correctPathElement.CorrectPathValue) == false)
                 { return true; }
             }
 

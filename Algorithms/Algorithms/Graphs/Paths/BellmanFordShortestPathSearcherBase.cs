@@ -110,16 +110,23 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
         private IEnumerable<long> GetPathTo(long to)
         {
             if (to == _initialNode)
-                return new long[] { _initialNode };
+                return new[] { _initialNode };
             if (_previousNodes[to, _sliceIndex].HasValue == false)
                 return new long[0];
 
             var path = new List<long> { to };
 
-            while (_previousNodes[to, _sliceIndex].Value != _initialNode)
+            while (true)
             {
-                path.Insert(0, _previousNodes[to, _sliceIndex].Value);
-                to = _previousNodes[to, _sliceIndex].Value;
+                if (_previousNodes[to, _sliceIndex].HasValue == false)
+                { throw new InvalidOperationException("Incorrect path sequence."); }
+                var previousNode = _previousNodes[to, _sliceIndex].Value;
+
+                if (previousNode == _initialNode)
+                { break; }
+
+                path.Insert(0, previousNode);
+                to = previousNode;
             }
 
             path.Insert(0, _initialNode);
