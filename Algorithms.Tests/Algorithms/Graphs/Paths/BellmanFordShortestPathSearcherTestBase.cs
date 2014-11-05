@@ -28,6 +28,16 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         }
 
         [TestMethod]
+        public void GetShortestPaths_ShouldReturnResult_IfThereIsOneBackwardEdge()
+        {
+            var paths = Searcher.GetShortestPaths(2, 1, GetDirectedValuedEdges("2 2 1"));
+
+            Assert.IsFalse(paths.HasNegativeLoop);
+            CheckPath(paths.GetPath(0), 2.0, new long[] { 1, 0 });
+            CheckPath(paths.GetPath(1), 0.0, new long[] { 1 });
+        }
+
+        [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereAreTwoConnectedNodes()
         {
             var paths = Searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));

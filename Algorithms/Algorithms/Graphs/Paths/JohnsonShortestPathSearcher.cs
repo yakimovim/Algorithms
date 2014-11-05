@@ -13,7 +13,7 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
     {
         public IMultiSourcePathsWithoutNegativeLoop<long, double, long> GetShortestPaths(long numberOfNodes, params IValuedEdge<long, double>[] edges)
         {
-            var singleSourceShortestPathSearcher = new BellmanFordShortestPathSearcher();
+            var singleSourceShortestPathSearcher = new YenBellmanFordShortestPathSearcher();
 
             var singleSourcePaths = singleSourceShortestPathSearcher.GetShortestPaths(numberOfNodes + 1, numberOfNodes,
                 edges.Concat(GetEdgesFromAdditionalNode(numberOfNodes)).ToArray());

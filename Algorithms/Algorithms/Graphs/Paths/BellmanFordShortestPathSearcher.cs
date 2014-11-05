@@ -1,68 +1,37 @@
-﻿namespace EdlinSoftware.Algorithms.Graphs.Paths
+﻿using System;
+using EdlinSoftware.DataStructures.Graphs;
+using EdlinSoftware.DataStructures.Graphs.Paths;
+
+namespace EdlinSoftware.Algorithms.Graphs.Paths
 {
     public class BellmanFordShortestPathSearcher : BellmanFordShortestPathSearcherBase
     {
-        protected override int FindAllPaths()
+        public override ISingleSourcePathsWithoutNegativeLoop<long, double, long> GetShortestPaths(long numberOfNodes, long initialNode, params IValuedEdge<long, double>[] edges)
         {
-            int previousStepIndex = 0;
-            int currentStepIndex = 1;
+            if (numberOfNodes <= 0) throw new ArgumentOutOfRangeException("numberOfNodes");
+            if (initialNode < 0 || initialNode >= numberOfNodes) throw new ArgumentOutOfRangeException("initialNode");
 
-            var size = ShortestPaths.GetLongLength(0);
+            InitializePathArrays(numberOfNodes, initialNode);
 
-            for (int i = 0; i < size - 1; i++)
+            RelaxEdgesRepeatedly(edges);
+
+            var hasNegativeLoop = CheckForNegativeLoop(edges);
+
+            return new BellmanFordShortestPaths(initialNode, ShortestPathValues, PreviousNodeInShortestPath)
             {
-                for (int node = 0; node < size; node++)
-                {
-                    var correctPathElement = GetCorrectedPath(node, previousStepIndex);
-
-                    ShortestPaths[node, currentStepIndex] = correctPathElement.CorrectPathValue;
-                    PreviousNodeInShortestPath[node, currentStepIndex] = correctPathElement.LastCorrectPathNode;
-                }
-
-                Swap(ref currentStepIndex, ref previousStepIndex);
-            }
-
-            return previousStepIndex;
-        }
-
-        private CorrectPathElement GetCorrectedPath(long node, int sliceIndex)
-        {
-            var minimumLength = ShortestPaths[node, sliceIndex];
-            var previousNode = PreviousNodeInShortestPath[node, sliceIndex];
-
-            var inputEdgesOfNode = InputEdges[node];
-
-            foreach (var edge in inputEdgesOfNode)
-            {
-                var newLength = ShortestPaths[edge.End1, sliceIndex] + edge.Value;
-
-                if (minimumLength > newLength)
-                {
-                    minimumLength = newLength;
-                    previousNode = edge.End1;
-                }
-            }
-
-            return new CorrectPathElement 
-            {
-                CorrectPathValue = minimumLength,
-                LastCorrectPathNode = previousNode
+                HasNegativeLoop = hasNegativeLoop
             };
         }
 
-        protected override bool CheckForNegativeCircle(int sliceIndex)
+        private void RelaxEdgesRepeatedly(IValuedEdge<long, double>[] edges)
         {
-            var size = ShortestPaths.GetLongLength(0);
-
-            for (int node = 0; node < size; node++)
+            for (long step = 0; step < ShortestPathValues.LongLength; step++)
             {
-                var correctPathElement = GetCorrectedPath(node, sliceIndex);
-
-                if (ShortestPaths[node, sliceIndex].Equals(correctPathElement.CorrectPathValue) == false)
-                { return true; }
+                foreach (var edge in edges)
+                {
+                    RelaxEdge(edge);
+                }
             }
-
-            return false;
         }
     }
 }
