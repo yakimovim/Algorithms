@@ -81,6 +81,8 @@
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcherTestBase.cs" />
     <Compile Include="Algorithms\Graphs\Paths\DijkstraShortestPathSearcherTest.cs" />
     <Compile Include="Algorithms\Graphs\Paths\FloydWarshallShortestPathSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\JohnsonShortestPathSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\MultiSourceShortestPathSearcherTest.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ShortestPathTestBase.cs" />
     <Compile Include="Algorithms\Graphs\Paths\SingleSourceShortestPathTestBase.cs" />
     <Compile Include="Algorithms\Graphs\Paths\YenBellmanFordShortestPathSearcherTest.cs" />

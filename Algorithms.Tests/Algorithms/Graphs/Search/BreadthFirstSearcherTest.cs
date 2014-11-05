@@ -21,7 +21,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
         [ExpectedException(typeof(ArgumentNullException))]
         public void Search_ShouldThrowException_IfGraphNodeIsNull()
         {
-            _searcher.Search(null, _connectedNodesSelector, args => { });
+            _searcher.Search(null, ConnectedNodesSelector, args => { });
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
         [ExpectedException(typeof(ArgumentNullException))]
         public void Search_ShouldThrowException_IfActionIsNull()
         {
-            _searcher.Search(GetUndirectedGraph(1)[0], _connectedNodesSelector, null);
+            _searcher.Search(GetUndirectedGraph(1)[0], ConnectedNodesSelector, null);
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
         {
             var startNode = GetUndirectedGraph(1)[0];
 
-            _searcher.Search(startNode, _connectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            _searcher.Search(startNode, ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
 
             CollectionAssert.Contains(_visitedNodes, startNode);
         }
@@ -53,7 +53,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
         {
             var graph = GetUndirectedGraph(5, "1-2", "2-3");
 
-            _searcher.Search(graph[0], _connectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            _searcher.Search(graph[0], ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
 
             CollectionAssert.IsSubsetOf(graph.Take(3).ToArray(), _visitedNodes);
         }
@@ -63,7 +63,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
         {
             var graph = GetUndirectedGraph(5, "1-2", "2-3");
 
-            _searcher.Search(graph[0], _connectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            _searcher.Search(graph[0], ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
 
             CollectionAssert.IsNotSubsetOf(graph.Skip(3).ToArray(), _visitedNodes);
         }
@@ -73,7 +73,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
         {
             var graph = GetUndirectedGraph(6, "1-2", "1-3", "2-4", "2-5", "3-5", "4-6", "5-6");
 
-            _searcher.Search(graph[0], _connectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            _searcher.Search(graph[0], ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
 
             CollectionAssert.AreEqual(_visitedNodes, new[] { graph[0], graph[1], graph[2], graph[3], graph[4], graph[5] });
         }

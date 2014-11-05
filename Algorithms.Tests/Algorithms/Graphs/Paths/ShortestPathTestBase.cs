@@ -14,5 +14,12 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             Assert.AreEqual(value, path.Value, 0.000001);
             CollectionAssert.AreEqual(pathNodes.ToArray(), path.Path.ToArray());
         }
+
+        protected void CheckPath(IPath<long, double, long> path, double value, params long[] pathNodes)
+        {
+            Assert.IsNotNull(path);
+            Assert.AreEqual(value, path.Value, 0.000001);
+            CollectionAssert.AreEqual(pathNodes, path.Path.ToArray());
+        }
     }
 }

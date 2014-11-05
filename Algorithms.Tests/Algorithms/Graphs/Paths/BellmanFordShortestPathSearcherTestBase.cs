@@ -11,7 +11,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereIsOnlyOneNode()
         {
-            var paths = _searcher.GetShortestPaths(1, 0);
+            var paths = Searcher.GetShortestPaths(1, 0);
 
             Assert.IsFalse(paths.HasNegativeLoop);
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
@@ -20,7 +20,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereAreTwoUnconnectedNodes()
         {
-            var paths = _searcher.GetShortestPaths(2, 0);
+            var paths = Searcher.GetShortestPaths(2, 0);
 
             Assert.IsFalse(paths.HasNegativeLoop);
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
@@ -30,7 +30,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereAreTwoConnectedNodes()
         {
-            var paths = _searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));
+            var paths = Searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
@@ -40,7 +40,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereAreThreeConnectedNodes()
         {
-            var paths = _searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 1 3", "1 3 3"));
+            var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 1 3", "1 3 3"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
@@ -51,7 +51,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereAreThreeNodesInCircleInGraph()
         {
-            var paths = _searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 2 3", "3 3 1"));
+            var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 2 3", "3 3 1"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
@@ -62,7 +62,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereAreThreeNodesInCircleInGraph_WithNegativeEdges()
         {
-            var paths = _searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 3 1"));
+            var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 3 1"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
@@ -73,7 +73,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnResult_IfThereIsNegativeCircleInGraph()
         {
-            var paths = _searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 -3 1"));
+            var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 -3 1"));
 
             Assert.IsTrue(paths.HasNegativeLoop);
         }
@@ -82,7 +82,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [ExpectedException(typeof(InvalidOperationException))]
         public void GetPath_ShouldThrowException_IfThereIsNegativeCircleInGraph()
         {
-            var paths = _searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 -3 1"));
+            var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 -3 1"));
 
             paths.GetPath(2);
         }

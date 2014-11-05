@@ -8,26 +8,26 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
     public abstract class SingleSourceShortestPathTestBase<TSearcher> : ShortestPathTestBase
         where TSearcher : ISingleSourceShortestPathSearcher
     {
-        protected TSearcher _searcher;
+        protected TSearcher Searcher;
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void GetShortestPaths_ShouldThrowException_IfGraphHasNoNodes()
         {
-            _searcher.GetShortestPaths(0, 0);
+            Searcher.GetShortestPaths(0, 0);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void GetShortestPaths_ShouldThrowException_IfSourceNodeNotInNodes()
         {
-            _searcher.GetShortestPaths(10, 12);
+            Searcher.GetShortestPaths(10, 12);
         }
 
         [TestMethod]
         public void GetShortestPaths_ShouldReturnOneElementPath_IfGraphHasOneNode()
         {
-            var paths = _searcher.GetShortestPaths(1, 0);
+            var paths = Searcher.GetShortestPaths(1, 0);
 
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
         }
@@ -35,7 +35,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnCorrectArray_ForTwoConnectedNodes()
         {
-            var paths = _searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));
+            var paths = Searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));
 
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
             CheckPath(paths.GetPath(1), 2.0, new long[] { 0, 1 });
@@ -44,7 +44,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnCorrectArray_ForTree()
         {
-            var paths = _searcher.GetShortestPaths(6, 0, GetDirectedValuedEdges("1 3 2", "2 5 4", "1 4 3", "3 1 5", "3 2 6"));
+            var paths = Searcher.GetShortestPaths(6, 0, GetDirectedValuedEdges("1 3 2", "2 5 4", "1 4 3", "3 1 5", "3 2 6"));
 
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
             CheckPath(paths.GetPath(1), 3.0, new long[] { 0, 1 });
@@ -57,7 +57,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod]
         public void GetShortestPaths_ShouldReturnCorrectArray_ForComplexGraph()
         {
-            var paths = _searcher.GetShortestPaths(4, 0, GetDirectedValuedEdges("1 1 2", "1 4 3", "2 2 3", "2 6 4", "3 3 4"));
+            var paths = Searcher.GetShortestPaths(4, 0, GetDirectedValuedEdges("1 1 2", "1 4 3", "2 2 3", "2 6 4", "3 3 4"));
 
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
             CheckPath(paths.GetPath(1), 1.0, new long[] { 0, 1 });

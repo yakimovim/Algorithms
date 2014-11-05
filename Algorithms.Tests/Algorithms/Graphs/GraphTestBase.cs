@@ -10,7 +10,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
     [TestClass]
     public abstract class GraphTestBase
     {
-        protected Func<GraphNode, IEnumerable<GraphNode>> _connectedNodesSelector = (n) => n.Edges.Select(e => e.GoesFrom(n)).ToArray();
+        protected readonly Func<GraphNode, IEnumerable<GraphNode>> ConnectedNodesSelector = n => n.Edges.Select(e => e.GoesFrom(n)).ToArray();
 
         protected GraphNode[] GetUndirectedGraph(int numberOfNodes, params string[] edges)
         {

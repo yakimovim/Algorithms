@@ -64,6 +64,7 @@
     <Compile Include="Algorithms\Graphs\Paths\FloydWarshallShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\IMultiSourceShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ISingleSourceShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\JohnsonShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ShortestPath.cs" />
     <Compile Include="Algorithms\Graphs\Paths\YenBellmanFordShortestPathSearcher.cs" />
     <Compile Include="DataStructures\Collections\ISequenceAlignment.cs" />

@@ -9,7 +9,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestInitialize]
         public void TestInitialize()
         {
-            _searcher = new BellmanFordShortestPathSearcher();
+            Searcher = new BellmanFordShortestPathSearcher();
         }
     }
 }

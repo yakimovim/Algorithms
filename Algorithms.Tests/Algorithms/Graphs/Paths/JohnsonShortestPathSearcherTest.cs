@@ -4,12 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
 {
     [TestClass]
-    public class DijkstraShortestPathSearcherTest : SingleSourceShortestPathTestBase<DijkstraShortestPathSearcher>
+    public class JohnsonShortestPathSearcherTest : MultiSourceShortestPathSearcherTest<JohnsonShortestPathSearcher>
     {
         [TestInitialize]
-        public void TestInitiazlie()
+        public void TestInitialize()
         {
-            Searcher = new DijkstraShortestPathSearcher();
+            Searcher = new JohnsonShortestPathSearcher();
         }
-    }
+   }
 }
