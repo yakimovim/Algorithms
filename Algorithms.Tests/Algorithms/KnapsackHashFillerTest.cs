@@ -10,10 +10,10 @@ namespace EdlinSoftware.Tests.Algorithms
         [TestInitialize]
         public void TestInitialize()
         {
-            _filler = new KnapsackHashFiller<KnapsackItem>(
+            Filler = new KnapsackHashFiller<KnapsackItem>(
                 i => i.Value, 
                 i => i.Size,
-                (itemNumber, restCapacity) => (int) ((((int)restCapacity) << ((int)10)) + itemNumber));
+                (itemNumber, restCapacity) => (int) ((((int)restCapacity) << 10) + itemNumber));
         }
     }
 }

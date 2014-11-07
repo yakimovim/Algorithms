@@ -10,7 +10,7 @@ namespace EdlinSoftware.Tests.Algorithms
         [TestInitialize]
         public void TestInitialize()
         {
-            _filler = new KnapsackArrayFiller<KnapsackItem>(i => i.Value, i => i.Size);
+            Filler = new KnapsackArrayFiller<KnapsackItem>(i => i.Value, i => i.Size);
         }
     }
 }

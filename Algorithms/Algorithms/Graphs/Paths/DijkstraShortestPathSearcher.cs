@@ -60,7 +60,7 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
                 RecalculateHeap(nodesHeap, nextNode);
             }
 
-            return new DijkstraShortestPaths(initialNode, numberOfNodes, _shortestPaths, _previousNodeInShortestPath);
+            return new DijkstraShortestPaths(initialNode, _shortestPaths, _previousNodeInShortestPath);
         }
 
         private void InitializePathsArrays(long numberOfNodes, long initialNode)
@@ -161,28 +161,26 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
     internal class DijkstraShortestPaths : ISingleSourcePaths<long, double, long>
     {
         private readonly long _initialNode;
-        private readonly long _numberOfNodes;
-        private readonly double[] _values;
+        private readonly double[] _pathValues;
         private readonly long?[] _previousNodes;
 
-        public DijkstraShortestPaths(long initialNode, long numberOfNodes, double[] values, long?[] previousNodes)
+        public DijkstraShortestPaths(long initialNode, double[] pathValues, long?[] previousNodes)
         {
             _initialNode = initialNode;
-            _numberOfNodes = numberOfNodes;
-            _values = values;
+            _pathValues = pathValues;
             _previousNodes = previousNodes;
         }
 
-        public IPath<long, double, long> GetPath(long to)
+        public virtual IPath<long, double, long> GetPath(long to)
         {
-            if (to < 0 || to >= _numberOfNodes)
+            if (to < 0 || to >= _pathValues.LongLength)
             { throw new ArgumentOutOfRangeException("to"); }
 
             return new ShortestPath<long, double, long>
             {
                 From = _initialNode,
                 To = to,
-                Value = _values[to],
+                Value = _pathValues[to],
                 Path = GetPathTo(to)
             };
         }
@@ -190,16 +188,23 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
         private IEnumerable<long> GetPathTo(long to)
         {
             if (to == _initialNode)
-                return new long[] { _initialNode };
+                return new[] { _initialNode };
             if (_previousNodes[to].HasValue == false)
                 return new long[0];
 
             var path = new List<long> { to };
 
-            while (_previousNodes[to].Value != _initialNode)
+            while (true)
             {
-                path.Insert(0, _previousNodes[to].Value);
-                to = _previousNodes[to].Value;
+                if (_previousNodes[to].HasValue == false)
+                { throw new InvalidOperationException("Incorrect path sequence."); }
+                var previousNode = _previousNodes[to].Value;
+
+                if (previousNode == _initialNode)
+                { break; }
+
+                path.Insert(0, previousNode);
+                to = previousNode;
             }
 
             path.Insert(0, _initialNode);

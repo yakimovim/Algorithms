@@ -15,19 +15,19 @@ namespace EdlinSoftware.Tests.DataStructures
             _unionFind = new UnionFind<int>();
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void ElementsCount_ShouldBeZero_ForEmptyUnionFind()
         {
             Assert.AreEqual(0, _unionFind.ElementsCount);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GroupsCount_ShouldBeZero_ForEmptyUnionFind()
         {
             Assert.AreEqual(0, _unionFind.GroupsCount);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Add_ShouldBeAbleToAddOneItem()
         {
             var elements = _unionFind.Add(1);
@@ -38,7 +38,7 @@ namespace EdlinSoftware.Tests.DataStructures
             CollectionAssert.AreEqual(new[] { 1 }, elements.Select(e => e.Item).ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Add_ShouldBeAbleToAddManyItems()
         {
             var elements = _unionFind.Add(1, 2, 3, 4);
@@ -49,7 +49,7 @@ namespace EdlinSoftware.Tests.DataStructures
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4 }, elements.Select(e => e.Item).ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Elements_ShouldReturnCollectionOfElements()
         {
             _unionFind.Add(1, 2, 3, 4);
@@ -61,7 +61,7 @@ namespace EdlinSoftware.Tests.DataStructures
             CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, elements.Select(e => e.Item).ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Groups_ShouldReturnCollectionOfGroups()
         {
             _unionFind.Add(1, 2, 3, 4);
@@ -72,7 +72,7 @@ namespace EdlinSoftware.Tests.DataStructures
             Assert.AreEqual(5, groups.Length);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void EachGroupShouldInitiallyContainOneElement()
         {
             _unionFind.Add(1, 2, 3, 4);
@@ -86,7 +86,7 @@ namespace EdlinSoftware.Tests.DataStructures
             }
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GroupOfElement_ShouldReturnGroupOfElement()
         {
             var elements = _unionFind.Add(1, 2, 3, 4).ToArray();
@@ -101,7 +101,7 @@ namespace EdlinSoftware.Tests.DataStructures
             CollectionAssert.AreEquivalent(new[] { elements[2] }, groupElements);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Union_ShouldNotChangeElementsCount()
         {
             var elements = _unionFind.Add(1, 2, 3, 4).ToArray();
@@ -111,7 +111,7 @@ namespace EdlinSoftware.Tests.DataStructures
             Assert.AreEqual(4, _unionFind.ElementsCount);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Union_ShouldReduceGroupsCountByOne()
         {
             var elements = _unionFind.Add(1, 2, 3, 4).ToArray();
@@ -121,7 +121,7 @@ namespace EdlinSoftware.Tests.DataStructures
             Assert.AreEqual(3, _unionFind.GroupsCount);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Union_UnionedElementsMustHaveTheSameGroup()
         {
             var elements = _unionFind.Add(1, 2, 3, 4).ToArray();
@@ -131,7 +131,7 @@ namespace EdlinSoftware.Tests.DataStructures
             Assert.AreSame(elements[1].Group, elements[2].Group);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Union_UnionedGroupShouldContainUnionedElements()
         {
             var elements = _unionFind.Add(1, 2, 3, 4).ToArray();
@@ -144,7 +144,7 @@ namespace EdlinSoftware.Tests.DataStructures
             CollectionAssert.AreEquivalent(new[] { elements[1], elements[2] }, group.Elements.ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Union_ShouldSupportComplexUnion()
         {
             var elements = _unionFind.Add(1, 2, 3, 4).ToArray();
@@ -161,7 +161,7 @@ namespace EdlinSoftware.Tests.DataStructures
             CollectionAssert.AreEquivalent(elements, group.Elements.ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Union_ShouldNotChangeElementsFromTheSameGroup()
         {
             var elements = _unionFind.Add(1, 2, 3, 4).ToArray();

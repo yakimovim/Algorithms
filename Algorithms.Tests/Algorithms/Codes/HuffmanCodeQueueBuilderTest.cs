@@ -10,7 +10,7 @@ namespace EdlinSoftware.Tests.Algorithms.Codes
         [TestInitialize]
         public void TestInitialize()
         {
-            _builder = new HuffmanCodeQueueBuilder<SymbolAndFrequency<char>>(a => a.Frequency);
+            Builder = new HuffmanCodeQueueBuilder<SymbolAndFrequency<char>>(a => a.Frequency);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
     public abstract class GraphSearcherTestBase<TGraphSearcher> : GraphTestBase
         where TGraphSearcher : IGraphSearcher<GraphNode>
     {
-        protected TGraphSearcher _searcher;
-        protected List<GraphNode> _visitedNodes;
+        protected TGraphSearcher Searcher;
+        protected List<GraphNode> VisitedNodes;
     }
 }

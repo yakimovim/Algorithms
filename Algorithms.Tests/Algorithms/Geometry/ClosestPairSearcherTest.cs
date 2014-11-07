@@ -17,28 +17,28 @@ namespace EdlinSoftware.Tests.Algorithms.Geometry
             _searcher = new ClosestPairSearcher();
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Search_ShouldThrowException_IfArrayOfPointsIsNull()
         {
             _searcher.Search(null);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentException))]
         public void Search_ShouldThrowException_IfArrayOfPointsHasNoValues()
         {
             _searcher.Search(GetArrayOfPoints(new float[0, 2]));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentException))]
         public void Search_ShouldThrowException_IfArrayOfPointsHasOnePoint()
         {
             _searcher.Search(GetArrayOfPoints(new float[,] { { 0, 0 } }));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnFirstTwoPoints_IfArrayOfPointsHasTwoPoints()
         {
             var arrayOfPoints = GetArrayOfPoints(new float[,] { { 0, 0 }, { 1, 1 } });
@@ -50,7 +50,7 @@ namespace EdlinSoftware.Tests.Algorithms.Geometry
             Assert.AreEqual(new PairOfPoints { P = arrayOfPoints[0], Q = arrayOfPoints[1] }, pair);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectPairOfPoints()
         {
             var arrayOfPoints = GetArrayOfPoints(new float[,] { { 1, 5 }, { 6, 4 }, { 8, 0 }, { 7, 11 }, { 9, 7 }, { 15, 8 } });

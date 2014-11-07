@@ -16,14 +16,14 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             _builder = OptimalSearchTreeBuilder.New<SearchElement>(e => e.SearchProbability);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void GetAverageSearchTime_ShouldThrowException_IfThereAreNoElements()
         {
             _builder.GetAverageSearchTime();
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetAverageSearchTime_ShouldReturnElementWeight_IfThereIsOnlyOneElement()
         {
             var searchTime = _builder.GetAverageSearchTime(new SearchElement(1, 0.45));
@@ -31,7 +31,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreEqual(0.45, searchTime, 0.001);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetAverageSearchTime_ShouldReturnCorrectTime_IfThereAreOnlyTwoElements()
         {
             var searchTime = _builder.GetAverageSearchTime(new SearchElement(1, 0.8), new SearchElement(2, 0.2));
@@ -39,7 +39,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreEqual(1.2, searchTime, 0.001);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetAverageSearchTime_ShouldReturnCorrectTime_IfThereAreOnlyThreeElements()
         {
             var searchTime = _builder.GetAverageSearchTime(new SearchElement(1, 0.8), new SearchElement(2, 0.1), new SearchElement(3, 0.1));
@@ -47,7 +47,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreEqual(1.3, searchTime, 0.001);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetAverageSearchTime_ShouldReturnCorrectTime_IfThereAreOnlyFourElements()
         {
             var searchTime = _builder.GetAverageSearchTime(new SearchElement(1, 0.02), new SearchElement(2, 0.23), new SearchElement(3, 0.73), new SearchElement(4, 0.01));
@@ -55,7 +55,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreEqual(1.27, searchTime, 0.001);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetAverageSearchTime_ShouldReturnCorrectTime_IfThereAreOnlyFourElements2()
         {
             var searchTime = _builder.GetAverageSearchTime(new SearchElement(1, 0.01), new SearchElement(2, 0.34), new SearchElement(3, 0.33), new SearchElement(4, 0.22));
@@ -63,7 +63,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreEqual(1.48, searchTime, 0.001);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetAverageSearchTime_ShouldReturnCorrectTime_IfThereAreOnlySevenElements()
         {
             var searchTime = _builder.GetAverageSearchTime(

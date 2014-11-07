@@ -7,7 +7,7 @@ namespace EdlinSoftware.Tests.Algorithms.Collections
     [TestClass]
     public class SequenceAlignerTest
     {
-        private static readonly Func<char, char, double> penalty = (a, b) => 
+        private static readonly Func<char, char, double> Penalty = (a, b) => 
         {
             if (a == b) return 0.0;
             if(a == ' ' || b == ' ') return 0.5;
@@ -19,10 +19,10 @@ namespace EdlinSoftware.Tests.Algorithms.Collections
         [TestInitialize]
         public void TestInitialize()
         {
-            _aligner = new SequenceAligner<char>(' ', penalty);
+            _aligner = new SequenceAligner<char>(' ', Penalty);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Align_ShouldReturnCorrectResult_IfBothSequencesAreEmpty()
         {
             var alignment = _aligner.Align("".ToCharArray(), "".ToCharArray());
@@ -32,7 +32,7 @@ namespace EdlinSoftware.Tests.Algorithms.Collections
             Assert.AreEqual("", new string(alignment.SecondAlignedSequence));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Align_ShouldReturnCorrectResult_IfBothSequencesAreEqual()
         {
             var text = "abcd";
@@ -44,7 +44,7 @@ namespace EdlinSoftware.Tests.Algorithms.Collections
             Assert.AreEqual(text, new string(alignment.SecondAlignedSequence));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Align_ShouldReturnCorrectResult_IfOneSequenceIsShorter()
         {
             var text1 = "abcd";
@@ -57,7 +57,7 @@ namespace EdlinSoftware.Tests.Algorithms.Collections
             Assert.AreEqual("abc ", new string(alignment.SecondAlignedSequence));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Align_ShouldReturnCorrectResult_IfOneSequenceIsShorter_GapInCenter()
         {
             var text1 = "abcd";
@@ -70,7 +70,7 @@ namespace EdlinSoftware.Tests.Algorithms.Collections
             Assert.AreEqual("ab d", new string(alignment.SecondAlignedSequence));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Align_ShouldReturnCorrectResult_ForComplexCase()
         {
             var text1 = "agggct";

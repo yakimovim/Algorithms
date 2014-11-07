@@ -49,61 +49,19 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
         }
     }
 
-    internal class BellmanFordShortestPaths : ISingleSourcePathsWithoutNegativeLoop<long, double, long>
+    internal class BellmanFordShortestPaths : DijkstraShortestPaths, ISingleSourcePathsWithoutNegativeLoop<long, double, long>
     {
-        private readonly double[] _pathMatrix;
-        private readonly long?[] _previousNodes;
-        private readonly long _initialNode;
-
         public bool HasNegativeLoop { get; set; }
 
-        public BellmanFordShortestPaths(long initialNode, double[] pathMatrix, long?[] previousNodes)
-        {
-            if (pathMatrix == null) throw new ArgumentNullException("pathMatrix");
-            if (previousNodes == null) throw new ArgumentNullException("previousNodes");
-            _pathMatrix = pathMatrix;
-            _previousNodes = previousNodes;
-            _initialNode = initialNode;
-        }
+        public BellmanFordShortestPaths(long initialNode, double[] pathValues, long?[] previousNodes)
+            : base(initialNode, pathValues, previousNodes)
+        { }
 
-        public IPath<long, double, long> GetPath(long to)
+        public override IPath<long, double, long> GetPath(long to)
         {
             if (HasNegativeLoop) throw new InvalidOperationException();
 
-            return new ShortestPath<long, double, long>
-            {
-                From = _initialNode,
-                To = to,
-                Value = _pathMatrix[to],
-                Path = GetPathTo(to)
-            };
-        }
-
-        private IEnumerable<long> GetPathTo(long to)
-        {
-            if (to == _initialNode)
-                return new[] { _initialNode };
-            if (_previousNodes[to].HasValue == false)
-                return new long[0];
-
-            var path = new List<long> { to };
-
-            while (true)
-            {
-                if (_previousNodes[to].HasValue == false)
-                { throw new InvalidOperationException("Incorrect path sequence."); }
-                var previousNode = _previousNodes[to].Value;
-
-                if (previousNode == _initialNode)
-                { break; }
-
-                path.Insert(0, previousNode);
-                to = previousNode;
-            }
-
-            path.Insert(0, _initialNode);
-
-            return path;
+            return base.GetPath(to);
         }
     }
 }

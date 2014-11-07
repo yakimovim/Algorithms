@@ -13,69 +13,69 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
         [TestInitialize]
         public void TestInitiazlie()
         {
-            _searcher = new BreadthFirstSearcher<GraphNode>();
-            _visitedNodes = new List<GraphNode>();
+            Searcher = new BreadthFirstSearcher<GraphNode>();
+            VisitedNodes = new List<GraphNode>();
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Search_ShouldThrowException_IfGraphNodeIsNull()
         {
-            _searcher.Search(null, ConnectedNodesSelector, args => { });
+            Searcher.Search(null, ConnectedNodesSelector, args => { });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Search_ShouldThrowException_IfNodesSelectorIsNull()
         {
-            _searcher.Search(GetDirectedGraph(1)[0], null, args => { });
+            Searcher.Search(GetDirectedGraph(1)[0], null, args => { });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Search_ShouldThrowException_IfActionIsNull()
         {
-            _searcher.Search(GetUndirectedGraph(1)[0], ConnectedNodesSelector, null);
+            Searcher.Search(GetUndirectedGraph(1)[0], ConnectedNodesSelector, null);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldVisitStartNode()
         {
             var startNode = GetUndirectedGraph(1)[0];
 
-            _searcher.Search(startNode, ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            Searcher.Search(startNode, ConnectedNodesSelector, args => VisitedNodes.Add(args.TargetNode));
 
-            CollectionAssert.Contains(_visitedNodes, startNode);
+            CollectionAssert.Contains(VisitedNodes, startNode);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldVisitAllReachableNodes()
         {
             var graph = GetUndirectedGraph(5, "1-2", "2-3");
 
-            _searcher.Search(graph[0], ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            Searcher.Search(graph[0], ConnectedNodesSelector, args => VisitedNodes.Add(args.TargetNode));
 
-            CollectionAssert.IsSubsetOf(graph.Take(3).ToArray(), _visitedNodes);
+            CollectionAssert.IsSubsetOf(graph.Take(3).ToArray(), VisitedNodes);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldNotVisitAllUnreachableNodes()
         {
             var graph = GetUndirectedGraph(5, "1-2", "2-3");
 
-            _searcher.Search(graph[0], ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            Searcher.Search(graph[0], ConnectedNodesSelector, args => VisitedNodes.Add(args.TargetNode));
 
-            CollectionAssert.IsNotSubsetOf(graph.Skip(3).ToArray(), _visitedNodes);
+            CollectionAssert.IsNotSubsetOf(graph.Skip(3).ToArray(), VisitedNodes);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldVisitNodesByLayers()
         {
             var graph = GetUndirectedGraph(6, "1-2", "1-3", "2-4", "2-5", "3-5", "4-6", "5-6");
 
-            _searcher.Search(graph[0], ConnectedNodesSelector, args => _visitedNodes.Add(args.TargetNode));
+            Searcher.Search(graph[0], ConnectedNodesSelector, args => VisitedNodes.Add(args.TargetNode));
 
-            CollectionAssert.AreEqual(_visitedNodes, new[] { graph[0], graph[1], graph[2], graph[3], graph[4], graph[5] });
+            CollectionAssert.AreEqual(VisitedNodes, new[] { graph[0], graph[1], graph[2], graph[3], graph[4], graph[5] });
         }
     }
 }

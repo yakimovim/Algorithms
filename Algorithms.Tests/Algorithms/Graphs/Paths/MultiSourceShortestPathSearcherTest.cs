@@ -10,7 +10,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
     {
         protected TSearcher Searcher;
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereAreNoNodesInGraph()
         {
             var allPaths = Searcher.GetShortestPaths(0);
@@ -18,7 +18,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             Assert.IsFalse(allPaths.HasNegativeLoop);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereIsOneNodeInGraph()
         {
             var allPaths = Searcher.GetShortestPaths(1);
@@ -27,7 +27,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(allPaths.GetPath(0, 0), 0.0, new long[] { 0 });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereAreTwoConnectedNodesInGraph()
         {
             var allPaths = Searcher.GetShortestPaths(2, GetDirectedValuedEdges("1 2 2"));
@@ -39,7 +39,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(allPaths.GetPath(1, 0), double.PositiveInfinity, new long[0]);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereAreTwoUnconnectedNodesInGraph()
         {
             var allPaths = Searcher.GetShortestPaths(2);
@@ -51,7 +51,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(allPaths.GetPath(1, 0), double.PositiveInfinity, new long[0]);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereAreThreeNodesInGraph()
         {
             var allPaths = Searcher.GetShortestPaths(3, GetDirectedValuedEdges("1 1 2", "2 1 3", "1 3 3"));
@@ -68,7 +68,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(allPaths.GetPath(2, 1), double.PositiveInfinity, new long[0]);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereAreThreeNodesInCircleInGraph()
         {
             var allPaths = Searcher.GetShortestPaths(3, GetDirectedValuedEdges("1 1 2", "2 2 3", "3 3 1"));
@@ -85,7 +85,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(allPaths.GetPath(2, 1), 4.0, new long[] { 2, 0, 1 });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereAreThreeNodesInCircleInGraph_WithNegativeEdges()
         {
             var allPaths = Searcher.GetShortestPaths(3, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 3 1"));
@@ -102,7 +102,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(allPaths.GetPath(2, 1), 4.0, new long[] { 2, 0, 1 });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnResult_IfThereIsNegativeCircleInGraph()
         {
             var allPaths = Searcher.GetShortestPaths(3, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 -3 1"));
@@ -110,7 +110,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             Assert.IsTrue(allPaths.HasNegativeLoop);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(InvalidOperationException))]
         public void GetPathLength_ShouldThrowException_IfThereIsNegativeCircleInGraph()
         {

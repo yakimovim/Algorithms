@@ -10,21 +10,21 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
     {
         protected TSearcher Searcher;
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void GetShortestPaths_ShouldThrowException_IfGraphHasNoNodes()
         {
             Searcher.GetShortestPaths(0, 0);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void GetShortestPaths_ShouldThrowException_IfSourceNodeNotInNodes()
         {
             Searcher.GetShortestPaths(10, 12);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetShortestPaths_ShouldReturnOneElementPath_IfGraphHasOneNode()
         {
             var paths = Searcher.GetShortestPaths(1, 0);
@@ -32,7 +32,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetShortestPaths_ShouldReturnCorrectArray_ForTwoConnectedNodes()
         {
             var paths = Searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));
@@ -41,7 +41,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(paths.GetPath(1), 2.0, new long[] { 0, 1 });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetShortestPaths_ShouldReturnCorrectArray_ForTree()
         {
             var paths = Searcher.GetShortestPaths(6, 0, GetDirectedValuedEdges("1 3 2", "2 5 4", "1 4 3", "3 1 5", "3 2 6"));
@@ -54,7 +54,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             CheckPath(paths.GetPath(5), 6.0, new long[] { 0, 2, 5 });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void GetShortestPaths_ShouldReturnCorrectArray_ForComplexGraph()
         {
             var paths = Searcher.GetShortestPaths(4, 0, GetDirectedValuedEdges("1 1 2", "1 4 3", "2 2 3", "2 6 4", "3 3 4"));

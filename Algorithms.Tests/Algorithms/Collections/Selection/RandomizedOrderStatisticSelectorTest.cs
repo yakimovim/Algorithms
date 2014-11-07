@@ -10,7 +10,7 @@ namespace EdlinSoftware.Tests.Algorithms.Collections.Selection
         [TestInitialize]
         public void TestInitialize()
         {
-            _selector = new RandomizedOrderStatisticSelector<int>(Comparer<int>.Default);
+            Selector = new RandomizedOrderStatisticSelector<int>(Comparer<int>.Default);
         }
     }
 }

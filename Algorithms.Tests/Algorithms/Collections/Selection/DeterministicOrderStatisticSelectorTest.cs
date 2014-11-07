@@ -9,7 +9,7 @@ namespace EdlinSoftware.Tests.Algorithms.Collections.Selection
         [TestInitialize]
         public void TestInitialize()
         {
-            _selector = DeterministicOrderStatisticSelector.New<int>();
+            Selector = DeterministicOrderStatisticSelector.New<int>();
         }
     }
 }

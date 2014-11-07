@@ -17,13 +17,13 @@ namespace EdlinSoftware.Tests.Algorithms.Scheduling
             _scheduler = new WeightedCompletionTimeMinimizer<Job>(j => j.Weight, j => j.Length);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Schedule_ShouldReturnNull_IfJobsAreNull()
         {
             Assert.IsNull(_scheduler.Schedule(null));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Schedule_ShouldReturnEmptySequence_IfJobsAreEmpty()
         {
             var scheduledJobs = _scheduler.Schedule(new Job[0]);
@@ -31,7 +31,7 @@ namespace EdlinSoftware.Tests.Algorithms.Scheduling
             Assert.AreEqual(0, scheduledJobs.Count());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Schedule_ShouldReturnOneJob_IfThereIsOnlyOneJob()
         {
             var scheduledJobs = _scheduler.Schedule(new[] { new Job { Weight = 1, Length = 1 } });
@@ -39,14 +39,14 @@ namespace EdlinSoftware.Tests.Algorithms.Scheduling
             Assert.AreEqual(1, scheduledJobs.Count());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Schedule_ShouldThrowException_IfThereAreNonPositiveLengths()
         {
             _scheduler.Schedule(new[] { new Job { Weight = 1, Length = -1 } });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Schedule_ShouldReturnCorrectSchedule_IfThereAreSeveralJobs()
         {
             var scheduledJobs = _scheduler.Schedule(new[] 

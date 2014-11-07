@@ -11,27 +11,27 @@ namespace EdlinSoftware.Tests.DataStructures.Heaps
         [TestInitialize]
         public void TestInitialize()
         {
-            _heap = Heap.New<int, string>();
+            Heap = EdlinSoftware.DataStructures.Heaps.Heap.New<int, string>();
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void New_ShouldThrowException_IfInitialCapacityIsLessThenOne()
         {
-            Heap.New<int, string>(-1);
+            EdlinSoftware.DataStructures.Heaps.Heap.New<int, string>(-1);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void New_ShouldThrowException_IfInitialHeapIsNull()
         {
-            Heap.New<int, string>(null);
+            EdlinSoftware.DataStructures.Heaps.Heap.New<int, string>(null);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void New_ShouldBuildCorrectHeap_FromInitialHeap()
         {
-            _heap = Heap.New(new[]
+            Heap = EdlinSoftware.DataStructures.Heaps.Heap.New(new[]
                                     {
                                         new HeapElement<int, string>(3, "A"), 
                                         new HeapElement<int, string>(5, "B"), 
@@ -41,15 +41,15 @@ namespace EdlinSoftware.Tests.DataStructures.Heaps
                                         new HeapElement<int, string>(2, "F") 
                                     });
 
-            var keys = Enumerable.Range(1, 6).Select(i => _heap.ExtractMinElement().Key).ToArray();
+            var keys = Enumerable.Range(1, 6).Select(i => Heap.ExtractMinElement().Key).ToArray();
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6 }, keys);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void HeapShouldWorkWithMaxKeys()
         {
-            _heap = Heap.New(new[]
+            Heap = EdlinSoftware.DataStructures.Heaps.Heap.New(new[]
                                     {
                                         new HeapElement<int, string>(int.MaxValue, "A"), 
                                         new HeapElement<int, string>(int.MaxValue, "B"), 
@@ -59,7 +59,7 @@ namespace EdlinSoftware.Tests.DataStructures.Heaps
                                         new HeapElement<int, string>(int.MaxValue, "F") 
                                     });
 
-            var keys = Enumerable.Range(1, 6).Select(i => _heap.ExtractMinElement().Key).ToArray();
+            var keys = Enumerable.Range(1, 6).Select(i => Heap.ExtractMinElement().Key).ToArray();
 
             CollectionAssert.AreEqual(new[] { int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue }, keys);
         }

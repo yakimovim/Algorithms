@@ -9,7 +9,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.MinimumSpanningTree
         [TestInitialize]
         public void TestInitialize()
         {
-            _mstSearcher = new PrimAlgorithm();
+            MstSearcher = new PrimAlgorithm();
         }
     }
 }

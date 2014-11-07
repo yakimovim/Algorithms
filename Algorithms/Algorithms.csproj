@@ -67,6 +67,7 @@
     <Compile Include="Algorithms\Graphs\Paths\JohnsonShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ShortestPath.cs" />
     <Compile Include="Algorithms\Graphs\Paths\YenBellmanFordShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculator.cs" />
     <Compile Include="DataStructures\Collections\ISequenceAlignment.cs" />
     <Compile Include="DataStructures\Geometry\PairOfPoints.cs" />
     <Compile Include="Algorithms\Graphs\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />

@@ -16,21 +16,21 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             _sorter = new TopologicalSorter<GraphNode>();
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Sort_ShouldThrowException_IfGraphIsNull()
         {
             _sorter.Sort(null, ConnectedNodesSelector);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Sort_ShouldThrowException_IfNodesSelectorIsNull()
         {
             _sorter.Sort(GetDirectedGraph(1), null);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Sort_ShouldReturnEmptyArray_IfGraphIsEmpty()
         {
             var order = _sorter.Sort(GetDirectedGraph(0), ConnectedNodesSelector);
@@ -38,7 +38,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreEqual(0, order.Length);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Sort_ShouldReturnArrayWithOneElement_IfGraphHasOneNode()
         {
             var graph = GetDirectedGraph(1);
@@ -48,7 +48,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreSame(graph[0], order[0]);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Sort_ShouldReturnCorrectOrder_ForChain()
         {
             var graph = GetDirectedGraph(3, "1-2", "2-3");
@@ -57,7 +57,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             CollectionAssert.AreEqual(new[] { graph[0], graph[1], graph[2] }, order);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Sort_ShouldReturnCorrectOrder_ForInversedChain()
         {
             var graph = GetDirectedGraph(3, "2-1", "3-2");
@@ -66,7 +66,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             CollectionAssert.AreEqual(new[] { graph[2], graph[1], graph[0] }, order);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Sort_ShouldReturnCorrectOrder_ForComplexConnections()
         {
             var graph = GetDirectedGraph(4, "1-2", "1-3", "4-2", "4-3");
@@ -75,7 +75,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             CollectionAssert.AreEqual(new[] { graph[3], graph[0], graph[2], graph[1] }, order);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Sort_ShouldReturnCorrectOrder_ForGraphWithSeveralComponents()
         {
             var graph = GetDirectedGraph(6, "1-2", "1-3", "4-2", "4-3", "5-6");

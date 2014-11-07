@@ -11,35 +11,35 @@ namespace EdlinSoftware.Tests.Algorithms.Codes
     public abstract class HuffmanCodeBuilderTest<TBuilder>
         where TBuilder : IHuffmanCodeBuilder<SymbolAndFrequency<char>>
     {
-        protected TBuilder _builder;
+        protected TBuilder Builder;
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Generate_ShouldThrowException_IfThereAreNoSymbolsInTheAlphabet()
         {
-            _builder.Generate(null);
+            Builder.Generate(null);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Generate_ShouldThrowException_IfThereIsOneSymbolInTheAlphabet()
         {
-            var tree = _builder.Generate(new SymbolAndFrequency<char>('a', 1.0));
+            Builder.Generate(new SymbolAndFrequency<char>('a', 1.0));
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Generate_ShouldReturnCorrectTree_IfThereAreTwoSymbolsInTheAlphabet()
         {
-            var tree = _builder.Generate(new SymbolAndFrequency<char>('a', 0.4),
+            var tree = Builder.Generate(new SymbolAndFrequency<char>('a', 0.4),
                 new SymbolAndFrequency<char>('b', 0.6));
 
             ValidateTree(tree, new object[,] { { 'a', 1 }, { 'b', 1 } });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Generate_ShouldReturnCorrectLadderTree()
         {
-            var tree = _builder.Generate(new SymbolAndFrequency<char>('a', 0.87),
+            var tree = Builder.Generate(new SymbolAndFrequency<char>('a', 0.87),
                 new SymbolAndFrequency<char>('b', 0.1),
                 new SymbolAndFrequency<char>('c', 0.02),
                 new SymbolAndFrequency<char>('d', 0.01));
@@ -47,10 +47,10 @@ namespace EdlinSoftware.Tests.Algorithms.Codes
             ValidateTree(tree, new object[,] { { 'a', 1 }, { 'b', 2 }, { 'c', 3 }, { 'd', 3 } });
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Generate_ShouldReturnCorrectBalancedTree()
         {
-            var tree = _builder.Generate(new SymbolAndFrequency<char>('a', 0.3),
+            var tree = Builder.Generate(new SymbolAndFrequency<char>('a', 0.3),
                 new SymbolAndFrequency<char>('b', 0.3),
                 new SymbolAndFrequency<char>('c', 0.2),
                 new SymbolAndFrequency<char>('d', 0.2));

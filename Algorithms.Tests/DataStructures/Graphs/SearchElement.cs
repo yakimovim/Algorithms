@@ -1,5 +1,4 @@
 ﻿using System;
-using EdlinSoftware.Algorithms.Graphs;
 
 namespace EdlinSoftware.Tests.DataStructures.Graphs
 {

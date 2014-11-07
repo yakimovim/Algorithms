@@ -18,40 +18,37 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
         {
             _searcher = new StronglyConnectedComponentsSearcher();
             _connectedNodes = new Dictionary<long, HashSet<long>>();
-            _connectedNodesProvider = node => 
-            {
-                return _connectedNodes.ContainsKey(node) ? (IEnumerable<long>)_connectedNodes[node] : new long[0];
-            };
+            _connectedNodesProvider = node => _connectedNodes.ContainsKey(node) ? (IEnumerable<long>)_connectedNodes[node] : new long[0];
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Search_ShouldThrowException_IfNumberOfNodesIsNegative()
         {
             _searcher.Search(-1, _connectedNodesProvider);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Search_ShouldThrowException_IfConnectedNodesProviderIsNull()
         {
             _searcher.Search(10, null);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnEmptyListOfComponents_IfGraphIsEmpty()
         {
-            SetDirectedGraph(0);
+            SetDirectedGraph();
 
             var listOfComponents = _searcher.Search(0, _connectedNodesProvider);
 
             Assert.AreEqual(0, listOfComponents.Length);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnOneComponents_IfGraphHasOneNode()
         {
-            SetDirectedGraph(1);
+            SetDirectedGraph();
 
             var listOfComponents = _searcher.Search(1, _connectedNodesProvider);
 
@@ -59,30 +56,30 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             Assert.AreEqual(0, listOfComponents[0].First());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectComponents_IfGraphHasOnlyUnconnectedNodes()
         {
-            SetDirectedGraph(5);
+            SetDirectedGraph();
 
             var listOfComponents = _searcher.Search(5, _connectedNodesProvider);
 
             CollectionAssert.AreEquivalent(new long[] { 0, 1, 2, 3, 4 }, listOfComponents.Select(c => c.First()).ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectComponents_IfGraphHasOneComponent()
         {
-            SetDirectedGraph(3, "1-2", "2-3", "3-1");
+            SetDirectedGraph("1-2", "2-3", "3-1");
 
             var listOfComponents = _searcher.Search(3, _connectedNodesProvider);
 
             CollectionAssert.AreEquivalent(new long[] { 0, 1, 2 }, listOfComponents[0].ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectComponents_IfGraphHasTwoUnconnectedComponents()
         {
-            SetDirectedGraph(6, "1-2", "2-3", "3-1", "4-5", "5-6", "6-4");
+            SetDirectedGraph("1-2", "2-3", "3-1", "4-5", "5-6", "6-4");
 
             var listOfComponents = _searcher.Search(6, _connectedNodesProvider);
 
@@ -90,10 +87,10 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             CollectionAssert.AreEquivalent(new long[] { 3, 4, 5 }, listOfComponents[1].ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectComponents_IfGraphHasTwoConnectedComponents()
         {
-            SetDirectedGraph(6, "1-2", "2-3", "3-1", "4-5", "5-6", "6-4", "3-5");
+            SetDirectedGraph("1-2", "2-3", "3-1", "4-5", "5-6", "6-4", "3-5");
 
             var listOfComponents = _searcher.Search(6, _connectedNodesProvider);
 
@@ -101,37 +98,37 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
             CollectionAssert.AreEquivalent(new long[] { 3, 4, 5 }, listOfComponents[0].ToArray());
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectComponents_ForComplexGraph1()
         {
-            SetDirectedGraph(11, "1-2", "2-3", "3-1", "2-4", "3-5", "5-4", "4-7", "7-6", "6-5", "5-7", "5-10", "6-11", "10-11", "11-9", "9-10", "1-8", "8-10", "8-9");
+            SetDirectedGraph("1-2", "2-3", "3-1", "2-4", "3-5", "5-4", "4-7", "7-6", "6-5", "5-7", "5-10", "6-11", "10-11", "11-9", "9-10", "1-8", "8-10", "8-9");
 
             var listOfComponents = _searcher.Search(11, _connectedNodesProvider);
 
             Assert.AreEqual(4, listOfComponents.Length);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectComponents_ForComplexGraph2()
         {
-            SetDirectedGraph(6, "1-2", "2-3", "3-1", "2-4", "4-5", "5-6", "6-4");
+            SetDirectedGraph("1-2", "2-3", "3-1", "2-4", "4-5", "5-6", "6-4");
 
             var listOfComponents = _searcher.Search(6, _connectedNodesProvider);
 
             Assert.AreEqual(2, listOfComponents.Length);
         }
 
-        [TestMethod]
+        [TestMethod, Owner("Ivan Yakimov")]
         public void Search_ShouldReturnCorrectComponents_ForComplexGraph3()
         {
-            SetDirectedGraph(5, "1-2", "2-3", "3-1", "2-4", "4-5", "5-2");
+            SetDirectedGraph("1-2", "2-3", "3-1", "2-4", "4-5", "5-2");
 
             var listOfComponents = _searcher.Search(5, _connectedNodesProvider);
 
             Assert.AreEqual(1, listOfComponents.Length);
         }
 
-        private void SetDirectedGraph(int numberOfNodes, params string[] edges)
+        private void SetDirectedGraph(params string[] edges)
         {
             foreach (var edge in edges)
             {
