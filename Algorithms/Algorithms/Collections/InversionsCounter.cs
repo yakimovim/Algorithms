@@ -37,8 +37,8 @@ namespace EdlinSoftware.Algorithms.Collections
         /// <returns>Number of invertions in the <paramref name="array"/>.</returns>
         public static long Count<T>(IList<T> array, IComparer<T> comparer)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
 
             var holder = SortAndCount(array, comparer);
 
@@ -97,7 +97,7 @@ namespace EdlinSoftware.Algorithms.Collections
         private static int Divide(int value)
         {
             if (value < 2)
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
 
             return value / 2;
         }

@@ -14,7 +14,7 @@ namespace EdlinSoftware.Algorithms
         private class TaskParameters
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private Func<long, long, int> _hashProvider;
+            private readonly Func<long, long, int> _hashProvider;
 
             public long RestItemsNumber { get; set; }
             public long RestKnapsackCapacity { get; set; }
@@ -22,7 +22,7 @@ namespace EdlinSoftware.Algorithms
             [DebuggerStepThrough]
             public TaskParameters(long restItemsNumber, long restKnapsackCapacity, Func<long, long, int> hashProvider)
             {
-                if (hashProvider == null) throw new ArgumentNullException("hashProvider");
+                if (hashProvider == null) throw new ArgumentNullException(nameof(hashProvider));
 
                 _hashProvider = hashProvider;
                 RestItemsNumber = restItemsNumber;
@@ -44,13 +44,13 @@ namespace EdlinSoftware.Algorithms
             }
         }
 
-        private Func<long, long, int> _hashProvider;
+        private readonly Func<long, long, int> _hashProvider;
         private Dictionary<TaskParameters, double> _subTaskResults;
 
         public KnapsackHashFiller(Func<TItem, double> itemValueProvider, Func<TItem, long> itemSizeProvider, Func<long, long, int> hashProvider)
             : base(itemValueProvider, itemSizeProvider)
         {
-            if (hashProvider == null) throw new ArgumentNullException("hashProvider");
+            if (hashProvider == null) throw new ArgumentNullException(nameof(hashProvider));
             _hashProvider = hashProvider;
         }
 
@@ -96,8 +96,8 @@ namespace EdlinSoftware.Algorithms
 
                 var itemsNumberWithoutLast = currentTaskParameters.RestItemsNumber - 1;
 
-                var lastItemSize = _orderedSizes[itemsNumberWithoutLast];
-                var lastItemValue = _orderedValues[itemsNumberWithoutLast];
+                var lastItemSize = OrderedSizes[itemsNumberWithoutLast];
+                var lastItemValue = OrderedValues[itemsNumberWithoutLast];
 
                 var capacityWithoutLastItemSize = currentTaskParameters.RestKnapsackCapacity - lastItemSize;
 
@@ -148,7 +148,7 @@ namespace EdlinSoftware.Algorithms
 
         private IEnumerable<TItem> GetOptimalItems(long knapsackCapacity)
         {
-            var taskParameters = new TaskParameters(_orderedItems.Length, knapsackCapacity, _hashProvider);
+            var taskParameters = new TaskParameters(OrderedItems.Length, knapsackCapacity, _hashProvider);
 
             var optimalItems = new List<TItem>();
 
@@ -161,14 +161,14 @@ namespace EdlinSoftware.Algorithms
 
                 taskParameters.RestItemsNumber--;
 
-                double prevOptimalValue;
-                if (_subTaskResults.TryGetValue(taskParameters, out prevOptimalValue) == false)
-                { prevOptimalValue = 0; }
+                double previousOptimalValue;
+                if (_subTaskResults.TryGetValue(taskParameters, out previousOptimalValue) == false)
+                { previousOptimalValue = 0; }
 
-                if (optimalValue != prevOptimalValue)
+                if (optimalValue != previousOptimalValue)
                 {
-                    optimalItems.Add(_orderedItems[taskParameters.RestItemsNumber]);
-                    taskParameters.RestKnapsackCapacity -= _orderedSizes[taskParameters.RestItemsNumber];
+                    optimalItems.Add(OrderedItems[taskParameters.RestItemsNumber]);
+                    taskParameters.RestKnapsackCapacity -= OrderedSizes[taskParameters.RestItemsNumber];
                 }
             }
 

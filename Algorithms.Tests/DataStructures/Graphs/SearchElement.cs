@@ -10,9 +10,9 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs
             SearchProbability = searchProbability;
         }
 
-        public int Value { get; private set; }
+        public int Value { get; }
 
-        public double SearchProbability { get; private set; }
+        public double SearchProbability { get; }
 
         public int CompareTo(SearchElement other)
         {

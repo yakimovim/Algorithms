@@ -10,15 +10,15 @@ namespace EdlinSoftware.Algorithms.Scheduling
     /// <typeparam name="TJob">Type of job.</typeparam>
     public class WeightedCompletionTimeMinimizer<TJob>
     {
-        private readonly Func<TJob, double> _weigthProvider;
+        private readonly Func<TJob, double> _weightProvider;
         private readonly Func<TJob, double> _lengthProvider;
 
-        public WeightedCompletionTimeMinimizer(Func<TJob, double> weigthProvider, Func<TJob, double> lengthProvider)
+        public WeightedCompletionTimeMinimizer(Func<TJob, double> weightProvider, Func<TJob, double> lengthProvider)
         {
-            if (weigthProvider == null) throw new ArgumentNullException("weigthProvider");
-            if (lengthProvider == null) throw new ArgumentNullException("lengthProvider");
+            if (weightProvider == null) throw new ArgumentNullException(nameof(weightProvider));
+            if (lengthProvider == null) throw new ArgumentNullException(nameof(lengthProvider));
 
-            _weigthProvider = weigthProvider;
+            _weightProvider = weightProvider;
             _lengthProvider = lengthProvider;
         }
 
@@ -28,15 +28,12 @@ namespace EdlinSoftware.Algorithms.Scheduling
         /// <param name="jobs">Jobs.</param>
         public IEnumerable<TJob> Schedule(IEnumerable<TJob> jobs)
         {
-            if (jobs == null)
-            { return null; }
-
-            return jobs.OrderByDescending(j => {
-                var length = _lengthProvider(j);
-                if (length <= 0.0)
-                    throw new ArgumentOutOfRangeException("Length must be positive");
-                var weight = _weigthProvider(j);
-                return weight / length;
+            return jobs?.OrderByDescending(j => {
+                                                    var length = _lengthProvider(j);
+                                                    if (length <= 0.0)
+                                                        throw new ArgumentOutOfRangeException(nameof(length), "Length must be positive");
+                                                    var weight = _weightProvider(j);
+                                                    return weight / length;
             }).ToArray();
         }
     }

@@ -29,7 +29,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         {
             var paths = Searcher.GetShortestPaths(1, 0);
 
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -37,8 +37,8 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         {
             var paths = Searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));
 
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), 2.0, new long[] { 0, 1 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), 2.0, 0, 1);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -46,12 +46,12 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         {
             var paths = Searcher.GetShortestPaths(6, 0, GetDirectedValuedEdges("1 3 2", "2 5 4", "1 4 3", "3 1 5", "3 2 6"));
 
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), 3.0, new long[] { 0, 1 });
-            CheckPath(paths.GetPath(2), 4.0, new long[] { 0, 2 });
-            CheckPath(paths.GetPath(3), 8.0, new long[] { 0, 1, 3 });
-            CheckPath(paths.GetPath(4), 5.0, new long[] { 0, 2, 4 });
-            CheckPath(paths.GetPath(5), 6.0, new long[] { 0, 2, 5 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), 3.0, 0, 1);
+            CheckPath(paths.GetPath(2), 4.0, 0, 2);
+            CheckPath(paths.GetPath(3), 8.0, 0, 1, 3);
+            CheckPath(paths.GetPath(4), 5.0, 0, 2, 4);
+            CheckPath(paths.GetPath(5), 6.0, 0, 2, 5);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -59,10 +59,10 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         {
             var paths = Searcher.GetShortestPaths(4, 0, GetDirectedValuedEdges("1 1 2", "1 4 3", "2 2 3", "2 6 4", "3 3 4"));
 
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), 1.0, new long[] { 0, 1 });
-            CheckPath(paths.GetPath(2), 3.0, new long[] { 0, 1, 2 });
-            CheckPath(paths.GetPath(3), 6.0, new long[] { 0, 1, 2, 3 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), 1.0, 0, 1);
+            CheckPath(paths.GetPath(2), 3.0, 0, 1, 2);
+            CheckPath(paths.GetPath(3), 6.0, 0, 1, 2, 3);
         }
     }
 }

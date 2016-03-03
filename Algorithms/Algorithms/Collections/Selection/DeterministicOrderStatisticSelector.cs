@@ -22,7 +22,7 @@ namespace EdlinSoftware.Algorithms.Collections.Selection
         public DeterministicOrderStatisticSelector(IComparer<T> comparer)
             : base(comparer, (array, left, rigth) => left)
         {
-            _pivotSelector = SelectPivotIndex;
+            PivotSelector = SelectPivotIndex;
             _comparer = comparer;
         }
 

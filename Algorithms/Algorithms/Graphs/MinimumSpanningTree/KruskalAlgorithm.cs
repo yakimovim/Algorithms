@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EdlinSoftware.DataStructures;
 using EdlinSoftware.DataStructures.Graphs;
-using EdlinSoftware.DataStructures.UnionFind;
 
 namespace EdlinSoftware.Algorithms.Graphs.MinimumSpanningTree
 {
@@ -23,9 +23,7 @@ namespace EdlinSoftware.Algorithms.Graphs.MinimumSpanningTree
 
             _nodes = _unionFind.Elements.ToArray();
 
-            _orderedEdges = edgesOfGraph == null
-                ? new List<IValuedEdge<long, long>>()
-                : edgesOfGraph.OrderBy(e => e.Value).ToList();
+            _orderedEdges = edgesOfGraph?.OrderBy(e => e.Value).ToList() ?? new List<IValuedEdge<long, long>>();
 
             return GetMinimumSpanningTree();
         }

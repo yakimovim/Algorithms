@@ -19,23 +19,21 @@ namespace EdlinSoftware.Algorithms.Graphs.Search
             {
                 SourceNode = sourceNode;
                 Node = node;
-                NodeChildren = nodeChildren == null
-                    ? new TGraphNode[0]
-                    : nodeChildren.ToArray();
+                NodeChildren = nodeChildren?.ToArray() ?? new TGraphNode[0];
                 CurrentChildIndex = 0;
             }
 
-            public TGraphNode SourceNode { get; private set; }
+            public TGraphNode SourceNode { get; }
 
-            public TGraphNode Node { get; private set; }
+            public TGraphNode Node { get; }
 
-            public TGraphNode[] NodeChildren { get; private set; }
+            public TGraphNode[] NodeChildren { get; }
 
             public long CurrentChildIndex { get; set; }
         }
 
         private readonly HashSet<TGraphNode> _visitedNodes = new HashSet<TGraphNode>();
-        private InformationMoments _informationMoment;
+        private readonly InformationMoments _informationMoment;
 
         public void ClearVisitedNodes()
         {
@@ -51,9 +49,9 @@ namespace EdlinSoftware.Algorithms.Graphs.Search
             Func<TGraphNode, IEnumerable<TGraphNode>> connectedNodesSelector,
             Action<IGraphNodeVisitingArgs<TGraphNode>> nodeAction)
         {
-            if (startNode == null) throw new ArgumentNullException("startNode");
-            if (connectedNodesSelector == null) throw new ArgumentNullException("connectedNodesSelector");
-            if (nodeAction == null) throw new ArgumentNullException("nodeAction");
+            if (startNode == null) throw new ArgumentNullException(nameof(startNode));
+            if (connectedNodesSelector == null) throw new ArgumentNullException(nameof(connectedNodesSelector));
+            if (nodeAction == null) throw new ArgumentNullException(nameof(nodeAction));
 
             var args = new GraphNodeVisitingArgs<TGraphNode>();
 

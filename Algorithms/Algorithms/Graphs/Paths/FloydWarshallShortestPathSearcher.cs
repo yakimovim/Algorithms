@@ -130,8 +130,8 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
         public FloydWarshallShortestPaths(double[, ,] pathMatrix, long?[,] pathOrderMatrix, int sliceIndex)
         {
-            if (pathMatrix == null) throw new ArgumentNullException("pathMatrix");
-            if (pathOrderMatrix == null) throw new ArgumentNullException("pathOrderMatrix");
+            if (pathMatrix == null) throw new ArgumentNullException(nameof(pathMatrix));
+            if (pathOrderMatrix == null) throw new ArgumentNullException(nameof(pathOrderMatrix));
             _pathMatrix = pathMatrix;
             _pathOrderMatrix = pathOrderMatrix;
             _sliceIndex = sliceIndex;

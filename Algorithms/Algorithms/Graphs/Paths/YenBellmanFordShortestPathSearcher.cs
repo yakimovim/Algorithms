@@ -13,8 +13,8 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
         public override ISingleSourcePathsWithoutNegativeLoop<long, double, long> GetShortestPaths(long numberOfNodes, long initialNode, params IValuedEdge<long, double>[] edges)
         {
-            if (numberOfNodes <= 0) throw new ArgumentOutOfRangeException("numberOfNodes");
-            if (initialNode < 0 || initialNode >= numberOfNodes) throw new ArgumentOutOfRangeException("initialNode");
+            if (numberOfNodes <= 0) throw new ArgumentOutOfRangeException(nameof(numberOfNodes));
+            if (initialNode < 0 || initialNode >= numberOfNodes) throw new ArgumentOutOfRangeException(nameof(initialNode));
 
             InitializePathArrays(numberOfNodes, initialNode);
 

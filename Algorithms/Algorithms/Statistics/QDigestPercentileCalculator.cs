@@ -32,9 +32,9 @@ namespace EdlinSoftware.Algorithms.Statistics
                 return index - sigma;
             }
 
-            public long Lower { get; private set; }
-            public long Upper { get; private set; }
-            public long Count { get; private set; }
+            public long Lower { get; }
+            public long Upper { get; }
+            public long Count { get; }
         }
 
         private class RangeComparer : IComparer<Range>

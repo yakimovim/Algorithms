@@ -31,9 +31,9 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
         /// <returns>Sorted array containing elements from both arrays.</returns>
         public static T[] Merge<T>(IList<T> first, IList<T> second, IComparer<T> comparer)
         {
-            if (first == null) throw new ArgumentNullException("first");
-            if (second == null) throw new ArgumentNullException("second");
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (first == null) throw new ArgumentNullException(nameof(first));
+            if (second == null) throw new ArgumentNullException(nameof(second));
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
 
             var merged = new T[first.Count + second.Count];
 

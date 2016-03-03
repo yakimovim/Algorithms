@@ -1,6 +1,6 @@
 ﻿namespace EdlinSoftware.Algorithms.Graphs.Search
 {
-    public interface IGraphNodeVisitingArgs<TGraphNode>
+    public interface IGraphNodeVisitingArgs<out TGraphNode>
     {
         TGraphNode SourceNode { get; }
         TGraphNode TargetNode { get; }

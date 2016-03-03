@@ -27,7 +27,7 @@ namespace EdlinSoftware.Algorithms
 
         private double[,] GetOptimalValues(long knapsackCapacity)
         {
-            var size = _orderedItems.Length;
+            var size = OrderedItems.Length;
 
             var optimalValues = new double[size + 1, knapsackCapacity + 1];
 
@@ -42,13 +42,13 @@ namespace EdlinSoftware.Algorithms
                     else
                     {
                         var itemIndex = restItemsNumber - 1;
-                        var nextRestKnapsackCapacity = restKnapsackCapacity - _orderedSizes[restItemsNumber - 1];
+                        var nextRestKnapsackCapacity = restKnapsackCapacity - OrderedSizes[restItemsNumber - 1];
 
                         if (nextRestKnapsackCapacity >= 0)
                         {
                             optimalValues[restItemsNumber, restKnapsackCapacity] = Math.Max(
                                     optimalValues[itemIndex, restKnapsackCapacity],
-                                    optimalValues[itemIndex, nextRestKnapsackCapacity] + _orderedValues[itemIndex]
+                                    optimalValues[itemIndex, nextRestKnapsackCapacity] + OrderedValues[itemIndex]
                                 );
                         }
                         else
@@ -64,7 +64,7 @@ namespace EdlinSoftware.Algorithms
 
         private IEnumerable<TItem> GetOptimalItems(long knapsackCapacity, double[,] optimalValues)
         {
-            var itemNumber = _orderedItems.Length;
+            var itemNumber = OrderedItems.Length;
             var knapsackSize = knapsackCapacity;
             var optimalItems = new List<TItem>();
 
@@ -77,8 +77,8 @@ namespace EdlinSoftware.Algorithms
 
                 if (optimalValue != optimalValues[itemNumber - 1, knapsackCapacity])
                 {
-                    optimalItems.Add(_orderedItems[itemNumber - 1]);
-                    knapsackSize -= _orderedSizes[itemNumber - 1];
+                    optimalItems.Add(OrderedItems[itemNumber - 1]);
+                    knapsackSize -= OrderedSizes[itemNumber - 1];
                 }
 
                 itemNumber--;

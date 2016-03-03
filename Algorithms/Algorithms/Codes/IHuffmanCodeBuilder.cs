@@ -12,7 +12,7 @@ namespace EdlinSoftware.Algorithms.Codes
     {
         public static IBinaryTreeNode<TSymbol> Generate<TSymbol>(this IHuffmanCodeBuilder<TSymbol> builder, params TSymbol[] alphabet)
         {
-            return builder.Generate((IEnumerable<TSymbol>)alphabet);
+            return builder.Generate(alphabet);
         }
     }
 }

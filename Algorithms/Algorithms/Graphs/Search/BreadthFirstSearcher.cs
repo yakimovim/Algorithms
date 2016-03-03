@@ -16,9 +16,9 @@ namespace EdlinSoftware.Algorithms.Graphs.Search
             Func<TGraphNode, IEnumerable<TGraphNode>> connectedNodesSelector, 
             Action<IGraphNodeVisitingArgs<TGraphNode>> nodeAction)
         {
-            if (startNode == null) throw new ArgumentNullException("startNode");
-            if (connectedNodesSelector == null) throw new ArgumentNullException("connectedNodesSelector");
-            if (nodeAction == null) throw new ArgumentNullException("nodeAction");
+            if (startNode == null) throw new ArgumentNullException(nameof(startNode));
+            if (connectedNodesSelector == null) throw new ArgumentNullException(nameof(connectedNodesSelector));
+            if (nodeAction == null) throw new ArgumentNullException(nameof(nodeAction));
 
             var args = new GraphNodeVisitingArgs<TGraphNode>();
 

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdlinSoftware.DataStructures.Graphs
 {
@@ -40,11 +38,11 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <param name="edge">Edge.</param>
         public virtual void AddEdge(TEdge edge)
         {
-            if (edge == null) throw new ArgumentNullException("edge");
+            if (edge == null) throw new ArgumentNullException(nameof(edge));
 
             var other = GetOtherNode(edge);
             if (other == null)
-            { throw new ArgumentException("The edge is not connected to this node.", "edge"); }
+            { throw new ArgumentException("The edge is not connected to this node.", nameof(edge)); }
 
             if (_edges.ContainsKey(other) == false)
             { _edges[other] = new List<TEdge>(); }

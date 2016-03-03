@@ -6,7 +6,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Paths
     /// <typeparam name="TNode">Type of nodes.</typeparam>
     /// <typeparam name="TPathValue">Type of path value.</typeparam>
     /// <typeparam name="TPathElement">Type of path elements.</typeparam>
-    public interface ISingleSourcePaths<TNode, TPathValue, TPathElement>
+    public interface ISingleSourcePaths<TNode, out TPathValue, out TPathElement>
     {
         /// <summary>
         /// Returns path to some node.
@@ -21,7 +21,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Paths
     /// <typeparam name="TNode">Type of nodes.</typeparam>
     /// <typeparam name="TPathValue">Type of path value.</typeparam>
     /// <typeparam name="TPathElement">Type of path elements.</typeparam>
-    public interface ISingleSourcePathsWithoutNegativeLoop<TNode, TPathValue, TPathElement>
+    public interface ISingleSourcePathsWithoutNegativeLoop<TNode, out TPathValue, out TPathElement>
         : ISingleSourcePaths<TNode, TPathValue, TPathElement>
     {
         /// <summary>

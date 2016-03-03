@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdlinSoftware.DataStructures.Graphs
 {
@@ -20,7 +18,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         private readonly HashSet<TEdge> _edges = new HashSet<TEdge>();
 
         /// <summary>
-        /// Gets list of nodes (vertecies) in the graph.
+        /// Gets list of nodes (vertices) in the graph.
         /// </summary>
         public IEnumerable<TNode> Nodes
         {
@@ -61,7 +59,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <param name="node">Node.</param>
         public void AddNode(TNode node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
 
             _nodes.Add(node);
         }
@@ -91,7 +89,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <param name="edge">Edge.</param>
         public void AddEdge(TEdge edge)
         {
-            if (edge == null) throw new ArgumentNullException("edge");
+            if (edge == null) throw new ArgumentNullException(nameof(edge));
 
             if (_nodes.Contains(edge.End1) == false)
                 throw new ArgumentException("End1 of edge is not in the graph.");
@@ -137,7 +135,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Gets number of nodes in the graph.
         /// </summary>
-        public long NodesCount { get; private set; }
+        public long NodesCount { get; }
 
         /// <summary>
         /// Gets list of edges in the graph.
@@ -164,7 +162,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <param name="edge">Edge.</param>
         public void AddEdge(TEdge edge)
         {
-            if (edge == null) throw new ArgumentNullException("edge");
+            if (edge == null) throw new ArgumentNullException(nameof(edge));
 
             CheckNode(edge.End1, "edge", "End1 of edge is not in the graph.");
             CheckNode(edge.End2, "edge", "End2 of edge is not in the graph.");
@@ -239,7 +237,8 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Gets all edges from this node to another node.
         /// </summary>
-        /// <param name="node">Target node.</param>
+        /// <param name="from">Source node.</param>
+        /// <param name="to">Target node.</param>
         public IEnumerable<TEdge> GetEdgesBetween(long from, long to)
         {
             CheckNode(from, "from");

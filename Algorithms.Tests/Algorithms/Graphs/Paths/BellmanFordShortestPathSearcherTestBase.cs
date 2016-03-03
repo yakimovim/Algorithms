@@ -14,7 +14,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             var paths = Searcher.GetShortestPaths(1, 0);
 
             Assert.IsFalse(paths.HasNegativeLoop);
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -23,8 +23,8 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             var paths = Searcher.GetShortestPaths(2, 0);
 
             Assert.IsFalse(paths.HasNegativeLoop);
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), double.PositiveInfinity, new long[0]);
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), double.PositiveInfinity);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -33,8 +33,8 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             var paths = Searcher.GetShortestPaths(2, 1, GetDirectedValuedEdges("2 2 1"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
-            CheckPath(paths.GetPath(0), 2.0, new long[] { 1, 0 });
-            CheckPath(paths.GetPath(1), 0.0, new long[] { 1 });
+            CheckPath(paths.GetPath(0), 2.0, 1, 0);
+            CheckPath(paths.GetPath(1), 0.0, 1);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -43,8 +43,8 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             var paths = Searcher.GetShortestPaths(2, 0, GetDirectedValuedEdges("1 2 2"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), 2.0, new long[] { 0, 1 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), 2.0, 0, 1);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -53,9 +53,9 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 1 3", "1 3 3"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), 1.0, new long[] { 0, 1 });
-            CheckPath(paths.GetPath(2), 2.0, new long[] { 0, 1, 2 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), 1.0, 0, 1);
+            CheckPath(paths.GetPath(2), 2.0, 0, 1, 2);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -64,9 +64,9 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 2 3", "3 3 1"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), 1.0, new long[] { 0, 1 });
-            CheckPath(paths.GetPath(2), 3.0, new long[] { 0, 1, 2 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), 1.0, 0, 1);
+            CheckPath(paths.GetPath(2), 3.0, 0, 1, 2);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -75,9 +75,9 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             var paths = Searcher.GetShortestPaths(3, 0, GetDirectedValuedEdges("1 1 2", "2 -2 3", "3 3 1"));
 
             Assert.IsFalse(paths.HasNegativeLoop);
-            CheckPath(paths.GetPath(0), 0.0, new long[] { 0 });
-            CheckPath(paths.GetPath(1), 1.0, new long[] { 0, 1 });
-            CheckPath(paths.GetPath(2), -1.0, new long[] { 0, 1, 2 });
+            CheckPath(paths.GetPath(0), 0.0, 0);
+            CheckPath(paths.GetPath(1), 1.0, 0, 1);
+            CheckPath(paths.GetPath(2), -1.0, 0, 1, 2);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]

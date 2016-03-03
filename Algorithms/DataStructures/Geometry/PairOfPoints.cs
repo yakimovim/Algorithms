@@ -25,7 +25,7 @@ namespace EdlinSoftware.DataStructures.Geometry
 
         public override string ToString()
         {
-            return string.Format("{0},{1}", P, Q);
+            return $"{P},{Q}";
         }
     }
 }

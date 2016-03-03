@@ -18,13 +18,13 @@ namespace EdlinSoftware.Algorithms.Graphs
     /// </summary>
     public class OptimalSearchTreeBuilder<TValue>
     {
-        private IComparer<TValue> _comparer;
-        private Func<TValue, double> _searchFrequencyProvider;
+        private readonly IComparer<TValue> _comparer;
+        private readonly Func<TValue, double> _searchFrequencyProvider;
 
         public OptimalSearchTreeBuilder(IComparer<TValue> comparer, Func<TValue, double> searchFrequencyProvider)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
-            if (searchFrequencyProvider == null) throw new ArgumentNullException("searchFrequencyProvider");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+            if (searchFrequencyProvider == null) throw new ArgumentNullException(nameof(searchFrequencyProvider));
             _comparer = comparer;
             _searchFrequencyProvider = searchFrequencyProvider;
         }
@@ -32,7 +32,7 @@ namespace EdlinSoftware.Algorithms.Graphs
         public double GetAverageSearchTime(params TValue[] searchElements)
         {
             if (searchElements == null || searchElements.Length == 0)
-                throw new ArgumentNullException("searchElement");
+                throw new ArgumentNullException(nameof(searchElements));
 
             var orderedSearchElements = searchElements.OrderBy(e => e, _comparer).ToArray();
             var searchFrequencies = orderedSearchElements.Select(e => _searchFrequencyProvider(e)).ToArray();

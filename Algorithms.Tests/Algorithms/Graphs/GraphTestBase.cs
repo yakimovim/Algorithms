@@ -73,18 +73,10 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
 
         private IValuedEdge<long, double>[] GetValuedEdges(Func<Action<IValuedEdge<long, double>>, IValuedEdge<long, double>> edgeGenerator, params string[] edgesDefinitions)
         {
-            var edges = new List<IValuedEdge<long, double>>();
-
-            foreach (var edgeDefinition in edgesDefinitions)
-            {
-                var parts = edgeDefinition.Split(' ');
-
-                var edge = edgeGenerator(e => ValuedEdgeInitializer(e, parts));
-
-                edges.Add(edge);
-            }
-
-            return edges.ToArray();
+            return edgesDefinitions
+                .Select(edgeDefinition => edgeDefinition.Split(' '))
+                .Select(parts => edgeGenerator(e => ValuedEdgeInitializer(e, parts)))
+                .ToArray();
         }
 
         private void ValuedEdgeInitializer(IValuedEdge<long, double> edge, string[] definitionParts)

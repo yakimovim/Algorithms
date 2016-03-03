@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdlinSoftware.DataStructures.Graphs
 {
@@ -20,7 +17,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         public static Graph<TEdge> GetCompleteGraph<TEdge>(long numberOfNodes, Func<long, long, TEdge> edgeProvider)
             where TEdge : IEdge<long>
         {
-            if (edgeProvider == null) throw new ArgumentNullException("edgeProvider");
+            if (edgeProvider == null) throw new ArgumentNullException(nameof(edgeProvider));
 
             var graph = new Graph<TEdge>(numberOfNodes);
 
@@ -44,11 +41,10 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Creates complete graph with undirected edges.
         /// </summary>
-        /// <typeparam name="TEdge">Type of graph edges.</typeparam>
         /// <param name="numberOfNodes">Number of nodes in graph.</param>
-        public static Graph<UndirectedEdge<long>> GetCompleteGraph<TEdge>(long numberOfNodes)
+        public static Graph<UndirectedEdge<long>> GetCompleteGraph(long numberOfNodes)
         {
-            return GetCompleteGraph<UndirectedEdge<long>>(numberOfNodes, (node1, node2) => new UndirectedEdge<long> { End1 = node1, End2 = node2 });
+            return GetCompleteGraph(numberOfNodes, (node1, node2) => new UndirectedEdge<long> { End1 = node1, End2 = node2 });
         }
 
     }

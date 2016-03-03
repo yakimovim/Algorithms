@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EdlinSoftware.DataStructures.Heaps
+﻿namespace EdlinSoftware.DataStructures.Heaps
 {
     /// <summary>
     /// Represents heap.

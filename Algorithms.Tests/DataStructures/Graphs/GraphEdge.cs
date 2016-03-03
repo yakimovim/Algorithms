@@ -16,7 +16,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs
                 return Second;
             if (Second == node)
                 return First;
-            throw new ArgumentException("Edge is not connected to the given node.", "node");
+            throw new ArgumentException("Edge is not connected to the given node.", nameof(node));
         }
     }
 }

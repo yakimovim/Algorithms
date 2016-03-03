@@ -34,7 +34,7 @@ namespace EdlinSoftware.DataStructures.Heaps
     {
         private readonly IComparer<TKey> _comparer;
         private readonly Dictionary<TValue, int> _valuesPositions = new Dictionary<TValue, int>();
-        private HeapElement<TKey, TValue>[] _elements = new HeapElement<TKey, TValue>[5];
+        private HeapElement<TKey, TValue>[] _elements;
 
         public int Count { get; private set; }
 
@@ -46,8 +46,8 @@ namespace EdlinSoftware.DataStructures.Heaps
         [DebuggerStepThrough]
         public UniqueHeap(IComparer<TKey> comparer, int initialCapacity)
         {
-            if (initialCapacity < 1) throw new ArgumentOutOfRangeException("initialCapacity", "Initial capacity must be positive.");
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (initialCapacity < 1) throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Initial capacity must be positive.");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
             _comparer = comparer;
             _elements = new HeapElement<TKey, TValue>[initialCapacity];
         }
@@ -55,8 +55,8 @@ namespace EdlinSoftware.DataStructures.Heaps
         [DebuggerStepThrough]
         public UniqueHeap(IComparer<TKey> comparer, HeapElement<TKey, TValue>[] initialHeap)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
-            if (initialHeap == null) throw new ArgumentNullException("initialHeap");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+            if (initialHeap == null) throw new ArgumentNullException(nameof(initialHeap));
             _comparer = comparer;
             _elements = initialHeap;
             Count = _elements.Length;
@@ -229,7 +229,7 @@ namespace EdlinSoftware.DataStructures.Heaps
 
         private void RemoveAt(int index)
         {
-            if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException("index");
+            if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException(nameof(index));
 
             _valuesPositions[_elements[Count - 1].Value] = index;
             _valuesPositions.Remove(_elements[index].Value);

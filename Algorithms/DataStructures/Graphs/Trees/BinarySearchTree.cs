@@ -156,11 +156,11 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             }
             else
             {
-                if (nodeToRemove.HasNoRightChild())
+                if (nodeToRemove.RightChild == null)
                 {
                     Replace(nodeToRemove).At(parentOfNodeToRemove).With(nodeToRemove.LeftChild);
                 }
-                else if (nodeToRemove.RightChild.HasNoLeftChild())
+                else if (nodeToRemove.RightChild.LeftChild == null)
                 {
                     Replace(nodeToRemove).At(parentOfNodeToRemove).With(nodeToRemove.RightChild);
                     nodeToRemove.RightChild.LeftChild = nodeToRemove.LeftChild;
@@ -183,7 +183,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
         private Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>> FindLeftmostChild(BinarySearchTreeNode<TValue> node, BinarySearchTreeNode<TValue> parent)
         {
-            while (!node.HasNoLeftChild())
+            while (node.LeftChild != null)
             {
                 parent = node;
                 node = node.LeftChild;
@@ -226,7 +226,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
     /// Represents one node of binary search tree.
     /// </summary>
     /// <typeparam name="TValue">Type of node value.</typeparam>
-    internal class BinarySearchTreeNode<TValue>
+    internal class BinarySearchTreeNode<TValue> : IBinaryTreeNode<TValue>
     {
         private readonly IComparer<TValue> _comparer;
 
@@ -246,6 +246,10 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// </summary>
         [CanBeNull]
         public BinarySearchTreeNode<TValue> RightChild { get; set; }
+
+        IBinaryTreeNode<TValue> IBinaryTreeNode<TValue>.LeftChild => LeftChild;
+
+        IBinaryTreeNode<TValue> IBinaryTreeNode<TValue>.RightChild => RightChild;
 
         public BinarySearchTreeNode([NotNull] IComparer<TValue> comparer, TValue value)
         {
@@ -316,25 +320,6 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                     tree.Add(value);
                 }
             }
-        }
-    }
-
-    /// <summary>
-    /// Contains extension methods for Binary Search Tree node.
-    /// </summary>
-    internal static class BinarySearchTreeNodeExtensions
-    {
-        public static bool IsLeaf<TValue>(this BinarySearchTreeNode<TValue> node)
-        {
-            return node.HasNoLeftChild() && node.HasNoRightChild();
-        }
-        public static bool HasNoRightChild<TValue>(this BinarySearchTreeNode<TValue> node)
-        {
-            return node.RightChild == null;
-        }
-        public static bool HasNoLeftChild<TValue>(this BinarySearchTreeNode<TValue> node)
-        {
-            return node.LeftChild == null;
         }
     }
 }

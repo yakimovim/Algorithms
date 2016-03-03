@@ -25,13 +25,13 @@ namespace EdlinSoftware.Algorithms.Codes
         [DebuggerStepThrough]
         public HuffmanCodeQueueBuilder(Func<TSymbol, double> frequencyProvider)
         {
-            if (frequencyProvider == null) throw new ArgumentNullException("frequencyExtractor");
+            if (frequencyProvider == null) throw new ArgumentNullException(nameof(frequencyProvider));
             _frequencyProvider = frequencyProvider;
         }
 
         public IBinaryTreeNode<TSymbol> Generate(IEnumerable<TSymbol> alphabet)
         {
-            if (alphabet == null || alphabet.Any() == false) throw new ArgumentNullException("alphabet");
+            if (alphabet == null || alphabet.Any() == false) throw new ArgumentNullException(nameof(alphabet));
 
 
             var queue1 = new Queue<HuffmanTreeNode<TSymbol>>(GetSortedAlphabet(alphabet));
@@ -44,9 +44,11 @@ namespace EdlinSoftware.Algorithms.Codes
                 var node1 = GetLeastFrequentItem(queue1, queue2);
                 var node2 = GetLeastFrequentItem(queue1, queue2);
 
-                var newNode = new HuffmanTreeNode<TSymbol>(default(TSymbol), node1.Frequency + node2.Frequency);
-                newNode.LeftChild = node1;
-                newNode.RightChild = node2;
+                var newNode = new HuffmanTreeNode<TSymbol>(default(TSymbol), node1.Frequency + node2.Frequency)
+                {
+                    LeftChild = node1,
+                    RightChild = node2
+                };
                 queue2.Enqueue(newNode);
             }
 
@@ -58,7 +60,7 @@ namespace EdlinSoftware.Algorithms.Codes
             var symbolsArray = alphabet.Select(a => new HuffmanTreeNode<TSymbol>(a, _frequencyProvider(a))).ToArray();
 
             if (symbolsArray.Length < 2)
-            { throw new ArgumentNullException("alphabet", "Alphabet should contain at least two symbols."); }
+            { throw new ArgumentNullException(nameof(alphabet), "Alphabet should contain at least two symbols."); }
 
             var rnd = new Random((int)DateTime.UtcNow.Ticks);
 

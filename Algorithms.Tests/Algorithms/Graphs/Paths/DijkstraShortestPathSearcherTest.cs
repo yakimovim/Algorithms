@@ -7,7 +7,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
     public class DijkstraShortestPathSearcherTest : SingleSourceShortestPathTestBase<DijkstraShortestPathSearcher>
     {
         [TestInitialize]
-        public void TestInitiazlie()
+        public void TestInitialize()
         {
             Searcher = new DijkstraShortestPathSearcher();
         }

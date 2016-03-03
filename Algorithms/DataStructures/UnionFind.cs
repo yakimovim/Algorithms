@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace EdlinSoftware.DataStructures.UnionFind
+namespace EdlinSoftware.DataStructures
 {
     /// <summary>
     /// Represents UnionFind structure.
@@ -13,14 +13,14 @@ namespace EdlinSoftware.DataStructures.UnionFind
     {
         private class UnionFindElement : IUnionFindElement<TItem>, IUnionFindGroup<TItem>
         {
-            private HashSet<UnionFindElement> _attachedElements = new HashSet<UnionFindElement>();
+            private readonly HashSet<UnionFindElement> _attachedElements = new HashSet<UnionFindElement>();
 
             public UnionFindElement()
             {
                 Leader = this;
             }
 
-            public UnionFindElement Leader { get; private set; }
+            public UnionFindElement Leader { get; set; }
 
             /// <summary>
             /// Gets item of the element.
@@ -30,10 +30,7 @@ namespace EdlinSoftware.DataStructures.UnionFind
             /// <summary>
             /// Gets number of elements below this element.
             /// </summary>
-            public int ElementsCount 
-            {
-                get { return Elements.Count(); }
-            }
+            public int ElementsCount => Elements.Count();
 
             /// <summary>
             /// Returns group if this element.
@@ -99,7 +96,7 @@ namespace EdlinSoftware.DataStructures.UnionFind
 
             public void Attach(UnionFindElement element)
             {
-                if (element == null) throw new ArgumentNullException("element");
+                if (element == null) throw new ArgumentNullException(nameof(element));
 
                 element.Leader = this;
                 _attachedElements.Add(element);
@@ -107,7 +104,7 @@ namespace EdlinSoftware.DataStructures.UnionFind
 
             public void Detach(UnionFindElement element)
             {
-                if (element == null) throw new ArgumentNullException("element");
+                if (element == null) throw new ArgumentNullException(nameof(element));
 
                 _attachedElements.Remove(element);
             }
@@ -183,7 +180,7 @@ namespace EdlinSoftware.DataStructures.UnionFind
         /// <returns>Corresponding elements.</returns>
         public IUnionFindElement<TItem>[] Add(params TItem[] items)
         {
-            if (items == null) throw new ArgumentNullException("item");
+            if (items == null) throw new ArgumentNullException(nameof(items));
 
             var elements = new LinkedList<IUnionFindElement<TItem>>();
 
@@ -208,13 +205,13 @@ namespace EdlinSoftware.DataStructures.UnionFind
         /// <param name="element2">Second element.</param>
         public void Union(IUnionFindElement<TItem> element1, IUnionFindElement<TItem> element2)
         {
-            if (element1 == null) throw new ArgumentNullException("element1");
-            if (element2 == null) throw new ArgumentNullException("element2");
+            if (element1 == null) throw new ArgumentNullException(nameof(element1));
+            if (element2 == null) throw new ArgumentNullException(nameof(element2));
 
             var internalElement1 = element1 as UnionFindElement;
-            if (internalElement1 == null) throw new ArgumentException("element1 is not from this UnionFind structure.", "element1");
+            if (internalElement1 == null) throw new ArgumentException("element1 is not from this UnionFind structure.", nameof(element1));
             var internalElement2 = element2 as UnionFindElement;
-            if (internalElement2 == null) throw new ArgumentNullException("element2 is not from this UnionFind structure.", "element2");
+            if (internalElement2 == null) throw new ArgumentException("element2 is not from this UnionFind structure.", nameof(element2));
 
             internalElement1.AdjustWithParents();
             internalElement2.AdjustWithParents();

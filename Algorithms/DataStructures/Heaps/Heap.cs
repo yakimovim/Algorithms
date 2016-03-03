@@ -33,15 +33,15 @@ namespace EdlinSoftware.DataStructures.Heaps
     public class Heap<TKey, TValue> : IHeap<TKey, TValue>
     {
         private readonly IComparer<TKey> _comparer;
-        private HeapElement<TKey, TValue>[] _elements = new HeapElement<TKey, TValue>[5];
+        private HeapElement<TKey, TValue>[] _elements;
 
         public int Count { get; private set; }
 
         [DebuggerStepThrough]
         public Heap(IComparer<TKey> comparer, int initialCapacity = 5)
         {
-            if (initialCapacity < 1) throw new ArgumentOutOfRangeException("initialCapacity", "Initial capacity must be positive.");
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (initialCapacity < 1) throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Initial capacity must be positive.");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
             _comparer = comparer;
             _elements = new HeapElement<TKey, TValue>[initialCapacity];
         }
@@ -49,8 +49,8 @@ namespace EdlinSoftware.DataStructures.Heaps
         [DebuggerStepThrough]
         public Heap(IComparer<TKey> comparer, HeapElement<TKey, TValue>[] initialHeap)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
-            if (initialHeap == null) throw new ArgumentNullException("initialHeap");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+            if (initialHeap == null) throw new ArgumentNullException(nameof(initialHeap));
             _comparer = comparer;
             _elements = initialHeap;
             Count = _elements.Length;

@@ -27,7 +27,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
         [DebuggerStepThrough]
         public Partitioner(IComparer<T> comparer)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
             _comparer = comparer;
         }
 
@@ -41,11 +41,11 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
         /// <returns>Array with partitioned part.</returns>
         public int Partition(IList<T> array, int left, int right, int pivotIndex)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (left < 0 || left >= array.Count) throw new ArgumentOutOfRangeException("left", "Index is out of array");
-            if (right < 0 || right >= array.Count) throw new ArgumentOutOfRangeException("right", "Index is out of array");
-            if (left > right) throw new ArgumentOutOfRangeException("right", "Left index should be smaller then right");
-            if (pivotIndex < left || pivotIndex > right) throw new ArgumentOutOfRangeException("pivotIndex", "Pivot index should be between left and right");
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (left < 0 || left >= array.Count) throw new ArgumentOutOfRangeException(nameof(left), "Index is out of array");
+            if (right < 0 || right >= array.Count) throw new ArgumentOutOfRangeException(nameof(right), "Index is out of array");
+            if (left > right) throw new ArgumentOutOfRangeException(nameof(right), "Left index should be smaller then right");
+            if (pivotIndex < left || pivotIndex > right) throw new ArgumentOutOfRangeException(nameof(pivotIndex), "Pivot index should be between left and right");
 
             if (left == right) return pivotIndex;
 
@@ -70,9 +70,9 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
 
         private void Swap(IList<T> array, int from, int to)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (from < 0 || from >= array.Count) throw new ArgumentOutOfRangeException("from", "Index is out of array");
-            if (to < 0 || to >= array.Count) throw new ArgumentOutOfRangeException("to", "Index is out of array");
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (from < 0 || from >= array.Count) throw new ArgumentOutOfRangeException(nameof(@from), "Index is out of array");
+            if (to < 0 || to >= array.Count) throw new ArgumentOutOfRangeException(nameof(to), "Index is out of array");
             if (from == to) return;
 
             T temp = array[from];

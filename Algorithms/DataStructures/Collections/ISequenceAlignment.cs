@@ -4,7 +4,7 @@
     /// Represents alignment of two sequences.
     /// </summary>
     /// <typeparam name="TSymbol">Type of symbol.</typeparam>
-    public interface ISequenceAlignment<TSymbol>
+    public interface ISequenceAlignment<out TSymbol>
     {
         /// <summary>
         /// Gets penalty of alignment.

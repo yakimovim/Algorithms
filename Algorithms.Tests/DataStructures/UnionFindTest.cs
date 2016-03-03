@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using EdlinSoftware.DataStructures.UnionFind;
+using EdlinSoftware.DataStructures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EdlinSoftware.Tests.DataStructures

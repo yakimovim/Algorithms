@@ -234,10 +234,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         {
             var valuedEdge = new ValuedEdge<TNode,TValue>(new UndirectedEdge<TNode>(nodesComparer));
 
-            if (initializer != null)
-            {
-                initializer(valuedEdge);
-            }
+            initializer?.Invoke(valuedEdge);
 
             return valuedEdge;
         }
@@ -247,10 +244,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         {
             var valuedEdge = new ValuedEdge<TNode, TValue>(new DirectedEdge<TNode>(nodesComparer));
 
-            if (initializer != null)
-            {
-                initializer(valuedEdge);
-            }
+            initializer?.Invoke(valuedEdge);
 
             return valuedEdge;
         }
@@ -263,7 +257,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         [DebuggerStepThrough]
         protected ValuedEdge(IEdge<TNode> edge)
         {
-            if (edge == null) throw new ArgumentNullException("edge");
+            if (edge == null) throw new ArgumentNullException(nameof(edge));
             _edge = edge;
         }
 

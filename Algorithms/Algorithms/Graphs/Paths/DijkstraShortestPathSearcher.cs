@@ -33,8 +33,8 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
         public ISingleSourcePaths<long, double, long> GetShortestPaths(long numberOfNodes, long initialNode, params IValuedEdge<long, double>[] edges)
         {
-            if (numberOfNodes <= 0) throw new ArgumentOutOfRangeException("numberOfNodes");
-            if (initialNode < 0 || initialNode >= numberOfNodes) throw new ArgumentOutOfRangeException("initialNode");
+            if (numberOfNodes <= 0) throw new ArgumentOutOfRangeException(nameof(numberOfNodes));
+            if (initialNode < 0 || initialNode >= numberOfNodes) throw new ArgumentOutOfRangeException(nameof(initialNode));
 
             InitializePathsArrays(numberOfNodes, initialNode);
 
@@ -174,7 +174,7 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
         public virtual IPath<long, double, long> GetPath(long to)
         {
             if (to < 0 || to >= _pathValues.LongLength)
-            { throw new ArgumentOutOfRangeException("to"); }
+            { throw new ArgumentOutOfRangeException(nameof(to)); }
 
             return new ShortestPath<long, double, long>
             {

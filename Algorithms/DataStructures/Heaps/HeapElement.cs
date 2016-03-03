@@ -20,11 +20,11 @@ namespace EdlinSoftware.DataStructures.Heaps
         /// <summary>
         /// Gets element key.
         /// </summary>
-        public TKey Key { get; private set; }
+        public TKey Key { get; }
 
         /// <summary>
         /// Gets element value.
         /// </summary>
-        public TValue Value { get; private set; }
+        public TValue Value { get; }
     }
 }

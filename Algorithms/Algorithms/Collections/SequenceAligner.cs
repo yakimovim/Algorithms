@@ -12,7 +12,7 @@ namespace EdlinSoftware.Algorithms.Collections
 
         public SequenceAligner(TSymbol alignSymbol, Func<TSymbol, TSymbol, double> penalty)
         {
-            if (penalty == null) throw new ArgumentNullException("penalty");
+            if (penalty == null) throw new ArgumentNullException(nameof(penalty));
 
             _alignSymbol = alignSymbol;
             _penalty = penalty;

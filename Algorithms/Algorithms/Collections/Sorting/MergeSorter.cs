@@ -30,8 +30,8 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
         /// <returns>Sorted array.</returns>
         public T[] Sort<T>(IList<T> unsorted, IComparer<T> comparer)
         {
-            if (unsorted == null) throw new ArgumentNullException("unsorted");
-            if (comparer == null) throw new ArgumentNullException("comparer");
+            if (unsorted == null) throw new ArgumentNullException(nameof(unsorted));
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
 
             return InternalSort(unsorted, comparer);
         }
@@ -75,7 +75,7 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
         private static int Divide(int value)
         {
             if (value < 2)
-            { throw new ArgumentOutOfRangeException("value"); }
+            { throw new ArgumentOutOfRangeException(nameof(value)); }
 
             return value / 2;
         }

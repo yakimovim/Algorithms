@@ -37,7 +37,7 @@ namespace EdlinSoftware.Algorithms.Geometry
         /// <returns>A pair of closest points.</returns>
         public PairOfPoints Search(PointF[] points)
         {
-            if (points == null) throw new ArgumentNullException("points");
+            if (points == null) throw new ArgumentNullException(nameof(points));
             if (points.Length < 2) throw new ArgumentException("There must be at least two points.");
 
             var pX = _sorter.Sort(points, new PointComparerX());
@@ -63,24 +63,24 @@ namespace EdlinSoftware.Algorithms.Geometry
             var leftPair = GetClosestPair(lX, lY);
             var rightPair = GetClosestPair(rX, rY);
 
-            double minDistanseAtSides = GetMinDistance(leftPair, rightPair);
+            double minDistanceAtSides = GetMinDistance(leftPair, rightPair);
 
-            var splitPair = GetClosestSplitPair(pX, pY, minDistanseAtSides);
+            var splitPair = GetClosestSplitPair(pX, pY, minDistanceAtSides);
 
             return GetClosestPair(leftPair, rightPair, splitPair);
         }
 
-        private PairOfPoints GetClosestSplitPair(PointF[] pX, PointF[] pY, double minDistanseAtSides)
+        private PairOfPoints GetClosestSplitPair(PointF[] pX, PointF[] pY, double minDistanceAtSides)
         {
             var middleIndex = pX.Length / 2;
             var middleX = pX[middleIndex].X;
 
             var sY = pY
-                .Where(point => point.X >= middleX - minDistanseAtSides && point.X <= middleX + minDistanseAtSides)
+                .Where(point => point.X >= middleX - minDistanceAtSides && point.X <= middleX + minDistanceAtSides)
                 .ToArray();
 
             PairOfPoints closestPair = null;
-            double minDistance = minDistanseAtSides;
+            double minDistance = minDistanceAtSides;
 
             for (int i = 0; i < sY.Length - 1; i++)
             {

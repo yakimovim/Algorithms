@@ -10,9 +10,9 @@ namespace EdlinSoftware.Algorithms.Codes
             Frequency = frequency;
         }
 
-        public double Frequency { get; private set; }
+        public double Frequency { get; }
 
-        public TSymbol Value { get; private set; }
+        public TSymbol Value { get; }
 
         public IBinaryTreeNode<TSymbol> LeftChild { get; set; }
 

@@ -5,7 +5,7 @@ namespace EdlinSoftware.DataStructures.Graphs
     /// Represents one node of binary tree.
     /// </summary>
     /// <typeparam name="TValue">Type of value stored in the node.</typeparam>
-    public interface IBinaryTreeNode<TValue>
+    public interface IBinaryTreeNode<out TValue>
     {
         /// <summary>
         /// Gets value of the node.

@@ -15,8 +15,8 @@ namespace EdlinSoftware.Algorithms.Graphs
 
         public HashSet<long>[] Search(long numberOfNodes, Func<long, IEnumerable<long>> connectedNodesSelector)
         {
-            if (numberOfNodes < 0) throw new ArgumentOutOfRangeException("numberOfNodes");
-            if (connectedNodesSelector == null) throw new ArgumentNullException("connectedNodesSelector");
+            if (numberOfNodes < 0) throw new ArgumentOutOfRangeException(nameof(numberOfNodes));
+            if (connectedNodesSelector == null) throw new ArgumentNullException(nameof(connectedNodesSelector));
 
             BuildEdges(numberOfNodes, connectedNodesSelector);
 
@@ -54,9 +54,7 @@ namespace EdlinSoftware.Algorithms.Graphs
             var visitedNodes = new HashSet<long>();
             var orderOfNodes = new List<long>();
 
-            Func<long, IEnumerable<long>> connectedNodesProvider = node => {
-                return _reverseEdges.ContainsKey(node) ? (IEnumerable<long>) _reverseEdges[node] : new long[0];
-            };
+            Func<long, IEnumerable<long>> connectedNodesProvider = node => _reverseEdges.ContainsKey(node) ? (IEnumerable<long>) _reverseEdges[node] : new long[0];
 
             var searcher = new DepthFirstSearcher<long>(InformationMoments.InformAfterChilden);
 
@@ -81,12 +79,9 @@ namespace EdlinSoftware.Algorithms.Graphs
             var listOfComponents = new List<HashSet<long>>();
             HashSet<long> currentComponent = null;
             
-            Func<long, IEnumerable<long>> connectedNodesProvider = node =>
-            {
-                return _directEdges.ContainsKey(node) ? (IEnumerable<long>)_directEdges[node] : new long[0];
-            };
+            Func<long, IEnumerable<long>> connectedNodesProvider = node => _directEdges.ContainsKey(node) ? (IEnumerable<long>)_directEdges[node] : new long[0];
 
-            var searcher = new DepthFirstSearcher<long>(InformationMoments.InformWhenFirstMet);
+            var searcher = new DepthFirstSearcher<long>();
 
             foreach (long node in orderOfNodes.Reverse<long>())
             {

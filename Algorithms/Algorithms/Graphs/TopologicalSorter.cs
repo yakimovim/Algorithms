@@ -13,8 +13,8 @@ namespace EdlinSoftware.Algorithms.Graphs
     {
         public TGraphNode[] Sort(IEnumerable<TGraphNode> graph, Func<TGraphNode, IEnumerable<TGraphNode>> connectedNodesSelector)
         {
-            if (graph == null) throw new ArgumentNullException("graph");
-            if (connectedNodesSelector == null) throw new ArgumentNullException("connectedNodesSelector");
+            if (graph == null) throw new ArgumentNullException(nameof(graph));
+            if (connectedNodesSelector == null) throw new ArgumentNullException(nameof(connectedNodesSelector));
 
             var graphNodes = graph.ToArray();
             var visitedNodes = new HashSet<TGraphNode>();

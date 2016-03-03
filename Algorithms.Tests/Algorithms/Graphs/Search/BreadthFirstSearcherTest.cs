@@ -11,7 +11,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Search
     public class BreadthFirstSearcherTest : GraphSearcherTestBase<BreadthFirstSearcher<GraphNode>>
     {
         [TestInitialize]
-        public void TestInitiazlie()
+        public void TestInitialize()
         {
             Searcher = new BreadthFirstSearcher<GraphNode>();
             VisitedNodes = new List<GraphNode>();

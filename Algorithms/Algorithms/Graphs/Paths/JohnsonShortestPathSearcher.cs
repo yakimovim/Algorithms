@@ -68,15 +68,12 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
         private IValuedEdge<long, double>[] _reweightedEdges;
 
-        private IValuedEdge<long, double>[] ReweightedEdges
-        {
-            get { return _reweightedEdges ?? (_reweightedEdges = GetReweightedEdges()); }
-        }
+        private IValuedEdge<long, double>[] ReweightedEdges => _reweightedEdges ?? (_reweightedEdges = GetReweightedEdges());
 
         public JohnsonShortestPaths(long numberOfNodes, IValuedEdge<long, double>[] edges, IDictionary<long, double> nodeWeights)
         {
-            if (edges == null) throw new ArgumentNullException("edges");
-            if (nodeWeights == null) throw new ArgumentNullException("nodeWeights");
+            if (edges == null) throw new ArgumentNullException(nameof(edges));
+            if (nodeWeights == null) throw new ArgumentNullException(nameof(nodeWeights));
             _numberOfNodes = numberOfNodes;
             _edges = edges;
             _nodeWeights = nodeWeights;

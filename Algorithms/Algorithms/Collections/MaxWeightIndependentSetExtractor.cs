@@ -11,7 +11,7 @@ namespace EdlinSoftware.Algorithms.Collections
     {
         public long[] Extract(double[] set)
         {
-            if (set == null) throw new ArgumentNullException("set");
+            if (set == null) throw new ArgumentNullException(nameof(set));
 
             var weightsArray = GetWeightsArray(set);
 
