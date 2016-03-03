@@ -163,6 +163,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 else if (nodeToRemove.RightChild.HasNoLeftChild())
                 {
                     Replace(nodeToRemove).At(parentOfNodeToRemove).With(nodeToRemove.RightChild);
+                    nodeToRemove.RightChild.LeftChild = nodeToRemove.LeftChild;
                 }
                 else
                 {

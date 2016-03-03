@@ -88,5 +88,35 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
 
             Assert.IsFalse(_tree.Contains(1));
         }
+
+        [TestMethod]
+        public void Remove_RemovesNodeWithNoRightChild()
+        {
+            _tree.AddRange(4, 2, 1, 3, 8, 6, 5, 7);
+
+            _tree.Remove(8);
+
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7 }, _tree.ToArray());
+        }
+
+        [TestMethod]
+        public void Remove_RemovesNodeWhichRightChildHasNoLeftChild()
+        {
+            _tree.AddRange(4, 2, 1, 3, 6, 5, 7, 8);
+
+            _tree.Remove(6);
+
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 7, 8 }, _tree.ToArray());
+        }
+
+        [TestMethod]
+        public void Remove_RemovesNodeWhichRightChildHaLeftChild()
+        {
+            _tree.AddRange(4, 2, 1, 3, 6, 5, 8, 7);
+
+            _tree.Remove(6);
+
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 7, 8 }, _tree.ToArray());
+        }
     }
 }
