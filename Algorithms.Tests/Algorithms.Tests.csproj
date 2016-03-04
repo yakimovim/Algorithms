@@ -100,6 +100,7 @@
     <Compile Include="Algorithms\Graphs\Search\GraphSearcherTestBase.cs" />
     <Compile Include="Algorithms\Graphs\TopologicalSorterTest.cs" />
     <Compile Include="DataStructures\Graphs\SearchElement.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\AvlTreeTest.cs" />
     <Compile Include="DataStructures\Graphs\Trees\BinarySearchTreeTest.cs" />
     <Compile Include="DataStructures\Graphs\UndirectedEdgeWithCost.cs" />
     <Compile Include="DataStructures\Heaps\BaseHeapTest.cs" />

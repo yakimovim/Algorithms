@@ -2,7 +2,7 @@
 
 namespace EdlinSoftware.Algorithms.Codes
 {
-    internal class HuffmanTreeNode<TSymbol> : IBinaryTreeNode<TSymbol>
+    internal class HuffmanTreeNode<TSymbol> : BinaryTreeNodeBase<HuffmanTreeNode<TSymbol>, TSymbol>
     {
         public HuffmanTreeNode(TSymbol symbol, double frequency)
         {
@@ -11,11 +11,5 @@ namespace EdlinSoftware.Algorithms.Codes
         }
 
         public double Frequency { get; }
-
-        public TSymbol Value { get; }
-
-        public IBinaryTreeNode<TSymbol> LeftChild { get; set; }
-
-        public IBinaryTreeNode<TSymbol> RightChild { get; set; }
     }
 }

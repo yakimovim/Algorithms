@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace EdlinSoftware.Algorithms.Statistics
 {
     /// <summary>
     /// Represents calculator of percentiles using QDigest algorithm.
     /// </summary>
-    public class QDigestPercentileCalculator
+    public class QDigestPercentileCalculator : ICanAdd<long>
     {
         private class Range
         {

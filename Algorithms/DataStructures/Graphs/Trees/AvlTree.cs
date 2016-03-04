@@ -1,24 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace EdlinSoftware.DataStructures.Graphs.Trees
 {
     /// <summary>
-    /// Represents binary search tree.
+    /// Self-balancing binary tree invented by Adelson-Velsky and Landis (1962).
     /// </summary>
-    /// <typeparam name="TValue">Type of node values.</typeparam>
-    public class BinarySearchTree<TValue> : BinarySearchTreeBase<TValue>
+    public class AvlTree<TValue> : BinarySearchTreeBase<TValue>
     {
         [CanBeNull]
-        private BinarySearchTreeNode<TValue> _root;
+        private AvlTreeNode<TValue> _root;
 
-        public BinarySearchTree([NotNull] IComparer<TValue> comparer)
+        public AvlTree([NotNull] IComparer<TValue> comparer)
             : base(comparer)
         { }
 
-        public BinarySearchTree()
+        public AvlTree()
         { }
+
+        private void SetRoot(AvlTreeNode<TValue> node)
+        {
+            _root = node;
+            if (node != null)
+            { node.Parent = null; }
+        }
 
         /// <summary>
         /// Adds value to the tree.
@@ -27,9 +32,12 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         public override void Add(TValue value)
         {
             if (_root == null)
-                _root = new BinarySearchTreeNode<TValue>(Comparer, value);
+                _root = new AvlTreeNode<TValue>(Comparer, value, null, SetRoot);
             else
+            {
                 _root.Add(value);
+                _root.Balance();
+            }
         }
 
         /// <summary>
@@ -39,19 +47,17 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <returns>True, if the tree contains the value. Otherwise, false.</returns>
         public override bool Contains(TValue value)
         {
-            var searchResult = FindWithParent(value);
-            return searchResult.Item1 != null;
+            return FindNodeByValue(value) != null;
         }
 
         /// <summary>
-        /// Finds node and its parent by value.
+        /// Finds node by its value.
         /// </summary>
         /// <param name="value">Value of node.</param>
-        /// <returns>Tuple of node and its parent node.</returns>
-        private Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>> FindWithParent(TValue value)
+        [CanBeNull]
+        private AvlTreeNode<TValue> FindNodeByValue(TValue value)
         {
-            BinarySearchTreeNode<TValue> parent = null;
-            BinarySearchTreeNode<TValue> node = _root;
+            AvlTreeNode<TValue> node = _root;
 
             while (node != null)
             {
@@ -60,19 +66,10 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 if (comparison == 0)
                     break;
 
-                if (comparison < 0)
-                {
-                    parent = node;
-                    node = node.LeftChild;
-                }
-                else
-                {
-                    parent = node;
-                    node = node.RightChild;
-                }
+                node = comparison < 0 ? node.LeftChild : node.RightChild;
             }
 
-            return Tuple.Create(node, parent);
+            return node;
         }
 
         /// <summary>
@@ -82,34 +79,36 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <returns>True, if value was removed. Otherwise, false.</returns>
         public override bool Remove(TValue value)
         {
-            var searchResult = FindWithParent(value);
-
-            var nodeToRemove = searchResult.Item1;
-            var parentOfNodeToRemove = searchResult.Item2;
-
+            var nodeToRemove = FindNodeByValue(value);
             if (nodeToRemove == null)
                 return false;
+
+            var parentOfNodeToRemove = nodeToRemove.Parent;
+            AvlTreeNode<TValue> balancingStartNode = null;
 
             if (nodeToRemove.IsLeaf())
             {
                 Replace(nodeToRemove).At(parentOfNodeToRemove).With(null);
+                balancingStartNode = parentOfNodeToRemove;
             }
             else
             {
                 if (nodeToRemove.RightChild == null)
                 {
                     Replace(nodeToRemove).At(parentOfNodeToRemove).With(nodeToRemove.LeftChild);
+                    balancingStartNode = nodeToRemove.LeftChild;
                 }
                 else if (nodeToRemove.RightChild.LeftChild == null)
                 {
                     Replace(nodeToRemove).At(parentOfNodeToRemove).With(nodeToRemove.RightChild);
                     nodeToRemove.RightChild.LeftChild = nodeToRemove.LeftChild;
+                    balancingStartNode = nodeToRemove.RightChild;
                 }
                 else
                 {
-                    var leftmostNodeSearchresult = FindLeftmostChildOf(nodeToRemove.RightChild, nodeToRemove);
-                    var leftmostNode = leftmostNodeSearchresult.Item1;
-                    var parentOfLeftmostNode = leftmostNodeSearchresult.Item2;
+                    var leftmostNode = FindLeftmostChildOf(nodeToRemove.RightChild);
+                    balancingStartNode = leftmostNode.Parent;
+                    var parentOfLeftmostNode = leftmostNode.Parent;
 
                     Replace(leftmostNode).At(parentOfLeftmostNode).With(leftmostNode.RightChild);
                     Replace(nodeToRemove).At(parentOfNodeToRemove).With(leftmostNode);
@@ -118,28 +117,58 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 }
             }
 
+            BalanceFrom(balancingStartNode);
+
             return true;
         }
 
-        private Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>> FindLeftmostChildOf(BinarySearchTreeNode<TValue> node, BinarySearchTreeNode<TValue> parent)
+        private AvlTreeNode<TValue> FindLeftmostChildOf(AvlTreeNode<TValue> node)
         {
             while (node.LeftChild != null)
             {
-                parent = node;
                 node = node.LeftChild;
             }
 
-            return Tuple.Create(node, parent);
+            return node;
         }
 
-        private ReplaceCommandFirstStep<BinarySearchTreeNode<TValue>> Replace(BinarySearchTreeNode<TValue> nodeToReplace)
+        private void BalanceFrom([CanBeNull] AvlTreeNode<TValue> node)
         {
-            return new ReplaceCommandFirstStep<BinarySearchTreeNode<TValue>>(SetRoot, nodeToReplace);
+            if(node == null)
+                return;
+
+            var parent = node.Parent;
+            node.Balance();
+
+            BalanceFrom(parent);
         }
 
-        private void SetRoot(BinarySearchTreeNode<TValue> node)
+        private ReplaceCommandFirstStep<AvlTreeNode<TValue>> Replace(AvlTreeNode<TValue> nodeToReplace)
         {
-            _root = node;
+            return new ReplaceCommandFirstStep<AvlTreeNode<TValue>>(SetRoot, nodeToReplace);
+        }
+
+        /// <summary>
+        /// Checks if every node of the tree is balanced.
+        /// </summary>
+        /// <returns>True, if all nodes of the tree are balanced. False, otherwise.</returns>
+        internal bool IsBalanced()
+        {
+            return IsBalanced(_root);
+        }
+
+        /// <summary>
+        /// Checks if given node is balanced with its children.
+        /// </summary>
+        /// <returns>True, if given node is balanced with its children. False, otherwise.</returns>
+        private bool IsBalanced(AvlTreeNode<TValue> node)
+        {
+            if (node == null)
+                return true;
+
+            return node.State == TreeState.Balanced
+                   && IsBalanced(node.LeftChild)
+                   && IsBalanced(node.RightChild);
         }
 
         public override IEnumerator<TValue> GetEnumerator()

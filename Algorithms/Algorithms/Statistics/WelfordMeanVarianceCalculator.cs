@@ -1,11 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace EdlinSoftware.Algorithms.Statistics
 {
     /// <summary>
     /// Represents calculator of running mean and variance using Welford formulas.
     /// </summary>
-    public class WelfordMeanVarianceCalculator
+    public class WelfordMeanVarianceCalculator : ICanAdd<double>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private long _count;

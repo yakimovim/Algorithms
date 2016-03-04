@@ -97,12 +97,17 @@
     <Compile Include="DataStructures\Graphs\Paths\IMultiSourcePaths.cs" />
     <Compile Include="DataStructures\Graphs\Paths\IPath.cs" />
     <Compile Include="DataStructures\Graphs\Paths\ISingleSourcePaths.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\AvlTree.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\AvlTreeNode.cs" />
     <Compile Include="DataStructures\Graphs\Trees\BinarySearchTree.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\BinarySearchTreeBase.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\BinarySearchTreeNode.cs" />
     <Compile Include="DataStructures\Heaps\Heap.cs" />
     <Compile Include="DataStructures\Heaps\HeapElement.cs" />
     <Compile Include="DataStructures\Heaps\IHeap.cs" />
     <Compile Include="DataStructures\Heaps\UniqueHeap.cs" />
     <Compile Include="DataStructures\UnionFind.cs" />
+    <Compile Include="ICanAdd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
