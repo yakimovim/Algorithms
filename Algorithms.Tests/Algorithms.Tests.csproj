@@ -94,6 +94,7 @@
     <Compile Include="Algorithms\KnapsackHashFillerTest.cs" />
     <Compile Include="Algorithms\Scheduling\WeightedCompletionTimeMinimizerTest.cs" />
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculatorTest.cs" />
+    <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearchTest.cs" />
     <Compile Include="DataStructures\Codes\SymbolAndFrequency.cs" />
     <Compile Include="DataStructures\Graphs\GraphEdge.cs" />
     <Compile Include="DataStructures\Graphs\GraphNode.cs" />
