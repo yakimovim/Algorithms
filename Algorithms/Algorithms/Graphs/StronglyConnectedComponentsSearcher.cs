@@ -56,7 +56,7 @@ namespace EdlinSoftware.Algorithms.Graphs
 
             Func<long, IEnumerable<long>> connectedNodesProvider = node => _reverseEdges.ContainsKey(node) ? (IEnumerable<long>) _reverseEdges[node] : new long[0];
 
-            var searcher = new DepthFirstSearcher<long>(InformationMoments.InformAfterChilden);
+            var searcher = new DepthFirstSearcher<long>(InformationMoments.InformAfterChildren);
 
             for (long node = numberOfNodes - 1; node >= 0; node--)
             {

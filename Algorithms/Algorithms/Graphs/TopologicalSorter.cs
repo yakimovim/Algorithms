@@ -20,7 +20,7 @@ namespace EdlinSoftware.Algorithms.Graphs
             var visitedNodes = new HashSet<TGraphNode>();
             var topologicalOrder = new TGraphNode[graphNodes.Length];
             var currentPlaceInOrder = topologicalOrder.Length - 1;
-            var searcher = new DepthFirstSearcher<TGraphNode>(InformationMoments.InformAfterChilden);
+            var searcher = new DepthFirstSearcher<TGraphNode>(InformationMoments.InformAfterChildren);
 
             foreach (var node in graphNodes)
             {

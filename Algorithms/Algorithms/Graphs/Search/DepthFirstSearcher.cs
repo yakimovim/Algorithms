@@ -7,8 +7,8 @@ namespace EdlinSoftware.Algorithms.Graphs.Search
     public enum InformationMoments
     {
         InformWhenFirstMet,
-        InformAfterChilden,
-        Both
+        InformAfterChildren,
+        InformWhenFirstMetAndAfterChildren
     }
 
     public class DepthFirstSearcher<TGraphNode> : IGraphSearcher<TGraphNode>
@@ -114,7 +114,7 @@ namespace EdlinSoftware.Algorithms.Graphs.Search
             _visitedNodes.Add(node);
             processStack.Push(new NodeDescription(sourceNode, node, connectedNodesSelector(node)));
 
-            if (_informationMoment != InformationMoments.InformAfterChilden)
+            if (_informationMoment != InformationMoments.InformAfterChildren)
             {
                 args.SourceNode = sourceNode;
                 args.TargetNode = node;
