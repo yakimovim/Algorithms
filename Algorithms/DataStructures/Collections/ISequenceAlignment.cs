@@ -9,7 +9,7 @@
         /// <summary>
         /// Gets penalty of alignment.
         /// </summary>
-        double Penalty { get; }
+        decimal Penalty { get; }
 
         /// <summary>
         /// Gets alignment of the first sequence.
@@ -31,7 +31,7 @@
         /// <summary>
         /// Gets penalty of alignment.
         /// </summary>
-        public double Penalty { get; set; }
+        public decimal Penalty { get; set; }
 
         /// <summary>
         /// Gets alignment of the first sequence.

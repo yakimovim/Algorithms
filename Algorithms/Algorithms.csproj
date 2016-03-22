@@ -51,12 +51,14 @@
     <Compile Include="Algorithms\Codes\HuffmanTreeNode.cs" />
     <Compile Include="Algorithms\Codes\IHuffmanCodeBuilder.cs" />
     <Compile Include="Algorithms\Collections\InversionsCounter.cs" />
+    <Compile Include="Algorithms\Collections\SequenceAlignment\LocalSequenceAligner.cs" />
     <Compile Include="Algorithms\Collections\MaxWeightIndependentSetExtractor.cs" />
     <Compile Include="Algorithms\Collections\Selection\DeterministicOrderStatisticSelector.cs" />
     <Compile Include="Algorithms\Collections\Selection\IOrderStatisticSelector.cs" />
     <Compile Include="Algorithms\Collections\Selection\OrderStatisticSelector.cs" />
     <Compile Include="Algorithms\Collections\Selection\RandomizedOrderStatisticSelector.cs" />
-    <Compile Include="Algorithms\Collections\SequenceAligner.cs" />
+    <Compile Include="Algorithms\Collections\SequenceAlignment\GlobalSequenceAligner.cs" />
+    <Compile Include="Algorithms\Collections\SequenceAlignment\SequenceAligner.cs" />
     <Compile Include="Algorithms\Collections\Sorting\Merger.cs" />
     <Compile Include="Algorithms\Collections\Sorting\MergeSorter.cs" />
     <Compile Include="Algorithms\Collections\Sorting\Partitioner.cs" />
