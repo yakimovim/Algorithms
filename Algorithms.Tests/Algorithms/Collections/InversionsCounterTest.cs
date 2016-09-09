@@ -45,5 +45,13 @@ namespace EdlinSoftware.Tests.Algorithms.Collections
 
             Assert.AreEqual(3, count);
         }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Count_ShouldReturnCorrectNumber_IfThereAreEqualNumbers()
+        {
+            var count = InversionsCounter.Count(new[] { 2, 3, 9, 2, 9 });
+
+            Assert.AreEqual(2, count);
+        }
     }
 }

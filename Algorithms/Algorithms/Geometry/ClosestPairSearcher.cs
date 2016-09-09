@@ -12,19 +12,39 @@ namespace EdlinSoftware.Algorithms.Geometry
     /// </summary>
     public class ClosestPairSearcher
     {
-        private readonly MergeSorter _sorter = new MergeSorter(); 
+        private readonly MergeSorter _sorter = new MergeSorter();
 
-        private class PointComparerX : IComparer<PointF>
+        private class PointContainer
         {
-            public int Compare(PointF x, PointF y)
+            public PointContainer(PointF point)
+            {
+                Point = point;
+            }
+
+            public PointF Point { get; }
+
+            public float X => Point.X;
+            public float Y => Point.Y;
+
+            public bool InLeftPart { get; set; }
+
+            public override string ToString()
+            {
+                return $"{X}:{Y}";
+            }
+        }
+
+        private class PointComparerX : IComparer<PointContainer>
+        {
+            public int Compare(PointContainer x, PointContainer y)
             {
                 return x.X.CompareTo(y.X);
             }
         }
 
-        private class PointComparerY : IComparer<PointF>
+        private class PointComparerY : IComparer<PointContainer>
         {
-            public int Compare(PointF x, PointF y)
+            public int Compare(PointContainer x, PointContainer y)
             {
                 return x.Y.CompareTo(y.Y);
             }
@@ -40,13 +60,14 @@ namespace EdlinSoftware.Algorithms.Geometry
             if (points == null) throw new ArgumentNullException(nameof(points));
             if (points.Length < 2) throw new ArgumentException("There must be at least two points.");
 
-            var pX = _sorter.Sort(points, new PointComparerX());
-            var pY = _sorter.Sort(points, new PointComparerY());
+            var pointContainers = points.Select(p => new PointContainer(p)).ToArray();
+            var pX = _sorter.Sort(pointContainers, new PointComparerX());
+            var pY = _sorter.Sort(pointContainers, new PointComparerY());
 
             return GetClosestPair(pX, pY);
         }
 
-        private PairOfPoints GetClosestPair(PointF[] pX, PointF[] pY)
+        private PairOfPoints GetClosestPair(PointContainer[] pX, PointContainer[] pY)
         {
             if (pX.Length < 2)
             {
@@ -54,10 +75,10 @@ namespace EdlinSoftware.Algorithms.Geometry
             }
             if (pX.Length == 2)
             {
-                return new PairOfPoints { P = pX[0], Q = pX[1] };
+                return new PairOfPoints { P = pX[0].Point, Q = pX[1].Point };
             }
 
-            PointF[] lX, lY, rX, rY;
+            PointContainer[] lX, lY, rX, rY;
             SeparateArrays(pX, pY, out lX, out lY, out rX, out rY);
 
             var leftPair = GetClosestPair(lX, lY);
@@ -70,7 +91,7 @@ namespace EdlinSoftware.Algorithms.Geometry
             return GetClosestPair(leftPair, rightPair, splitPair);
         }
 
-        private PairOfPoints GetClosestSplitPair(PointF[] pX, PointF[] pY, double minDistanceAtSides)
+        private PairOfPoints GetClosestSplitPair(PointContainer[] pX, PointContainer[] pY, double minDistanceAtSides)
         {
             var middleIndex = pX.Length / 2;
             var middleX = pX[middleIndex].X;
@@ -84,12 +105,15 @@ namespace EdlinSoftware.Algorithms.Geometry
 
             for (int i = 0; i < sY.Length - 1; i++)
             {
-                for (int j = i + 1; j <= 7; j++)
+                for (int j = i + 1; j <= i + 7; j++)
                 {
                     if (j >= sY.Length)
                     { break; }
 
-                    var newPair = new PairOfPoints { P = sY[i], Q = sY[j] };
+                    if (sY[j].Y - sY[i].Y > minDistance)
+                    { break; }
+
+                    var newPair = new PairOfPoints { P = sY[i].Point, Q = sY[j].Point };
                     var newDistance = GetDistance(newPair);
                     if (newDistance < minDistance)
                     {
@@ -102,31 +126,36 @@ namespace EdlinSoftware.Algorithms.Geometry
             return closestPair;
         }
 
-        private void SeparateArrays(PointF[] pX, PointF[] pY, out PointF[] lX, out PointF[] lY, out PointF[] rX, out PointF[] rY)
+        private void SeparateArrays(PointContainer[] pX, PointContainer[] pY, out PointContainer[] lX, out PointContainer[] lY, out PointContainer[] rX, out PointContainer[] rY)
         {
             var middleIndex = pX.Length / 2;
             var middleX = pX[middleIndex].X;
 
-            lX = new PointF[middleIndex + 1];
-            lY = new PointF[middleIndex + 1];
-            rX = new PointF[pX.Length - lX.Length];
-            rY = new PointF[pY.Length - lY.Length];
+            lX = new PointContainer[middleIndex + 1];
+            lY = new PointContainer[middleIndex + 1];
+            rX = new PointContainer[pX.Length - lX.Length];
+            rY = new PointContainer[pY.Length - lY.Length];
 
             int ilX, ilY, irX, irY;
             ilX = ilY = irX = irY = 0;
 
             for (int k = 0; k < pX.Length; k++)
             {
-                if (pX[k].X <= middleX)
+                if (pX[k].X <= middleX && ilX < lX.Length)
                 {
                     lX[ilX++] = pX[k];
+                    pX[k].InLeftPart = true;
                 }
                 else
                 {
                     rX[irX++] = pX[k];
+                    pX[k].InLeftPart = false;
                 }
+            }
 
-                if (pY[k].X <= middleX)
+            for (int k = 0; k < pX.Length; k++)
+            {
+                if (pY[k].InLeftPart)
                 {
                     lY[ilY++] = pY[k];
                 }

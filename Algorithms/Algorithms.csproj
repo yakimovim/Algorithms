@@ -61,7 +61,8 @@
     <Compile Include="Algorithms\Collections\SequenceAlignment\SequenceAligner.cs" />
     <Compile Include="Algorithms\Collections\Sorting\Merger.cs" />
     <Compile Include="Algorithms\Collections\Sorting\MergeSorter.cs" />
-    <Compile Include="Algorithms\Collections\Sorting\Partitioner.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\ThreeWayPartitioner.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\TwoWayPartitioner.cs" />
     <Compile Include="Algorithms\Collections\Sorting\QuickSorter.cs" />
     <Compile Include="Algorithms\Geometry\ClosestPairSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcher.cs" />

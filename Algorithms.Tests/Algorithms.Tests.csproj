@@ -71,7 +71,8 @@
     <Compile Include="Algorithms\Collections\SequenceAlignment\SequenceAlignerTestBase.cs" />
     <Compile Include="Algorithms\Collections\Sorting\MergerTest.cs" />
     <Compile Include="Algorithms\Collections\Sorting\MergeSorterTest.cs" />
-    <Compile Include="Algorithms\Collections\Sorting\PartitionerTest.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\ThreeWayPartitionerTest.cs" />
+    <Compile Include="Algorithms\Collections\Sorting\TwoWayPartitionerTest.cs" />
     <Compile Include="Algorithms\Collections\Sorting\QuickSorterTest.cs" />
     <Compile Include="Algorithms\Geometry\ClosestPairSearcherTest.cs" />
     <Compile Include="Algorithms\Graphs\GraphTestBase.cs" />

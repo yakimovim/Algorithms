@@ -139,7 +139,7 @@ namespace EdlinSoftware.Algorithms.Collections
             if (secondIndex >= second.Length)
                 return true;
 
-            return comparer.Compare(first[firstIndex], second[secondIndex]) < 0;
+            return comparer.Compare(first[firstIndex], second[secondIndex]) <= 0;
         }
     }
 }

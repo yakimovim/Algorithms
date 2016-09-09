@@ -16,7 +16,7 @@ namespace EdlinSoftware.Algorithms.Collections.Selection
 
     public class OrderStatisticSelector<T> : IOrderStatisticSelector<T>
     {
-        private readonly Partitioner<T> _partitioner;
+        private readonly TwoWayPartitioner<T> _partitioner;
         protected Func<T[], int, int, int> PivotSelector;
 
         [DebuggerStepThrough]
@@ -26,7 +26,7 @@ namespace EdlinSoftware.Algorithms.Collections.Selection
             if (pivotSelector == null) throw new ArgumentNullException(nameof(pivotSelector));
             PivotSelector = pivotSelector;
 
-            _partitioner = new Partitioner<T>(comparer);
+            _partitioner = new TwoWayPartitioner<T>(comparer);
         }
 
         public T Select(T[] array, int order)
