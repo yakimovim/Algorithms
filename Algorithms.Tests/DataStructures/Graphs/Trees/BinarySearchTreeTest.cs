@@ -118,5 +118,37 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 7, 8 }, _tree.ToArray());
         }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetStringPresentation_OnlyRoot()
+        {
+            _tree.Add(2);
+
+            Assert.AreEqual("2", _tree.ToString());
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetStringPresentation_RootAndLess()
+        {
+            _tree.AddRange(2, 1);
+
+            Assert.AreEqual("   2\n1   ", _tree.ToString());
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetStringPresentation_RootAndMore()
+        {
+            _tree.AddRange(2, 3);
+
+            Assert.AreEqual("2   \n   3", _tree.ToString());
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetStringPresentation_RootAndBoth()
+        {
+            _tree.AddRange(2, 1, 3);
+
+            Assert.AreEqual("  2  \n1   3", _tree.ToString());
+        }
     }
 }

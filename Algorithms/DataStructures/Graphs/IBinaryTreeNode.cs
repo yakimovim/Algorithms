@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace EdlinSoftware.DataStructures.Graphs
@@ -92,7 +94,7 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <param name="action">Action for each node.</param>
         public static void VisitInOrder<TValue>(this IBinaryTreeNode<TValue> node, Action<TValue> action)
         {
-            if(node == null)
+            if (node == null)
                 return;
 
             node.LeftChild.VisitInOrder(action);
@@ -130,6 +132,70 @@ namespace EdlinSoftware.DataStructures.Graphs
             node.LeftChild.VisitInOrder(action);
             node.RightChild.VisitInOrder(action);
             action(node.Value);
+        }
+
+        /// <summary>
+        /// Gets string presentation of node.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node value.</typeparam>
+        /// <param name="node">Tree node.</param>
+        /// <returns>Array of strings of equal length with string presentation of sub-tree.</returns>
+        public static string[] GetStringPresentation<TValue>(this IBinaryTreeNode<TValue> node)
+        {
+            if (node == null)
+                return new string[0];
+
+            var leftPresentation = GetStringPresentation(node.LeftChild);
+            var rightPresentation = GetStringPresentation(node.RightChild);
+
+            var leftWidth = leftPresentation.Length > 0 ? leftPresentation[0].Length : 0;
+            var rightWidth = rightPresentation.Length > 0 ? rightPresentation[0].Length : 0;
+
+            var myPresentation = node.Value?.ToString() ?? "";
+            var myWidth = myPresentation.Length;
+
+            if (rightWidth == 0 && leftWidth == 0)
+                return new[] {myPresentation};
+
+            var middlePadding = Math.Max(3, myWidth);
+            var totalWidth = Math.Max(leftWidth + middlePadding + rightWidth, myWidth);
+            middlePadding = totalWidth - leftWidth - rightWidth;
+
+            int leftPadding, rightPadding;
+            if (leftWidth == 0)
+            {
+                leftPadding = 0;
+                rightPadding = totalWidth - myWidth;
+            }
+            else if (rightWidth == 0)
+            {
+                leftPadding = totalWidth - myWidth;
+                rightPadding = 0;
+            }
+            else
+            {
+                leftPadding = (totalWidth - myWidth) / 2;
+                rightPadding = totalWidth - myWidth - leftPadding;
+            }
+
+
+            var presentation = new LinkedList<string>();
+            presentation.AddLast(new string(' ', leftPadding) + myPresentation + new string(' ', rightPadding));
+
+            var size = Math.Max(leftPresentation.Length, rightPresentation.Length);
+            for (int i = 0; i < size; i++)
+            {
+                var value = (i < leftPresentation.Length)
+                    ? leftPresentation[i]
+                    : new string(' ', leftWidth);
+                value += new string(' ', middlePadding);
+                value += (i < rightPresentation.Length)
+                    ? rightPresentation[i]
+                    : new string(' ', rightWidth);
+                presentation.AddLast(value);
+            }
+
+            return presentation.ToArray();
         }
     }
 }

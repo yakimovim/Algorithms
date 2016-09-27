@@ -179,5 +179,10 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
             return values.GetEnumerator();
         }
+
+        public override string ToString()
+        {
+            return string.Join("\n", _root.GetStringPresentation());
+        }
     }
 }
