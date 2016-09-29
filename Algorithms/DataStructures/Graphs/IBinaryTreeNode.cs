@@ -7,17 +7,24 @@ using JetBrains.Annotations;
 namespace EdlinSoftware.DataStructures.Graphs
 {
     /// <summary>
-    /// Represents one node of binary tree.
+    /// Represents item with value.
     /// </summary>
     /// <typeparam name="TValue">Type of value stored in the node.</typeparam>
-    /// <typeparam name="TNode">Type of nodes.</typeparam>
-    public interface IBinaryTreeNode<out TValue, out TNode>
-        where TNode : IBinaryTreeNode<TValue, TNode>
+    public interface IValued<out TValue>
     {
         /// <summary>
-        /// Gets value of the node.
+        /// Gets value of the item.
         /// </summary>
         TValue Value { get; }
+    }
+
+    /// <summary>
+    /// Represents one node of binary tree.
+    /// </summary>
+    /// <typeparam name="TNode">Type of nodes.</typeparam>
+    public interface IBinaryTreeNode<out TNode>
+        where TNode : IBinaryTreeNode<TNode>
+    {
         /// <summary>
         /// Gets left child of the node. Can be null.
         /// </summary>
@@ -37,11 +44,11 @@ namespace EdlinSoftware.DataStructures.Graphs
         IDictionary<string, object> Properties { get; }
     }
 
-    /// <summary>
-    /// Represents one node of binary tree.
-    /// </summary>
-    /// <typeparam name="TValue">Type of value stored in the node.</typeparam>
-    public interface IBinaryTreeNode<out TValue> : IBinaryTreeNode<TValue, IBinaryTreeNode<TValue>>
+    public interface IValuedBinaryTreeNode<out TValue, out TNode> : IBinaryTreeNode<TNode>, IValued<TValue>
+        where TNode : IValuedBinaryTreeNode<TValue, TNode>
+    { }
+
+    public interface IValuedBinaryTreeNode<out TValue> : IValuedBinaryTreeNode<TValue, IValuedBinaryTreeNode<TValue>>
     { }
 
     /// <summary>
@@ -62,7 +69,7 @@ namespace EdlinSoftware.DataStructures.Graphs
     /// </summary>
     /// <typeparam name="TNode">Type of binary tree node.</typeparam>
     /// <typeparam name="TValue">Type of value stored in the node.</typeparam>
-    public abstract class BinaryTreeNodeBase<TNode, TValue> : IBinaryTreeNode<TValue, TNode>
+    public abstract class BinaryTreeNodeBase<TNode, TValue> : IBinaryTreeNode<TNode>, IValued<TValue>
         where TNode : BinaryTreeNodeBase<TNode, TValue>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -86,7 +93,7 @@ namespace EdlinSoftware.DataStructures.Graphs
 
         public override string ToString()
         {
-            return string.Join("\n", this.GetStringPresentation());
+            return string.Join("\n", ((TNode)this).GetStringPresentation<TValue, TNode>());
         }
     }
 
@@ -98,12 +105,11 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Determines if the node has no children.
         /// </summary>
-        /// <typeparam name="TValue">Type of node value.</typeparam>
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <returns>True, if node has no children. False, otherwise.</returns>
-        public static bool IsLeaf<TValue, TNode>(this IBinaryTreeNode<TValue, TNode> node) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static bool IsLeaf<TNode>(this IBinaryTreeNode<TNode> node) 
+            where TNode : IBinaryTreeNode<TNode>
         {
             return node.LeftChild == null && node.RightChild == null;
         }
@@ -121,7 +127,7 @@ namespace EdlinSoftware.DataStructures.Graphs
             this TNode node, 
             TValue value, 
             [NotNull] IComparer<TValue> comparer) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             if (comparer == null) throw new ArgumentNullException(nameof(comparer));
 
@@ -163,7 +169,7 @@ namespace EdlinSoftware.DataStructures.Graphs
             this TNode node,
             TValue value,
             [NotNull] IComparer<TValue> comparer)
-            where TNode : IBinaryTreeNode<TValue, TNode>
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             if (comparer == null) throw new ArgumentNullException(nameof(comparer));
 
@@ -193,19 +199,18 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Returns height of binary tree node.
         /// </summary>
-        /// <typeparam name="TValue">Type of node value.</typeparam>
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <returns>Height of binary tree node. 0 if node is null.</returns>
-        public static ulong GetHeight<TValue, TNode>(this TNode node) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static ulong GetHeight<TNode>(this TNode node) 
+            where TNode : IBinaryTreeNode<TNode>
         {
             if (node == null)
                 return 0;
 
             var key = Guid.NewGuid().ToString();
 
-            var queue = new Queue<IBinaryTreeNode<TValue, TNode>>();
+            var queue = new Queue<IBinaryTreeNode<TNode>>();
             queue.Enqueue(node);
             node.Properties[key] = 1UL;
             while (true)
@@ -231,12 +236,11 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Returns node with minimal value in the sub-tree of this node.
         /// </summary>
-        /// <typeparam name="TValue">Type of node value.</typeparam>
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <remarks>Applicable only to binary search trees.</remarks>
-        public static TNode FindNodeWithMinimalValue<TValue, TNode>(this TNode node) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static TNode FindNodeWithMinimalValue<TNode>(this TNode node) 
+            where TNode : IBinaryTreeNode<TNode>
         {
             if (node == null)
                 return default(TNode);
@@ -253,12 +257,11 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Returns node with maximal value in the sub-tree of this node.
         /// </summary>
-        /// <typeparam name="TValue">Type of node value.</typeparam>
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <remarks>Applicable only to binary search trees.</remarks>
-        public static TNode FindNodeWithMaximalValue<TValue, TNode>(this TNode node) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static TNode FindNodeWithMaximalValue<TNode>(this TNode node) 
+            where TNode : IBinaryTreeNode<TNode>
         {
             if (node == null)
                 return default(TNode);
@@ -275,12 +278,11 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Returns node with next value greater or equal to the value of this node.
         /// </summary>
-        /// <typeparam name="TValue">Type of node value.</typeparam>
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <remarks>Applicable only to binary search trees.</remarks>
-        public static TNode Next<TValue, TNode>(this TNode node) 
-            where TNode : IBinaryTreeNode<TValue, TNode>, IParented<TNode>
+        public static TNode Next<TNode>(this TNode node) 
+            where TNode : IBinaryTreeNode<TNode>, IParented<TNode>
         {
             if (node == null)
                 return default(TNode);
@@ -317,12 +319,11 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Returns node with next value less or equal to the value of this node.
         /// </summary>
-        /// <typeparam name="TValue">Type of node value.</typeparam>
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <remarks>Applicable only to binary search trees.</remarks>
-        public static TNode Previous<TValue, TNode>(this TNode node) 
-            where TNode : IBinaryTreeNode<TValue, TNode>, IParented<TNode>
+        public static TNode Previous<TNode>(this TNode node) 
+            where TNode : IBinaryTreeNode<TNode>, IParented<TNode>
         {
             if (node == null)
                 return default(TNode);
@@ -373,7 +374,7 @@ namespace EdlinSoftware.DataStructures.Graphs
             [NotNull] IComparer<TValue> comparer,
             bool includeFrom = false,
             bool includeTo = false) 
-            where TNode : IBinaryTreeNode<TValue, TNode>, IParented<TNode>
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>, IParented<TNode>
         {
             if (comparer == null) throw new ArgumentNullException(nameof(comparer));
 
@@ -394,7 +395,7 @@ namespace EdlinSoftware.DataStructures.Graphs
                 if (comparer.Compare(from, rangeNode.Value) < 0)
                     range.AddLast(rangeNode.Value);
 
-                rangeNode = rangeNode.Next<TValue, TNode>();
+                rangeNode = rangeNode.Next();
             }
 
             return range.ToArray();
@@ -407,15 +408,15 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <param name="action">Action for each node.</param>
-        public static void VisitInOrder<TValue, TNode>(this IBinaryTreeNode<TValue, TNode> node, Action<TValue> action) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static void VisitInOrder<TValue, TNode>(this TNode node, Action<TValue> action) 
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             if (node == null)
                 return;
 
             var key = Guid.NewGuid().ToString();
 
-            var stack = new Stack<IBinaryTreeNode<TValue, TNode>>();
+            var stack = new Stack<TNode>();
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -448,15 +449,15 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <param name="action">Action for each node.</param>
-        public static void VisitPreOrder<TValue, TNode>(this IBinaryTreeNode<TValue, TNode> node, Action<TValue> action) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static void VisitPreOrder<TValue, TNode>(this TNode node, Action<TValue> action) 
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             if (node == null)
                 return;
 
             var key = Guid.NewGuid().ToString();
 
-            var stack = new Stack<IBinaryTreeNode<TValue, TNode>>();
+            var stack = new Stack<TNode>();
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -489,15 +490,15 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <param name="action">Action for each node.</param>
-        public static void VisitPostOrder<TValue, TNode>(this IBinaryTreeNode<TValue, TNode> node, Action<TValue> action) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static void VisitPostOrder<TValue, TNode>(this TNode node, Action<TValue> action) 
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             if (node == null)
                 return;
 
             var key = Guid.NewGuid().ToString();
 
-            var stack = new Stack<IBinaryTreeNode<TValue, TNode>>();
+            var stack = new Stack<TNode>();
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -530,14 +531,14 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <typeparam name="TNode">Type of node.</typeparam>
         /// <param name="node">Tree node.</param>
         /// <returns>Array of strings of equal length with string presentation of sub-tree.</returns>
-        public static string[] GetStringPresentation<TValue, TNode>(this IBinaryTreeNode<TValue, TNode> node) 
-            where TNode : IBinaryTreeNode<TValue, TNode>
+        public static string[] GetStringPresentation<TValue, TNode>(this TNode node) 
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             if (node == null)
                 return new string[0];
 
-            var leftPresentation = GetStringPresentation(node.LeftChild);
-            var rightPresentation = GetStringPresentation(node.RightChild);
+            var leftPresentation = GetStringPresentation<TValue, TNode>(node.LeftChild);
+            var rightPresentation = GetStringPresentation<TValue, TNode>(node.RightChild);
 
             var leftWidth = leftPresentation.Length > 0 ? leftPresentation[0].Length : 0;
             var rightWidth = rightPresentation.Length > 0 ? rightPresentation[0].Length : 0;

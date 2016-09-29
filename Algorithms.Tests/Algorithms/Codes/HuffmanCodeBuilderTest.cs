@@ -58,7 +58,7 @@ namespace EdlinSoftware.Tests.Algorithms.Codes
             ValidateTree(tree, new object[,] { { 'a', 2 }, { 'b', 2 }, { 'c', 2 }, { 'd', 2 } });
         }
 
-        private void ValidateTree(IBinaryTreeNode<SymbolAndFrequency<char>> tree, object[,] expected)
+        private void ValidateTree(IValuedBinaryTreeNode<SymbolAndFrequency<char>> tree, object[,] expected)
         {
             var symbolDepth = new Dictionary<char, long>();
 
@@ -74,7 +74,7 @@ namespace EdlinSoftware.Tests.Algorithms.Codes
             }
         }
 
-        private void GetSymbolsDepth(IBinaryTreeNode<SymbolAndFrequency<char>> node, long level, Dictionary<char, long> symbolDepth)
+        private void GetSymbolsDepth(IValuedBinaryTreeNode<SymbolAndFrequency<char>> node, long level, Dictionary<char, long> symbolDepth)
         {
             if (node.IsLeaf())
             {

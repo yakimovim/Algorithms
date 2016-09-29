@@ -148,7 +148,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         {
             var values = new LinkedList<TValue>();
 
-            _root.VisitInOrder(value => values.AddLast(value));
+            _root.VisitInOrder<TValue, BinarySearchTreeNode<TValue>>(value => values.AddLast(value));
 
             return values.GetEnumerator();
         }

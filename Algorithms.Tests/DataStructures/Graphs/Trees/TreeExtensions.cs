@@ -26,17 +26,17 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         }
 
         public static TValue[] GetValues<TValue, TNode>(this TNode node)
-            where TNode : IBinaryTreeNode<TValue, TNode>
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             var values = new LinkedList<TValue>();
 
-            node.VisitInOrder(v => values.AddLast(v));
+            node.VisitInOrder<TValue, TNode>(v => values.AddLast(v));
 
             return values.ToArray();
         }
 
         public static void CheckBinarySearchTree<TValue, TNode>(this TNode node, IComparer<TValue> comparer)
-            where TNode : IBinaryTreeNode<TValue, TNode>
+            where TNode : IBinaryTreeNode<TNode>, IValued<TValue>
         {
             if(node == null)
                 return;

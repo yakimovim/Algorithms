@@ -5,12 +5,12 @@ namespace EdlinSoftware.Algorithms.Codes
 {
     public interface IHuffmanCodeBuilder<TSymbol>
     {
-        IBinaryTreeNode<TSymbol> Generate(IEnumerable<TSymbol> alphabet);
+        IValuedBinaryTreeNode<TSymbol> Generate(IEnumerable<TSymbol> alphabet);
     }
     
     public static class HuffmanCodeBuilder
     {
-        public static IBinaryTreeNode<TSymbol> Generate<TSymbol>(this IHuffmanCodeBuilder<TSymbol> builder, params TSymbol[] alphabet)
+        public static IValuedBinaryTreeNode<TSymbol> Generate<TSymbol>(this IHuffmanCodeBuilder<TSymbol> builder, params TSymbol[] alphabet)
         {
             return builder.Generate(alphabet);
         }

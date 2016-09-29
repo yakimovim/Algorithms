@@ -21,7 +21,7 @@ namespace EdlinSoftware.Algorithms.Codes
             _frequencyProvider = frequencyProvider;
         }
 
-        public IBinaryTreeNode<TSymbol> Generate(IEnumerable<TSymbol> alphabet)
+        public IValuedBinaryTreeNode<TSymbol> Generate(IEnumerable<TSymbol> alphabet)
         {
             if (alphabet == null) throw new ArgumentNullException(nameof(alphabet));
 

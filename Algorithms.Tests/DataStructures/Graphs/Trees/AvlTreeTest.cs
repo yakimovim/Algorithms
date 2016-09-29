@@ -230,12 +230,12 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(4, 2, 1, 3, 6, 5, 8, 7);
 
-            var node = _tree.Root.FindNodeWithMinimalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMinimalValue();
 
             var values = new List<int> { node.Value };
             values.AddRange(Enumerable.Range(0, 7).Select(i =>
             {
-                node = node.Next<int, AvlTreeNode<int>>();
+                node = node.Next();
                 return node.Value;
             }));
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, values.ToArray());
@@ -246,12 +246,12 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 2, 2, 2);
 
-            var node = _tree.Root.FindNodeWithMinimalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMinimalValue();
 
             var values = new List<int> { node.Value };
             values.AddRange(Enumerable.Range(0, 3).Select(i =>
             {
-                node = node.Next<int, AvlTreeNode<int>>();
+                node = node.Next();
                 return node.Value;
             }));
             CollectionAssert.AreEqual(new[] { 2, 2, 2, 2 }, values.ToArray());
@@ -262,12 +262,12 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(4, 2, 1, 2, 7, 2, 8, 7);
 
-            var node = _tree.Root.FindNodeWithMinimalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMinimalValue();
 
             var values = new List<int> { node.Value };
             values.AddRange(Enumerable.Range(0, 7).Select(i =>
             {
-                node = node.Next<int, AvlTreeNode<int>>();
+                node = node.Next();
                 return node.Value;
             }));
             CollectionAssert.AreEqual(new[] { 1, 2, 2, 2, 4, 7, 7, 8 }, values.ToArray());
@@ -278,9 +278,9 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(7, 7, 7);
 
-            var node = _tree.Root.FindNodeWithMaximalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMaximalValue();
 
-            Assert.IsNull(node.Next<int, AvlTreeNode<int>>());
+            Assert.IsNull(node.Next());
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -288,12 +288,12 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(4, 2, 1, 3, 6, 5, 8, 7);
 
-            var node = _tree.Root.FindNodeWithMaximalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMaximalValue();
 
             var values = new List<int> { node.Value };
             values.AddRange(Enumerable.Range(0, 7).Select(i =>
             {
-                node = node.Previous<int, AvlTreeNode<int>>();
+                node = node.Previous();
                 return node.Value;
             }));
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, values.ToArray().Reverse().ToArray());
@@ -304,12 +304,12 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 2, 2, 2);
 
-            var node = _tree.Root.FindNodeWithMaximalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMaximalValue();
 
             var values = new List<int> { node.Value };
             values.AddRange(Enumerable.Range(0, 3).Select(i =>
             {
-                node = node.Previous<int, AvlTreeNode<int>>();
+                node = node.Previous();
                 return node.Value;
             }));
             CollectionAssert.AreEqual(new[] { 2, 2, 2, 2 }, values.ToArray().Reverse().ToArray());
@@ -320,12 +320,12 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(4, 2, 1, 2, 7, 2, 8, 7);
 
-            var node = _tree.Root.FindNodeWithMaximalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMaximalValue();
 
             var values = new List<int> { node.Value };
             values.AddRange(Enumerable.Range(0, 7).Select(i =>
             {
-                node = node.Previous<int, AvlTreeNode<int>>();
+                node = node.Previous();
                 return node.Value;
             }));
             CollectionAssert.AreEqual(new[] { 1, 2, 2, 2, 4, 7, 7, 8 }, values.ToArray().Reverse().ToArray());
@@ -336,9 +336,9 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(1, 1, 1);
 
-            var node = _tree.Root.FindNodeWithMinimalValue<int, AvlTreeNode<int>>();
+            var node = _tree.Root.FindNodeWithMinimalValue();
 
-            Assert.IsNull(node.Previous<int, AvlTreeNode<int>>());
+            Assert.IsNull(node.Previous());
         }
     }
 }

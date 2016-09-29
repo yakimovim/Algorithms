@@ -178,7 +178,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 1, 3, 4, 5);
 
-            Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+            Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue().Value);
 
             _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
@@ -188,7 +188,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 2, 2, 2, 2);
 
-            Assert.AreEqual(2, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+            Assert.AreEqual(2, _tree.Root.FindNodeWithMinimalValue().Value);
 
             _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
@@ -198,7 +198,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 1, 3, 1, 1);
 
-            Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+            Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue().Value);
 
             _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
@@ -208,7 +208,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 1, 3, 4, 5);
 
-            Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+            Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue().Value);
 
             _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
@@ -218,7 +218,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 2, 2, 2, 2);
 
-            Assert.AreEqual(2, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+            Assert.AreEqual(2, _tree.Root.FindNodeWithMaximalValue().Value);
 
             _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
@@ -228,7 +228,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.AddRange(2, 5, 3, 1, 5);
 
-            Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+            Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue().Value);
 
             _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }

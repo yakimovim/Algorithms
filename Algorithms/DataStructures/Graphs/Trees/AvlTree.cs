@@ -149,14 +149,14 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         {
             var values = new LinkedList<TValue>();
 
-            _root.VisitInOrder(value => values.AddLast(value));
+            _root.VisitInOrder<TValue, AvlTreeNode<TValue>>(value => values.AddLast(value));
 
             return values.GetEnumerator();
         }
 
         public override string ToString()
         {
-            return string.Join("\n", _root.GetStringPresentation());
+            return string.Join("\n", _root.GetStringPresentation<TValue, AvlTreeNode<TValue>>());
         }
     }
 }
