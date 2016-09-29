@@ -17,19 +17,19 @@ namespace EdlinSoftware.Algorithms.Codes
         [DebuggerStepThrough]
         public HuffmanCodeHeapBuilder(Func<TSymbol, double> frequencyProvider)
         {
-            if (frequencyProvider == null) throw new ArgumentNullException("frequencyExtractor");
+            if (frequencyProvider == null) throw new ArgumentNullException(nameof(frequencyProvider));
             _frequencyProvider = frequencyProvider;
         }
 
         public IBinaryTreeNode<TSymbol> Generate(IEnumerable<TSymbol> alphabet)
         {
-            if (alphabet == null || alphabet.Any() == false) throw new ArgumentNullException("alphabet");
+            if (alphabet == null || alphabet.Any() == false) throw new ArgumentNullException(nameof(alphabet));
 
             var heap = new Heap<double, HuffmanTreeNode<TSymbol>>(Comparer<double>.Default,
                 (from a in alphabet
                  let node = new HuffmanTreeNode<TSymbol>(a, _frequencyProvider(a))
                  select new HeapElement<double, HuffmanTreeNode<TSymbol>>(node.Frequency, node)).ToArray());
-            if (heap.Count == 1) throw new ArgumentNullException("alphabet", "Alphabet should contain at least two symbols.");
+            if (heap.Count == 1) throw new ArgumentNullException(nameof(alphabet), "Alphabet should contain at least two symbols.");
 
             while (heap.Count > 1)
             {

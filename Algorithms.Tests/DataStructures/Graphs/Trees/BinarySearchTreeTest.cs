@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using EdlinSoftware.DataStructures.Graphs;
 using EdlinSoftware.DataStructures.Graphs.Trees;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -149,6 +150,54 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(2, 1, 3);
 
             Assert.AreEqual("  2  \n1   3", _tree.ToString());
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void FindNodeWithMinimalValue_AllDifferentValues()
+        {
+            _tree.AddRange(2, 1, 3, 4, 5);
+
+            Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void FindNodeWithMinimalValue_AllSameValues()
+        {
+            _tree.AddRange(2, 2, 2, 2, 2);
+
+            Assert.AreEqual(2, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void FindNodeWithMinimalValue_SomeSameValues()
+        {
+            _tree.AddRange(2, 1, 3, 1, 1);
+
+            Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void FindNodeWithMaximalValue_AllDifferentValues()
+        {
+            _tree.AddRange(2, 1, 3, 4, 5);
+
+            Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void FindNodeWithMaximalValue_AllSameValues()
+        {
+            _tree.AddRange(2, 2, 2, 2, 2);
+
+            Assert.AreEqual(2, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void FindNodeWithMaximalValue_SomeSameValues()
+        {
+            _tree.AddRange(2, 5, 3, 1, 5);
+
+            Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
         }
     }
 }

@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace EdlinSoftware.DataStructures.Graphs.Trees
 {
-    internal class AvlTreeNode<TValue> : BinaryTreeNodeBase<AvlTreeNode<TValue>, TValue>
+    internal class AvlTreeNode<TValue> : BinaryTreeNodeBase<AvlTreeNode<TValue>, TValue>, IParented<AvlTreeNode<TValue>>
     {
         private readonly IComparer<TValue> _comparer;
         private readonly Action<AvlTreeNode<TValue>> _setTreeRoot;
@@ -152,15 +152,15 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <summary>
         /// Gets height of the left child.
         /// </summary>
-        private int LeftHeight => LeftChild.GetHeight();
+        private ulong LeftHeight => LeftChild.GetHeight<TValue, AvlTreeNode<TValue>>();
         /// <summary>
         /// Gets height of the right child.
         /// </summary>
-        private int RightHeight => RightChild.GetHeight();
+        private ulong RightHeight => RightChild.GetHeight<TValue, AvlTreeNode<TValue>>();
         /// <summary>
         /// Gets balance factor.
         /// </summary>
-        private int BalanceFactor => RightHeight - LeftHeight;
+        private long BalanceFactor => (long) RightHeight - (long) LeftHeight;
         /// <summary>
         /// Gets state of the tree starting from this node.
         /// </summary>
@@ -175,6 +175,9 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 return TreeState.Balanced;
             }
         }
+
+        AvlTreeNode<TValue> IParented<AvlTreeNode<TValue>>.Parent => Parent;
+
 
         /// <summary>
         /// Adds value to the tree with this node as a root.

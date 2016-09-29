@@ -13,6 +13,8 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         [CanBeNull]
         private BinarySearchTreeNode<TValue> _root;
 
+        internal BinarySearchTreeNode<TValue> Root => _root;
+
         public BinarySearchTree([NotNull] IComparer<TValue> comparer)
             : base(comparer)
         { }
@@ -153,7 +155,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
         public override string ToString()
         {
-            return string.Join("\n", _root.GetStringPresentation());
+            return _root?.ToString() ?? "";
         }
     }
 }

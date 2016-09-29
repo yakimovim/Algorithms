@@ -11,6 +11,8 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         [CanBeNull]
         private AvlTreeNode<TValue> _root;
 
+        internal AvlTreeNode<TValue> Root => _root;
+
         public AvlTree([NotNull] IComparer<TValue> comparer)
             : base(comparer)
         { }
@@ -134,7 +136,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
         private void BalanceFrom([CanBeNull] AvlTreeNode<TValue> node)
         {
-            if(node == null)
+            if (node == null)
                 return;
 
             var parent = node.Parent;

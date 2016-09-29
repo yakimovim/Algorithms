@@ -25,28 +25,34 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <param name="value">Value to add.</param>
         public void Add(TValue value)
         {
-            if (_comparer.Compare(value, Value) < 0)
+            var node = this;
+
+            while (true)
             {
-                if (LeftChild == null)
+                var nodeValue = node.Value;
+
+                if (_comparer.Compare(value, nodeValue) < 0)
                 {
-                    LeftChild = new BinarySearchTreeNode<TValue>(_comparer, value);
+                    if (node.LeftChild == null)
+                    {
+                        node.LeftChild = new BinarySearchTreeNode<TValue>(_comparer, value);
+                        return;
+                    }
+
+                    node = node.LeftChild;
                 }
                 else
                 {
-                    LeftChild.Add(value);
+                    if (node.RightChild == null)
+                    {
+                        node.RightChild = new BinarySearchTreeNode<TValue>(_comparer, value);
+                        return;
+                    }
+
+                    node = node.RightChild;
                 }
             }
-            else
-            {
-                if (RightChild == null)
-                {
-                    RightChild = new BinarySearchTreeNode<TValue>(_comparer, value);
-                }
-                else
-                {
-                    RightChild.Add(value);
-                }
-            }
+
         }
     }
 }
