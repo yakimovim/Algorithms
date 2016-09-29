@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using EdlinSoftware.DataStructures.Graphs;
 using EdlinSoftware.DataStructures.Graphs.Trees;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -38,6 +39,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(1, 5, 2, 3, 4);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, _tree.ToArray());
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -46,6 +49,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(1, 5, 2, 2, 4, 4);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 2, 4, 4, 5 }, _tree.ToArray());
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -54,6 +59,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(1, 5, 2, 3, 4);
 
             Assert.IsTrue(new[] { 1, 2, 3, 4, 5 }.All(value => _tree.Contains(value)));
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -62,6 +69,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(1, 5, 2, 3, 4);
 
             Assert.IsTrue(new[] { 0, -2, 6, 10 }.All(value => !_tree.Contains(value)));
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -70,6 +79,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(1, 5, 2, 3, 4);
 
             Assert.IsTrue(new[] { 0, -2, 6, 10 }.All(value => !_tree.Remove(value)));
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -78,6 +89,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(1, 5, 2, 3, 4);
 
             Assert.IsTrue(new[] { 1, 2, 3, 4, 5 }.All(value => _tree.Remove(value)));
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -88,6 +101,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.Remove(1);
 
             Assert.IsFalse(_tree.Contains(1));
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -98,6 +113,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.Remove(8);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7 }, _tree.ToArray());
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -108,6 +125,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.Remove(6);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 7, 8 }, _tree.ToArray());
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -118,6 +137,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.Remove(6);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 7, 8 }, _tree.ToArray());
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -158,6 +179,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(2, 1, 3, 4, 5);
 
             Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -166,6 +189,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(2, 2, 2, 2, 2);
 
             Assert.AreEqual(2, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -174,6 +199,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(2, 1, 3, 1, 1);
 
             Assert.AreEqual(1, _tree.Root.FindNodeWithMinimalValue<int, BinarySearchTreeNode<int>>().Value);
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -182,6 +209,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(2, 1, 3, 4, 5);
 
             Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -190,6 +219,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(2, 2, 2, 2, 2);
 
             Assert.AreEqual(2, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -198,6 +229,8 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             _tree.AddRange(2, 5, 3, 1, 5);
 
             Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue<int, BinarySearchTreeNode<int>>().Value);
+
+            _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
         }
     }
 }

@@ -37,8 +37,34 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 _root = new AvlTreeNode<TValue>(Comparer, value, null, SetRoot);
             else
             {
-                _root.Add(value);
-                _root.Balance();
+                var nodeToAddTo = _root.FindNodeToAddTo(value, Comparer);
+
+                var newNode = new AvlTreeNode<TValue>(Comparer, value, nodeToAddTo, SetRoot);
+
+                if (Comparer.Compare(value, nodeToAddTo.Value) < 0)
+                {
+                    nodeToAddTo.LeftChild = newNode;
+                }
+                else
+                {
+                    nodeToAddTo.RightChild = newNode;
+                }
+
+                Rebalance(newNode);
+            }
+        }
+
+        private void Rebalance(AvlTreeNode<TValue> node)
+        {
+            while (node != null)
+            {
+                var parent = node.Parent;
+
+                node.Balance();
+
+                node.AdjustHeight();
+
+                node = parent;
             }
         }
 
@@ -49,29 +75,9 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <returns>True, if the tree contains the value. Otherwise, false.</returns>
         public override bool Contains(TValue value)
         {
-            return FindNodeByValue(value) != null;
-        }
+            var node = _root.FindNodeByValue(value, Comparer);
 
-        /// <summary>
-        /// Finds node by its value.
-        /// </summary>
-        /// <param name="value">Value of node.</param>
-        [CanBeNull]
-        private AvlTreeNode<TValue> FindNodeByValue(TValue value)
-        {
-            AvlTreeNode<TValue> node = _root;
-
-            while (node != null)
-            {
-                var comparison = Comparer.Compare(value, node.Value);
-
-                if (comparison == 0)
-                    break;
-
-                node = comparison < 0 ? node.LeftChild : node.RightChild;
-            }
-
-            return node;
+            return node != null && Comparer.Compare(node.Value, value) == 0;
         }
 
         /// <summary>
@@ -81,12 +87,12 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <returns>True, if value was removed. Otherwise, false.</returns>
         public override bool Remove(TValue value)
         {
-            var nodeToRemove = FindNodeByValue(value);
-            if (nodeToRemove == null)
+            var nodeToRemove = _root.FindNodeByValue(value, Comparer);
+            if (nodeToRemove == null || Comparer.Compare(nodeToRemove.Value, value) != 0)
                 return false;
 
             var parentOfNodeToRemove = nodeToRemove.Parent;
-            AvlTreeNode<TValue> balancingStartNode = null;
+            AvlTreeNode<TValue> balancingStartNode;
 
             if (nodeToRemove.IsLeaf())
             {
@@ -119,7 +125,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 }
             }
 
-            BalanceFrom(balancingStartNode);
+            Rebalance(balancingStartNode);
 
             return true;
         }
@@ -134,43 +140,9 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             return node;
         }
 
-        private void BalanceFrom([CanBeNull] AvlTreeNode<TValue> node)
-        {
-            if (node == null)
-                return;
-
-            var parent = node.Parent;
-            node.Balance();
-
-            BalanceFrom(parent);
-        }
-
         private ReplaceCommandFirstStep<AvlTreeNode<TValue>> Replace(AvlTreeNode<TValue> nodeToReplace)
         {
             return new ReplaceCommandFirstStep<AvlTreeNode<TValue>>(SetRoot, nodeToReplace);
-        }
-
-        /// <summary>
-        /// Checks if every node of the tree is balanced.
-        /// </summary>
-        /// <returns>True, if all nodes of the tree are balanced. False, otherwise.</returns>
-        internal bool IsBalanced()
-        {
-            return IsBalanced(_root);
-        }
-
-        /// <summary>
-        /// Checks if given node is balanced with its children.
-        /// </summary>
-        /// <returns>True, if given node is balanced with its children. False, otherwise.</returns>
-        private bool IsBalanced(AvlTreeNode<TValue> node)
-        {
-            if (node == null)
-                return true;
-
-            return node.State == TreeState.Balanced
-                   && IsBalanced(node.LeftChild)
-                   && IsBalanced(node.RightChild);
         }
 
         public override IEnumerator<TValue> GetEnumerator()

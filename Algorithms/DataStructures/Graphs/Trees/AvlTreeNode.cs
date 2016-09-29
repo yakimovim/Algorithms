@@ -32,6 +32,13 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
         public AvlTreeNode<TValue> Parent { get; internal set; }
 
+        public ulong Height { get; set; }
+
+        public void AdjustHeight()
+        {
+            Height = 1 + Math.Max(LeftChild?.Height ?? 0UL, RightChild?.Height ?? 0UL);
+        }
+
         public override AvlTreeNode<TValue> LeftChild
         {
             [DebuggerStepThrough]
@@ -111,6 +118,11 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
             RightChild = leftChildOfRightChild;
             rightChild.LeftChild = this;
+
+            leftChildOfRightChild?.AdjustHeight();
+            AdjustHeight();
+            rightChild.AdjustHeight();
+            Parent?.AdjustHeight();
         }
 
         private void RightRotation()
@@ -129,6 +141,11 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
             LeftChild = rightChildOfleftChild;
             leftChild.RightChild = this;
+
+            rightChildOfleftChild?.AdjustHeight();
+            AdjustHeight();
+            leftChild.AdjustHeight();
+            Parent?.AdjustHeight();
         }
 
         private void LeftRightRotation()
@@ -152,11 +169,11 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <summary>
         /// Gets height of the left child.
         /// </summary>
-        private ulong LeftHeight => LeftChild.GetHeight<TValue, AvlTreeNode<TValue>>();
+        private ulong LeftHeight => LeftChild?.Height ?? 0UL;
         /// <summary>
         /// Gets height of the right child.
         /// </summary>
-        private ulong RightHeight => RightChild.GetHeight<TValue, AvlTreeNode<TValue>>();
+        private ulong RightHeight => RightChild?.Height ?? 0UL;
         /// <summary>
         /// Gets balance factor.
         /// </summary>

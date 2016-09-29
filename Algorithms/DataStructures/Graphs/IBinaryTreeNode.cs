@@ -76,12 +76,10 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// <summary>
         /// Gets or sets left child of the node. Can be null.
         /// </summary>
-        [CanBeNull]
         public virtual TNode LeftChild { get; set; }
         /// <summary>
         /// Gets or sets right child of the node. Can be null.
         /// </summary>
-        [CanBeNull]
         public virtual TNode RightChild { get; set; }
 
         public IDictionary<string, object> Properties => _properties.Value;
@@ -149,6 +147,46 @@ namespace EdlinSoftware.DataStructures.Graphs
                 }
                 else
                     return node;
+            }
+        }
+
+        /// <summary>
+        /// Returns node to which given value should be added.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node value.</typeparam>
+        /// <typeparam name="TNode">Type of node.</typeparam>
+        /// <param name="node">Root node.</param>
+        /// <param name="value">Value to find.</param>
+        /// <param name="comparer">Comparer of values.</param>
+        /// <remarks>Applicable only to binary search trees.</remarks>
+        public static TNode FindNodeToAddTo<TValue, TNode>(
+            this TNode node,
+            TValue value,
+            [NotNull] IComparer<TValue> comparer)
+            where TNode : IBinaryTreeNode<TValue, TNode>
+        {
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+
+            if (node == null)
+                return default(TNode);
+
+            while (true)
+            {
+                var nodeValue = node.Value;
+                var comparison = comparer.Compare(value, nodeValue);
+
+                if (comparison < 0)
+                {
+                    if (node.LeftChild == null)
+                        return node;
+                    node = node.LeftChild;
+                }
+                else
+                {
+                    if (node.RightChild == null)
+                        return node;
+                    node = node.RightChild;
+                }
             }
         }
 
@@ -266,7 +304,7 @@ namespace EdlinSoftware.DataStructures.Graphs
                     if (node.Parent == null)
                         return default(TNode);
 
-                    if (object.ReferenceEquals(node.Parent.RightChild, node))
+                    if (ReferenceEquals(node.Parent.RightChild, node))
                         node = node.Parent;
                     else
                     {
@@ -308,7 +346,7 @@ namespace EdlinSoftware.DataStructures.Graphs
                     if (node.Parent == null)
                         return default(TNode);
 
-                    if (object.ReferenceEquals(node.Parent.LeftChild, node))
+                    if (ReferenceEquals(node.Parent.LeftChild, node))
                         node = node.Parent;
                     else
                     {

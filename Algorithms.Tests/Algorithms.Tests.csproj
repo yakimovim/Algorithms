@@ -106,6 +106,7 @@
     <Compile Include="DataStructures\Graphs\SearchElement.cs" />
     <Compile Include="DataStructures\Graphs\Trees\AvlTreeTest.cs" />
     <Compile Include="DataStructures\Graphs\Trees\BinarySearchTreeTest.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\TreeExtensions.cs" />
     <Compile Include="DataStructures\Graphs\UndirectedEdgeWithCost.cs" />
     <Compile Include="DataStructures\Heaps\BaseHeapTest.cs" />
     <Compile Include="DataStructures\Heaps\HeapTest.cs" />
