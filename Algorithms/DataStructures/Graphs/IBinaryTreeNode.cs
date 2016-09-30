@@ -385,14 +385,29 @@ namespace EdlinSoftware.DataStructures.Graphs
 
             var rangeNode = node.FindNodeByValue(from, comparer);
 
+            if (includeFrom)
+            {
+                var previousNode = rangeNode.Previous();
+                while (previousNode != null)
+                {
+                    if (comparer.Compare(@from, previousNode.Value) == 0)
+                        range.AddFirst(rangeNode.Value);
+                    else
+                        break;
+
+                    previousNode = previousNode.Previous();
+                }
+            }
+
             while (true)
             {
                 var comparisonTo = comparer.Compare(to, rangeNode.Value);
-                if(comparisonTo < 0)
+                if(comparisonTo < 0 || (!includeTo && comparisonTo == 0))
                     break;
 
 
-                if (comparer.Compare(from, rangeNode.Value) < 0)
+                var comparisonFrom = comparer.Compare(@from, rangeNode.Value);
+                if (comparisonFrom < 0 || (includeFrom && comparisonFrom == 0))
                     range.AddLast(rangeNode.Value);
 
                 rangeNode = rangeNode.Next();

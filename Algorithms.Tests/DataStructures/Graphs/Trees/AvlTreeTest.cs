@@ -340,5 +340,55 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
 
             Assert.IsNull(node.Previous());
         }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void RangeSearch_NoData()
+        {
+            _tree.AddRange(1, 2, 6, 7, 8);
+
+            var range = _tree.Root.RangeSearch(3, 5, Comparer<int>.Default);
+
+            Assert.AreEqual(0, range.Length);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void RangeSearch_ExcludeBorders_DifferentData()
+        {
+            _tree.AddRange(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+            var range = _tree.Root.RangeSearch(3, 7, Comparer<int>.Default);
+
+            CollectionAssert.AreEqual(new[] { 4, 5, 6 }, range);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void RangeSearch_IncludeBorders_DifferentData()
+        {
+            _tree.AddRange(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+            var range = _tree.Root.RangeSearch(3, 7, Comparer<int>.Default, true, true);
+
+            CollectionAssert.AreEqual(new[] { 3, 4, 5, 6, 7 }, range);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void RangeSearch_ExcludeBorders_SameData()
+        {
+            _tree.AddRange(3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7);
+
+            var range = _tree.Root.RangeSearch(3, 7, Comparer<int>.Default);
+
+            CollectionAssert.AreEqual(new[] { 4, 5, 6 }, range);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void RangeSearch_IncludeBorders_SameData()
+        {
+            _tree.AddRange(1, 2, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 8, 9);
+
+            var range = _tree.Root.RangeSearch(3, 7, Comparer<int>.Default, true, true);
+
+            CollectionAssert.AreEqual(new[] { 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7 }, range);
+        }
     }
 }
