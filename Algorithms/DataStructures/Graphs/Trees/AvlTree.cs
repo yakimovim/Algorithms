@@ -74,6 +74,15 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             return new AvlTree<TValue>(newRoot, comparer);
         }
 
+        /// <summary>
+        /// Merges two trees represented by roots into common root.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="leftTreeRoot">Left tree root.</param>
+        /// <param name="rightTreeRoot">Right tree root.</param>
+        /// <param name="mergedTreeRoot">Common root.</param>
+        /// <returns>Returns root of merged tree.</returns>
+
         private static AvlTreeNode<TValue> MergeWithRoot<TValue>(
             AvlTreeNode<TValue> leftTreeRoot,
             AvlTreeNode<TValue> rightTreeRoot,
@@ -162,6 +171,12 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             throw new InvalidOperationException("This situation should never occur.");
         }
 
+        /// <summary>
+        /// Returns absolute difference between heights of two AVL nodes.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="node1">First node.</param>
+        /// <param name="node2">Second node.</param>
         private static long HeightDistance<TValue>(AvlTreeNode<TValue> node1,
             AvlTreeNode<TValue> node2)
         {

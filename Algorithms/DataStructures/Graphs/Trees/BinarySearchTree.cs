@@ -35,7 +35,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <param name="rightTree">Right tree.</param>
         /// <param name="comparer">Comparer of values.</param>
         public static BinarySearchTree<TValue> Merge<TValue>(
-            BinarySearchTree<TValue> leftTree, 
+            BinarySearchTree<TValue> leftTree,
             BinarySearchTree<TValue> rightTree,
             [NotNull] IComparer<TValue> comparer)
         {
@@ -51,6 +51,48 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             var mergedTreeRoot = new BinarySearchTreeNode<TValue>(comparer, maxNode.Value);
             MergeWithRoot<TValue, BinarySearchTreeNode<TValue>>(leftTree.Root, rightTree.Root, mergedTreeRoot);
             return new BinarySearchTree<TValue>(mergedTreeRoot, comparer);
+        }
+
+        internal static Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>> Split<TValue>(
+            BinarySearchTreeNode<TValue> root,
+            TValue splitValue,
+            [NotNull] IComparer<TValue> comparer)
+        {
+            if(root == null)
+                return new Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>>(null, null);
+
+            if (comparer.Compare(splitValue, root.Value) < 0)
+            {
+                var splitRoots = Split(root.LeftChild, splitValue, comparer);
+
+                MergeWithRoot<TValue, BinarySearchTreeNode<TValue>>(splitRoots.Item2, root.RightChild, root);
+
+                return new Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>>(splitRoots.Item1, root);
+            }
+            else
+            {
+                var splitRoots = Split(root.RightChild, splitValue, comparer);
+
+                MergeWithRoot<TValue, BinarySearchTreeNode<TValue>>(root.LeftChild, splitRoots.Item1, root);
+
+                return new Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>>(root, splitRoots.Item2);
+            }
+        }
+
+        public static Tuple<BinarySearchTree<TValue>, BinarySearchTree<TValue>> Split<TValue>(
+            BinarySearchTree<TValue> tree, TValue splitValue,
+            [NotNull] IComparer<TValue> comparer)
+        {
+            if (tree?.Root == null)
+                return new Tuple<BinarySearchTree<TValue>, BinarySearchTree<TValue>>(null, null);
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+
+            var splitRoots = Split(tree.Root, splitValue, comparer);
+
+            return new Tuple<BinarySearchTree<TValue>, BinarySearchTree<TValue>>(
+                new BinarySearchTree<TValue>(splitRoots.Item1, comparer),
+                new BinarySearchTree<TValue>(splitRoots.Item2, comparer)
+                );
         }
     }
 

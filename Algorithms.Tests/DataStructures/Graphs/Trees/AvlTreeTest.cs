@@ -613,5 +613,25 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
 
             CollectionAssert.AreEqual(new[] { 1 }, mergedTree.ToArray());
         }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_OverlappingTrees()
+        {
+            var leftTree = new AvlTree<int>
+            {
+                1,2,2,3,4,4,4,5,5
+            };
+            var rightTree = new AvlTree<int>
+            {
+                5,5,6,7,7,7,8,8
+            };
+
+            var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+
+            Assert.IsTrue(mergedTree.Root.IsBalanced());
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+
+            CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 7, 7, 7, 8, 8 }, mergedTree.ToArray());
+        }
     }
 }
