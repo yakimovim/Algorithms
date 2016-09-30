@@ -53,6 +53,14 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             return new BinarySearchTree<TValue>(mergedTreeRoot, comparer);
         }
 
+        /// <summary>
+        /// Splits binary search tree in two. In the left tree all values will be less then
+        /// <paramref name="splitValue"/>, in the right tree they will be greater or equal.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="root">Root of tree to split.</param>
+        /// <param name="splitValue">Value to split by.</param>
+        /// <param name="comparer">Comparer of values.</param>
         internal static Tuple<BinarySearchTreeNode<TValue>, BinarySearchTreeNode<TValue>> Split<TValue>(
             BinarySearchTreeNode<TValue> root,
             TValue splitValue,
@@ -79,6 +87,14 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             }
         }
 
+        /// <summary>
+        /// Splits binary search tree in two. In the left tree all values will be less then
+        /// <paramref name="splitValue"/>, in the right tree they will be greater or equal.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="tree">Tree to split.</param>
+        /// <param name="splitValue">Value to split by.</param>
+        /// <param name="comparer">Comparer of values.</param>
         public static Tuple<BinarySearchTree<TValue>, BinarySearchTree<TValue>> Split<TValue>(
             BinarySearchTree<TValue> tree, TValue splitValue,
             [NotNull] IComparer<TValue> comparer)

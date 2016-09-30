@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using JetBrains.Annotations;
 
 namespace EdlinSoftware.DataStructures.Graphs.Trees
@@ -129,16 +131,18 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 var subRoot = leftTreeRoot;
                 while (HeightDistance(subRoot, rightTreeRoot) > 1)
                 {
+                    Contract.Assume(subRoot != null);
                     subRoot = subRoot.RightChild;
                 }
 
+                Contract.Assume(subRoot != null);
                 var subRootParent = subRoot.Parent;
 
                 MergeWithRoot<TValue, AvlTreeNode<TValue>>(subRoot, rightTreeRoot, mergedTreeRoot);
                 mergedTreeRoot.Height = 1 + Math.Max(subRoot.Height, rightTreeRoot.Height);
 
-                if(subRootParent != null)
-                { subRootParent.RightChild = mergedTreeRoot;}
+                if (subRootParent != null)
+                { subRootParent.RightChild = mergedTreeRoot; }
                 mergedTreeRoot.Parent = subRootParent;
 
                 mergedTreeRoot.Rebalance();
@@ -151,9 +155,11 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                 var subRoot = rightTreeRoot;
                 while (HeightDistance(leftTreeRoot, subRoot) > 1)
                 {
+                    Contract.Assume(subRoot != null);
                     subRoot = subRoot.LeftChild;
                 }
 
+                Contract.Assume(subRoot != null);
                 var subRootParent = subRoot.Parent;
 
                 MergeWithRoot<TValue, AvlTreeNode<TValue>>(leftTreeRoot, subRoot, mergedTreeRoot);
@@ -177,10 +183,68 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <typeparam name="TValue">Type of node values.</typeparam>
         /// <param name="node1">First node.</param>
         /// <param name="node2">Second node.</param>
-        private static long HeightDistance<TValue>(AvlTreeNode<TValue> node1,
+        private static ulong HeightDistance<TValue>(AvlTreeNode<TValue> node1,
             AvlTreeNode<TValue> node2)
         {
-            return Math.Abs((long) node1.Height - (long) node2.Height);
+            return (ulong)Math.Abs((long)node1.Height - (long)node2.Height);
+        }
+
+        /// <summary>
+        /// Splits binary search tree in two. In the left tree all values will be less then
+        /// <paramref name="splitValue"/>, in the right tree they will be greater or equal.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="root">Root of tree to split.</param>
+        /// <param name="splitValue">Value to split by.</param>
+        /// <param name="comparer">Comparer of values.</param>
+        internal static Tuple<AvlTreeNode<TValue>, AvlTreeNode<TValue>> Split<TValue>(
+            AvlTreeNode<TValue> root,
+            TValue splitValue,
+            [NotNull] IComparer<TValue> comparer)
+        {
+            if (root == null)
+                return new Tuple<AvlTreeNode<TValue>, AvlTreeNode<TValue>>(null, null);
+
+            if (comparer.Compare(splitValue, root.Value) < 0)
+            {
+                var splitRoots = Split(root.LeftChild, splitValue, comparer);
+
+                MergeWithRoot<TValue, AvlTreeNode<TValue>>(splitRoots.Item2, root.RightChild, root);
+
+                return new Tuple<AvlTreeNode<TValue>, AvlTreeNode<TValue>>(splitRoots.Item1, root);
+            }
+            else
+            {
+                var splitRoots = Split(root.RightChild, splitValue, comparer);
+
+                MergeWithRoot<TValue, AvlTreeNode<TValue>>(root.LeftChild, splitRoots.Item1, root);
+
+                return new Tuple<AvlTreeNode<TValue>, AvlTreeNode<TValue>>(root, splitRoots.Item2);
+            }
+        }
+
+        /// <summary>
+        /// Splits binary search tree in two. In the left tree all values will be less then
+        /// <paramref name="splitValue"/>, in the right tree they will be greater or equal.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="tree">Tree to split.</param>
+        /// <param name="splitValue">Value to split by.</param>
+        /// <param name="comparer">Comparer of values.</param>
+        public static Tuple<AvlTree<TValue>, AvlTree<TValue>> Split<TValue>(
+            AvlTree<TValue> tree, TValue splitValue,
+            [NotNull] IComparer<TValue> comparer)
+        {
+            if (tree?.Root == null)
+                return new Tuple<AvlTree<TValue>, AvlTree<TValue>>(null, null);
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+
+            var splitRoots = Split(tree.Root, splitValue, comparer);
+
+            return new Tuple<AvlTree<TValue>, AvlTree<TValue>>(
+                new AvlTree<TValue>(splitRoots.Item1, comparer),
+                new AvlTree<TValue>(splitRoots.Item2, comparer)
+                );
         }
     }
 
@@ -236,7 +300,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             }
         }
 
-        
+
         /// <summary>
         /// Checks if the tree contains the value;
         /// </summary>
