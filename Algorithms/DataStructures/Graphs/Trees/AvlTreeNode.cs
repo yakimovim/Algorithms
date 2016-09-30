@@ -9,7 +9,6 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
     internal class AvlTreeNode<TValue> : BinaryTreeNodeBase<AvlTreeNode<TValue>, TValue>, IParented<AvlTreeNode<TValue>>
     {
         private readonly IComparer<TValue> _comparer;
-        private readonly Action<AvlTreeNode<TValue>> _setTreeRoot;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AvlTreeNode<TValue> _leftChild;
@@ -17,17 +16,15 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         private AvlTreeNode<TValue> _rightChild;
 
         public AvlTreeNode(
-            [NotNull] IComparer<TValue> comparer, 
-            TValue value, 
-            AvlTreeNode<TValue> parent,
-            [NotNull] Action<AvlTreeNode<TValue>> setTreeRoot)
+            [NotNull] IComparer<TValue> comparer,
+            TValue value,
+            AvlTreeNode<TValue> parent)
         {
             if (comparer == null) throw new ArgumentNullException(nameof(comparer));
-            if (setTreeRoot == null) throw new ArgumentNullException(nameof(setTreeRoot));
             _comparer = comparer;
-            _setTreeRoot = setTreeRoot;
             Parent = parent;
             Value = value;
+            Height = 1;
         }
 
         public AvlTreeNode<TValue> Parent { get; internal set; }
@@ -110,12 +107,12 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             var leftChildOfRightChild = RightChild.LeftChild;
 
             if (Parent == null)
-                _setTreeRoot(rightChild);
+                rightChild.Parent = null;
             else if (Parent.LeftChild == this)
                 Parent.LeftChild = rightChild;
             else
                 Parent.RightChild = rightChild;
-
+            
             RightChild = leftChildOfRightChild;
             rightChild.LeftChild = this;
 
@@ -133,7 +130,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             var rightChildOfleftChild = LeftChild.RightChild;
 
             if (Parent == null)
-                _setTreeRoot(leftChild);
+                leftChild.Parent = null;
             else if (Parent.LeftChild == this)
                 Parent.LeftChild = leftChild;
             else
@@ -177,7 +174,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <summary>
         /// Gets balance factor.
         /// </summary>
-        private long BalanceFactor => (long) RightHeight - (long) LeftHeight;
+        private long BalanceFactor => (long)RightHeight - (long)LeftHeight;
         /// <summary>
         /// Gets state of the tree starting from this node.
         /// </summary>
@@ -185,9 +182,9 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         {
             get
             {
-                if(BalanceFactor > 1)
+                if (BalanceFactor > 1)
                     return TreeState.RightHeavy;
-                if(BalanceFactor < -1)
+                if (BalanceFactor < -1)
                     return TreeState.LeftHeavy;
                 return TreeState.Balanced;
             }
@@ -206,7 +203,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             {
                 if (LeftChild == null)
                 {
-                    LeftChild = new AvlTreeNode<TValue>(_comparer, value, this, _setTreeRoot);
+                    LeftChild = new AvlTreeNode<TValue>(_comparer, value, this);
                 }
                 else
                 {
@@ -218,7 +215,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             {
                 if (RightChild == null)
                 {
-                    RightChild = new AvlTreeNode<TValue>(_comparer, value, this, _setTreeRoot);
+                    RightChild = new AvlTreeNode<TValue>(_comparer, value, this);
                 }
                 else
                 {

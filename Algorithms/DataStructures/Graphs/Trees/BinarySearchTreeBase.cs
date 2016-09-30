@@ -16,18 +16,17 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             private readonly Action<TNode> _setTreeRoot;
             private readonly TNode _nodeToReplace;
 
-            public ReplaceCommandFirstStep([NotNull] Action<TNode> setTreeRoot,
-                [NotNull] TNode nodeToReplace)
+            public ReplaceCommandFirstStep([NotNull] TNode nodeToReplace, [NotNull] Action<TNode> setTreeRoot)
             {
-                if (setTreeRoot == null) throw new ArgumentNullException(nameof(setTreeRoot));
                 if (nodeToReplace == null) throw new ArgumentNullException(nameof(nodeToReplace));
+                if (setTreeRoot == null) throw new ArgumentNullException(nameof(setTreeRoot));
                 _setTreeRoot = setTreeRoot;
                 _nodeToReplace = nodeToReplace;
             }
 
             public ReplaceCommandLastStep<TNode> At([CanBeNull] TNode parentOfNodeToReplace)
             {
-                return new ReplaceCommandLastStep<TNode>(_setTreeRoot, _nodeToReplace, parentOfNodeToReplace);
+                return new ReplaceCommandLastStep<TNode>(_nodeToReplace, parentOfNodeToReplace, _setTreeRoot);
             }
         }
 
@@ -38,12 +37,11 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             private readonly TNode _nodeToReplace;
             private readonly TNode _parentOfNodeToReplace;
 
-            public ReplaceCommandLastStep([NotNull] Action<TNode> setTreeRoot,
-                [NotNull] TNode nodeToReplace, 
-                TNode parentOfNodeToReplace)
+            public ReplaceCommandLastStep([NotNull] TNode nodeToReplace, TNode parentOfNodeToReplace,
+                [NotNull] Action<TNode> setTreeRoot)
             {
-                if (setTreeRoot == null) throw new ArgumentNullException(nameof(setTreeRoot));
                 if (nodeToReplace == null) throw new ArgumentNullException(nameof(nodeToReplace));
+                if (setTreeRoot == null) throw new ArgumentNullException(nameof(setTreeRoot));
                 _setTreeRoot = setTreeRoot;
                 _nodeToReplace = nodeToReplace;
                 _parentOfNodeToReplace = parentOfNodeToReplace;

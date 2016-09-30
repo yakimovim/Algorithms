@@ -5,6 +5,56 @@ using JetBrains.Annotations;
 namespace EdlinSoftware.DataStructures.Graphs.Trees
 {
     /// <summary>
+    /// Contains methods for work with binary search tree.
+    /// </summary>
+    public static class BinarySearchTree
+    {
+        /// <summary>
+        /// Merges two trees into existing root.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <typeparam name="TNode">Type of node.</typeparam>
+        /// <param name="leftTreeRoot">Root of left tree.</param>
+        /// <param name="rightTreeRoot">Root of right tree.</param>
+        /// <param name="mergedTreeRoot">Root of merged tree.</param>
+        internal static void MergeWithRoot<TValue, TNode>(TNode leftTreeRoot, TNode rightTreeRoot,
+            [NotNull] TNode mergedTreeRoot)
+            where TNode : BinarySearchTreeNode<TValue>
+        {
+            if (mergedTreeRoot == null) throw new ArgumentNullException(nameof(mergedTreeRoot));
+
+            mergedTreeRoot.LeftChild = leftTreeRoot;
+            mergedTreeRoot.RightChild = rightTreeRoot;
+        }
+
+        /// <summary>
+        /// Merges two trees into existing root.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="leftTree">Left tree.</param>
+        /// <param name="rightTree">Right tree.</param>
+        /// <param name="comparer">Comparer of values.</param>
+        public static BinarySearchTree<TValue> Merge<TValue>(
+            BinarySearchTree<TValue> leftTree, 
+            BinarySearchTree<TValue> rightTree,
+            [NotNull] IComparer<TValue> comparer)
+        {
+            if (leftTree?.Root == null)
+                return rightTree;
+            if (rightTree?.Root == null)
+                return leftTree;
+            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+
+            var maxNode = leftTree.Root.FindNodeWithMaximalValue();
+            leftTree.Remove(maxNode.Value);
+
+            var mergedTreeRoot = new BinarySearchTreeNode<TValue>(comparer, maxNode.Value);
+            MergeWithRoot<TValue, BinarySearchTreeNode<TValue>>(leftTree.Root, rightTree.Root, mergedTreeRoot);
+            return new BinarySearchTree<TValue>(mergedTreeRoot, comparer);
+        }
+    }
+
+    /// <summary>
     /// Represents binary search tree.
     /// </summary>
     /// <typeparam name="TValue">Type of node values.</typeparam>
@@ -21,6 +71,12 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
         public BinarySearchTree()
         { }
+
+        internal BinarySearchTree(BinarySearchTreeNode<TValue> root, [NotNull] IComparer<TValue> comparer)
+            : this(comparer)
+        {
+            _root = root;
+        }
 
         /// <summary>
         /// Adds value to the tree.
@@ -136,7 +192,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
         private ReplaceCommandFirstStep<BinarySearchTreeNode<TValue>> Replace(BinarySearchTreeNode<TValue> nodeToReplace)
         {
-            return new ReplaceCommandFirstStep<BinarySearchTreeNode<TValue>>(SetRoot, nodeToReplace);
+            return new ReplaceCommandFirstStep<BinarySearchTreeNode<TValue>>(nodeToReplace, SetRoot);
         }
 
         private void SetRoot(BinarySearchTreeNode<TValue> node)

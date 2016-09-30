@@ -30,7 +30,7 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         {
             _tree.Add(1);
 
-            CollectionAssert.AreEqual(new [] { 1 }, _tree.ToArray());
+            CollectionAssert.AreEqual(new[] { 1 }, _tree.ToArray());
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -231,6 +231,44 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             Assert.AreEqual(5, _tree.Root.FindNodeWithMaximalValue().Value);
 
             _tree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_TreesWithDifferentValues()
+        {
+            var leftTree = new BinarySearchTree<int>
+            {
+                1,2,3,4
+            };
+            var rightTree = new BinarySearchTree<int>
+            {
+                5,6,7,8
+            };
+
+            var mergedTree = BinarySearchTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, mergedTree.ToArray());
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_TreesWithSameValues()
+        {
+            var leftTree = new BinarySearchTree<int>
+            {
+                1,2,2,3,4,4,4
+            };
+            var rightTree = new BinarySearchTree<int>
+            {
+                5,5,6,7,7,7,8,8
+            };
+
+            var mergedTree = BinarySearchTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+
+            CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8 }, mergedTree.ToArray());
         }
     }
 }

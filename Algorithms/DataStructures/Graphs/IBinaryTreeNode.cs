@@ -604,5 +604,23 @@ namespace EdlinSoftware.DataStructures.Graphs
 
             return presentation.ToArray();
         }
+
+        /// <summary>
+        /// Returns root of tree to which the <paramref name="node"/> belongs to.
+        /// </summary>
+        /// <typeparam name="TNode">Type of node.</typeparam>
+        /// <param name="node">Node of tree.</param>
+        public static TNode GetTreeRoot<TNode>([NotNull] this TNode node)
+            where TNode : IParented<TNode>
+        {
+            if (node == null) throw new ArgumentNullException(nameof(node));
+
+            while (node.Parent != null)
+            {
+                node = node.Parent;
+            }
+
+            return node;
+        }
     }
 }
