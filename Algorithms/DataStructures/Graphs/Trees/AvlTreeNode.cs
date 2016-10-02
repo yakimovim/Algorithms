@@ -1,27 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-using JetBrains.Annotations;
 
 namespace EdlinSoftware.DataStructures.Graphs.Trees
 {
     internal class AvlTreeNode<TValue> : BinaryTreeNodeBase<AvlTreeNode<TValue>, TValue>, IParented<AvlTreeNode<TValue>>
     {
-        private readonly IComparer<TValue> _comparer;
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AvlTreeNode<TValue> _leftChild;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AvlTreeNode<TValue> _rightChild;
 
         public AvlTreeNode(
-            [NotNull] IComparer<TValue> comparer,
             TValue value,
             AvlTreeNode<TValue> parent)
         {
-            if (comparer == null) throw new ArgumentNullException(nameof(comparer));
-            _comparer = comparer;
             Parent = parent;
             Value = value;
             Height = 1;
@@ -191,39 +184,6 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         }
 
         AvlTreeNode<TValue> IParented<AvlTreeNode<TValue>>.Parent => Parent;
-
-
-        /// <summary>
-        /// Adds value to the tree with this node as a root.
-        /// </summary>
-        /// <param name="value">Value to add.</param>
-        public void Add(TValue value)
-        {
-            if (_comparer.Compare(value, Value) < 0)
-            {
-                if (LeftChild == null)
-                {
-                    LeftChild = new AvlTreeNode<TValue>(_comparer, value, this);
-                }
-                else
-                {
-                    LeftChild.Add(value);
-                    LeftChild.Balance();
-                }
-            }
-            else
-            {
-                if (RightChild == null)
-                {
-                    RightChild = new AvlTreeNode<TValue>(_comparer, value, this);
-                }
-                else
-                {
-                    RightChild.Add(value);
-                    RightChild.Balance();
-                }
-            }
-        }
     }
 
 

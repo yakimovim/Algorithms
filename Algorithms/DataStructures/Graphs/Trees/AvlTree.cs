@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using JetBrains.Annotations;
 
@@ -38,7 +37,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <param name="leftTreeRoot">Root of left tree.</param>
         /// <param name="rightTreeRoot">Root of right tree.</param>
         /// <param name="mergedTreeRoot">Root of merged tree.</param>
-        internal static void MergeWithRoot<TValue, TNode>(TNode leftTreeRoot, TNode rightTreeRoot,
+        private static void MergeWithRoot<TValue, TNode>(TNode leftTreeRoot, TNode rightTreeRoot,
             [NotNull] TNode mergedTreeRoot)
             where TNode : AvlTreeNode<TValue>
         {
@@ -69,7 +68,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             var maxNode = leftTree.Root.FindNodeWithMaximalValue();
             leftTree.Remove(maxNode.Value);
 
-            var mergedTreeRoot = new AvlTreeNode<TValue>(comparer, maxNode.Value, null);
+            var mergedTreeRoot = new AvlTreeNode<TValue>(maxNode.Value, null);
 
             var newRoot = MergeWithRoot(leftTree.Root, rightTree.Root, mergedTreeRoot);
 
@@ -197,7 +196,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         /// <param name="root">Root of tree to split.</param>
         /// <param name="splitValue">Value to split by.</param>
         /// <param name="comparer">Comparer of values.</param>
-        internal static Tuple<AvlTreeNode<TValue>, AvlTreeNode<TValue>> Split<TValue>(
+        private static Tuple<AvlTreeNode<TValue>, AvlTreeNode<TValue>> Split<TValue>(
             AvlTreeNode<TValue> root,
             TValue splitValue,
             [NotNull] IComparer<TValue> comparer)
@@ -278,12 +277,12 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         public override void Add(TValue value)
         {
             if (_root == null)
-                _root = new AvlTreeNode<TValue>(Comparer, value, null);
+                _root = new AvlTreeNode<TValue>(value, null);
             else
             {
                 var nodeToAddTo = _root.FindNodeToAddTo(value, Comparer);
 
-                var newNode = new AvlTreeNode<TValue>(Comparer, value, nodeToAddTo);
+                var newNode = new AvlTreeNode<TValue>(value, nodeToAddTo);
 
                 if (Comparer.Compare(value, nodeToAddTo.Value) < 0)
                 {
