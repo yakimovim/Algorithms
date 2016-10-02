@@ -376,248 +376,235 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
             CollectionAssert.AreEqual(new[] { 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7 }, range);
         }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_TreesWithDifferentValues()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1,2,3,4
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        5,6,7,8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_TreesWithDifferentValues()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1,2,3,4
+            };
+            var rightTree = new SplayTree<int>
+            {
+                5,6,7,8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_TreesWithSameValues()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1,2,2,3,4,4,4
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        5,5,6,7,7,7,8,8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_TreesWithSameValues()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1,2,2,3,4,4,4
+            };
+            var rightTree = new SplayTree<int>
+            {
+                5,5,6,7,7,7,8,8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_LeftTreeIsSmaller()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1,2
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        3,3,3,3,4,4,4,5,6,6,6,6,6,7,8,8,8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_LeftTreeIsSmaller()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1,2
+            };
+            var rightTree = new SplayTree<int>
+            {
+                3,3,3,3,4,4,4,5,6,6,6,6,6,7,8,8,8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_LeftTreeHasOneElement()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        3,3,3,3,4,4,4,5,6,6,6,6,6,7,8,8,8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_LeftTreeHasOneElement()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1
+            };
+            var rightTree = new SplayTree<int>
+            {
+                3,3,3,3,4,4,4,5,6,6,6,6,6,7,8,8,8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_LeftTreeIsEmpty()
-        //{
-        //    var leftTree = new AvlTree<int>();
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        3,3,3,3,4,4,4,5,6,6,6,6,6,7,8,8,8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_LeftTreeIsEmpty()
+        {
+            var leftTree = new SplayTree<int>();
+            var rightTree = new SplayTree<int>
+            {
+                3,3,3,3,4,4,4,5,6,6,6,6,6,7,8,8,8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_RightTreeIsSmaller()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1,2,3,3,3,3,4,4,4,5,6,6,6,6,6,7,8
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        8,8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_RightTreeIsSmaller()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1,2,3,3,3,3,4,4,4,5,6,6,6,6,6,7,8
+            };
+            var rightTree = new SplayTree<int>
+            {
+                8,8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_RightTreeHasOneElement()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1,2,3,3,3,3,4,4,4,5,6,6,6,6,6,7,8
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_RightTreeHasOneElement()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1,2,3,3,3,3,4,4,4,5,6,6,6,6,6,7,8
+            };
+            var rightTree = new SplayTree<int>
+            {
+                8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_RightTreeIsEmpty()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1,2,3,3,3,3,4,4,4,5,6,6,6,6,6,7,8
-        //    };
-        //    var rightTree = new AvlTree<int>();
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_RightTreeIsEmpty()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1,2,3,3,3,3,4,4,4,5,6,6,6,6,6,7,8
+            };
+            var rightTree = new SplayTree<int>();
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 7, 8 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_OneElementInEachTree()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        1
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_OneElementInEachTree()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1
+            };
+            var rightTree = new SplayTree<int>
+            {
+                1
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 1 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 1 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_EmptyTrees()
-        //{
-        //    var leftTree = new AvlTree<int>();
-        //    var rightTree = new AvlTree<int>();
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_EmptyTrees()
+        {
+            var leftTree = new SplayTree<int>();
+            var rightTree = new SplayTree<int>();
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new int[0], mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new int[0], mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_OnlyOneElementInLeftTree()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1
-        //    };
-        //    var rightTree = new AvlTree<int>();
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_OnlyOneElementInLeftTree()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1
+            };
+            var rightTree = new SplayTree<int>();
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_OnlyOneElementInRightTree()
-        //{
-        //    var leftTree = new AvlTree<int>();
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        1
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_OnlyOneElementInRightTree()
+        {
+            var leftTree = new SplayTree<int>();
+            var rightTree = new SplayTree<int>
+            {
+                1
+            };
 
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1 }, mergedTree.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Merge_OverlappingTrees()
-        //{
-        //    var leftTree = new AvlTree<int>
-        //    {
-        //        1,2,2,3,4,4,4,5,5
-        //    };
-        //    var rightTree = new AvlTree<int>
-        //    {
-        //        5,5,6,7,7,7,8,8
-        //    };
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Merge_OverlappingTrees()
+        {
+            var leftTree = new SplayTree<int>
+            {
+                1,2,2,3,4,4,4,5,5
+            };
+            var rightTree = new SplayTree<int>
+            {
+                5,5,6,7,7,7,8,8
+            };
 
-        //    var mergedTree = AvlTree.Merge(leftTree, rightTree, Comparer<int>.Default);
+            var mergedTree = SplayTree.Merge(leftTree, rightTree, Comparer<int>.Default);
 
-        //    Assert.IsTrue(mergedTree.Root.IsBalanced());
-        //    mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            mergedTree.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 7, 7, 7, 8, 8 }, mergedTree.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 7, 7, 7, 8, 8 }, mergedTree.ToArray());
+        }
 
         [TestMethod, Owner("Ivan Yakimov")]
         public void Split_TreeWithDifferentValues()

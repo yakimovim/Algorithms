@@ -190,6 +190,31 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
                     new SplayTree<TValue>(rightTreeRoot, comparer));
             }
         }
+
+        /// <summary>
+        /// Merges two trees.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="leftTree">Left tree.</param>
+        /// <param name="rightTree">Right tree.</param>
+        /// <param name="comparer">Comparer of values.</param>
+        public static SplayTree<TValue> Merge<TValue>(
+            SplayTree<TValue> leftTree,
+            SplayTree<TValue> rightTree,
+            [NotNull] IComparer<TValue> comparer)
+        {
+            if (leftTree?.Root == null)
+                return rightTree;
+            if (rightTree?.Root == null)
+                return leftTree;
+
+            var maxNode = leftTree.Root.FindNodeWithMaximalValue();
+            leftTree.Splay(maxNode);
+            if(maxNode.RightChild != null)
+                throw new InvalidOperationException("There should be no right child of the maximim node in the binary search tree");
+            maxNode.RightChild = rightTree.Root;
+            return new SplayTree<TValue>(maxNode, comparer);
+        }
     }
 
 
@@ -213,7 +238,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             _root = root;
         }
 
-        private void Splay(SplayTreeNode<TValue> node)
+        internal void Splay(SplayTreeNode<TValue> node)
         {
             if (node == null)
                 return;

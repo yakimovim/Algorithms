@@ -48,7 +48,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         }
 
         /// <summary>
-        /// Merges two trees into existing root.
+        /// Merges two trees.
         /// </summary>
         /// <typeparam name="TValue">Type of node values.</typeparam>
         /// <param name="leftTree">Left tree.</param>
