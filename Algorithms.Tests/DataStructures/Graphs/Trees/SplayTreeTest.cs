@@ -619,60 +619,60 @@ namespace EdlinSoftware.Tests.DataStructures.Graphs.Trees
         //    CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 6, 7, 7, 7, 8, 8 }, mergedTree.ToArray());
         //}
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Split_TreeWithDifferentValues()
-        //{
-        //    _tree.AddRange(1, 2, 3, 4, 6, 7, 8, 9);
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Split_TreeWithDifferentValues()
+        {
+            _tree.AddRange(1, 2, 3, 4, 6, 7, 8, 9);
 
-        //    var splitTrees = AvlTree.Split(_tree, 5, Comparer<int>.Default);
+            var splitTrees = SplayTree.Split(_tree, 5, Comparer<int>.Default);
 
-        //    splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
-        //    splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 3, 4 }, splitTrees.Item1.ToArray());
-        //    CollectionAssert.AreEqual(new[] { 6, 7, 8, 9 }, splitTrees.Item2.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4 }, splitTrees.Item1.ToArray());
+            CollectionAssert.AreEqual(new[] { 6, 7, 8, 9 }, splitTrees.Item2.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Split_TreeWithSameValues()
-        //{
-        //    _tree.AddRange(1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9);
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Split_TreeWithSameValues()
+        {
+            _tree.AddRange(1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9);
 
-        //    var splitTrees = AvlTree.Split(_tree, 5, Comparer<int>.Default);
+            var splitTrees = SplayTree.Split(_tree, 5, Comparer<int>.Default);
 
-        //    splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
-        //    splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 5, 5, 5 }, splitTrees.Item1.ToArray());
-        //    CollectionAssert.AreEqual(new[] { 6, 7, 8, 9, 9 }, splitTrees.Item2.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 5, 5, 5 }, splitTrees.Item1.ToArray());
+            CollectionAssert.AreEqual(new[] { 6, 7, 8, 9, 9 }, splitTrees.Item2.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Split_ByLower()
-        //{
-        //    _tree.AddRange(1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9);
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Split_ByLower()
+        {
+            _tree.AddRange(1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9);
 
-        //    var splitTrees = AvlTree.Split(_tree, 0, Comparer<int>.Default);
+            var splitTrees = SplayTree.Split(_tree, 0, Comparer<int>.Default);
 
-        //    splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
-        //    splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new int[0], splitTrees.Item1.ToArray());
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9 }, splitTrees.Item2.ToArray());
-        //}
+            CollectionAssert.AreEqual(new int[0], splitTrees.Item1.ToArray());
+            CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9 }, splitTrees.Item2.ToArray());
+        }
 
-        //[TestMethod, Owner("Ivan Yakimov")]
-        //public void Split_ByUpper()
-        //{
-        //    _tree.AddRange(1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9);
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void Split_ByUpper()
+        {
+            _tree.AddRange(1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9);
 
-        //    var splitTrees = AvlTree.Split(_tree, 10, Comparer<int>.Default);
+            var splitTrees = SplayTree.Split(_tree, 10, Comparer<int>.Default);
 
-        //    splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
-        //    splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item1.Root.CheckBinarySearchTree(Comparer<int>.Default);
+            splitTrees.Item2.Root.CheckBinarySearchTree(Comparer<int>.Default);
 
-        //    CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9 }, splitTrees.Item1.ToArray());
-        //    CollectionAssert.AreEqual(new int[0], splitTrees.Item2.ToArray());
-        //}
+            CollectionAssert.AreEqual(new[] { 1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 9 }, splitTrees.Item1.ToArray());
+            CollectionAssert.AreEqual(new int[0], splitTrees.Item2.ToArray());
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using JetBrains.Annotations;
 
@@ -134,15 +135,60 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
 
         public static void ApplyZigZagging<TValue>(this SplayTreeNode<TValue> node)
         {
-            if(node == null)
+            if (node == null)
                 return;
 
-            if(ShouldZig(node))
+            if (ShouldZig(node))
                 Zig(node);
-            else if(ShouldZigZag(node))
+            else if (ShouldZigZag(node))
                 ZigZag(node);
-            else if(ShouldZigZig(node))
+            else if (ShouldZigZig(node))
                 ZigZig(node);
+        }
+
+        /// <summary>
+        /// Splits binary search tree in two. In the left tree all values will be less 
+        /// or equal then <paramref name="splitValue"/>, in the right tree they will 
+        /// be greater or equal.
+        /// </summary>
+        /// <typeparam name="TValue">Type of node values.</typeparam>
+        /// <param name="tree">Tree to split.</param>
+        /// <param name="splitValue">Value to split by.</param>
+        /// <param name="comparer">Comparer of values.</param>
+        public static Tuple<SplayTree<TValue>, SplayTree<TValue>> Split<TValue>(
+            SplayTree<TValue> tree, TValue splitValue,
+            [NotNull] IComparer<TValue> comparer)
+        {
+            if (tree?.Root == null)
+                return new Tuple<SplayTree<TValue>, SplayTree<TValue>>(
+                    new SplayTree<TValue>(comparer),
+                    new SplayTree<TValue>(comparer));
+
+            var node = tree.Find(splitValue);
+            if (comparer.Compare(splitValue, node.Value) < 0)
+            {
+                var leftTreeRoot = node.LeftChild;
+                var rightTreeRoot = node;
+                rightTreeRoot.LeftChild = null;
+                if (leftTreeRoot != null)
+                { leftTreeRoot.Parent = null; }
+
+                return new Tuple<SplayTree<TValue>, SplayTree<TValue>>(
+                    new SplayTree<TValue>(leftTreeRoot, comparer),
+                    new SplayTree<TValue>(rightTreeRoot, comparer));
+            }
+            else
+            {
+                var leftTreeRoot = node;
+                var rightTreeRoot = node.RightChild;
+                leftTreeRoot.RightChild = null;
+                if (rightTreeRoot != null)
+                { rightTreeRoot.Parent = null; }
+
+                return new Tuple<SplayTree<TValue>, SplayTree<TValue>>(
+                    new SplayTree<TValue>(leftTreeRoot, comparer),
+                    new SplayTree<TValue>(rightTreeRoot, comparer));
+            }
         }
     }
 
