@@ -622,5 +622,31 @@ namespace EdlinSoftware.DataStructures.Graphs
 
             return node;
         }
+
+        /// <summary>
+        /// Checks if <paramref name="node"/> is left child of its parent.
+        /// </summary>
+        /// <typeparam name="TNode">Type of node.</typeparam>
+        /// <param name="node">Tree node.</param>
+        public static bool IsLeftChild<TNode>(this TNode node)
+            where TNode : class, IParented<TNode>, IBinaryTreeNode<TNode>
+        {
+            if (node?.Parent == null)
+                return false;
+            return ReferenceEquals(node.Parent.LeftChild, node);
+        }
+
+        /// <summary>
+        /// Checks if <paramref name="node"/> is left child of its parent.
+        /// </summary>
+        /// <typeparam name="TNode">Type of node.</typeparam>
+        /// <param name="node">Tree node.</param>
+        public static bool IsRigthChild<TNode>(this TNode node)
+            where TNode : class, IParented<TNode>, IBinaryTreeNode<TNode>
+        {
+            if (node?.Parent == null)
+                return false;
+            return ReferenceEquals(node.Parent.RightChild, node);
+        }
     }
 }

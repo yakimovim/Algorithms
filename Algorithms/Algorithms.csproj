@@ -108,6 +108,8 @@
     <Compile Include="DataStructures\Graphs\Trees\BinarySearchTree.cs" />
     <Compile Include="DataStructures\Graphs\Trees\BinarySearchTreeBase.cs" />
     <Compile Include="DataStructures\Graphs\Trees\BinarySearchTreeNode.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\SplayTree.cs" />
+    <Compile Include="DataStructures\Graphs\Trees\SplayTreeNode.cs" />
     <Compile Include="DataStructures\Heaps\Heap.cs" />
     <Compile Include="DataStructures\Heaps\HeapElement.cs" />
     <Compile Include="DataStructures\Heaps\IHeap.cs" />
