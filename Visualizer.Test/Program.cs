@@ -8,32 +8,46 @@ namespace Visualizer.Test
     {
         static void Main()
         {
-            var node = new TestGraphNode("A", new TestGraphNode("B"), new TestGraphNode("C"));
+            var nodeA = new TestGraphNode("A");
+            var nodeB = new TestGraphNode("B");
+            var nodeC = new TestGraphNode("C");
 
-            GraphNodeVisualizer.TestShowVisualizer(node);
+            nodeA.AddNode(nodeB);
+            nodeB.AddNode(nodeC);
+            nodeC.AddNode(nodeA);
+
+            GraphNodeVisualizer.TestShowVisualizer(nodeA);
         }
     }
 
     [Serializable]
     public class TestGraphNode : GraphNode
     {
+        private readonly List<GraphEdge> _edges;
+
         public TestGraphNode(string content, params TestGraphNode[] connected)
         {
             Content = content;
 
-            var edges = new List<GraphEdge>();
+            _edges = new List<GraphEdge>();
 
             foreach (var node in connected)
             {
-                edges.Add(new GraphEdge
-                {
-                    From = this,
-                    To = node,
-                    IsDirected = true
-                });
+                AddNode(node);
             }
 
-            Edges = edges;
+            Edges = _edges;
+        }
+
+        public void AddNode(TestGraphNode node)
+        {
+            var edge = new GraphEdge
+            {
+                From = this,
+                To = node,
+                IsDirected = true
+            };
+            _edges.Add(edge);
         }
     }
 }

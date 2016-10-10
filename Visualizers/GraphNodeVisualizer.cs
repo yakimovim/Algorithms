@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.DebuggerVisualizers;
 
 [assembly: System.Diagnostics.DebuggerVisualizer(
 typeof(EdlinSoftware.Algorithms.Visualizers.GraphNodeVisualizer),
-//typeof(VisualizerObjectSource),
 Target = typeof(EdlinSoftware.Algorithms.Visualizers.GraphNode),
 Description = "Edlin Software Graph Visualizer")]
 
@@ -81,11 +80,11 @@ namespace EdlinSoftware.Algorithms.Visualizers
     }
 
     [Serializable]
-    public abstract class GraphNode
+    public class GraphNode
     {
         public string Content { get; set; }
 
-        public IEnumerable<GraphEdge> Edges { get; protected set; }
+        public IEnumerable<GraphEdge> Edges { get; set; }
 
         internal Node GraphViewerNode { get; set; }
     }
