@@ -60,9 +60,10 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
         }
     }
 
-
     public class BinaryTreeNodeDebuggerProxy
     {
+        private long _id = 0L;
+
         public readonly GraphNode Node;
 
         public BinaryTreeNodeDebuggerProxy([NotNull] object node)
@@ -80,7 +81,7 @@ namespace EdlinSoftware.DataStructures.Graphs.Trees
             var leftChild = node.GetType().GetProperty("LeftChild", BindingFlags.Instance | BindingFlags.Public).GetValue(node);
             var rightChild = node.GetType().GetProperty("RightChild", BindingFlags.Instance | BindingFlags.Public).GetValue(node);
 
-            var result = new GraphNode
+            var result = new GraphNode((_id++).ToString())
             {
                 Content = node.GetType()
                         .GetProperty("Value", BindingFlags.Instance | BindingFlags.Public)

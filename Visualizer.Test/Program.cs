@@ -8,9 +8,9 @@ namespace Visualizer.Test
     {
         static void Main()
         {
-            var nodeA = new TestGraphNode("A");
-            var nodeB = new TestGraphNode("B");
-            var nodeC = new TestGraphNode("C");
+            var nodeA = new TestGraphNode("A", "LA");
+            var nodeB = new TestGraphNode("B", "LB");
+            var nodeC = new TestGraphNode("C", "LC");
 
             nodeA.AddNode(nodeB);
             nodeB.AddNode(nodeC);
@@ -25,7 +25,8 @@ namespace Visualizer.Test
     {
         private readonly List<GraphEdge> _edges;
 
-        public TestGraphNode(string content, params TestGraphNode[] connected)
+        public TestGraphNode(string id, string content, params TestGraphNode[] connected)
+            : base(id)
         {
             Content = content;
 

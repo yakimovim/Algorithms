@@ -41,7 +41,10 @@ namespace EdlinSoftware.Algorithms.Visualizers
 
             var stack = new Stack<GraphNode>();
             stack.Push(graphNode);
-            graphNode.GraphViewerNode = new Node(graphNode.Content);
+            graphNode.GraphViewerNode = new Node(graphNode.Id)
+            {
+                LabelText = graphNode.Content
+            };
             graph.AddNode(graphNode.GraphViewerNode);
 
             while (stack.Count > 0)
@@ -57,11 +60,17 @@ namespace EdlinSoftware.Algorithms.Visualizers
                         if (toNode.GraphViewerNode == null)
                         {
                             stack.Push(toNode);
-                            toNode.GraphViewerNode = new Node(toNode.Content);
+                            toNode.GraphViewerNode = new Node(toNode.Id)
+                            {
+                                LabelText = toNode.Content
+                            };
                             graph.AddNode(toNode.GraphViewerNode);
                         }
 
-                        var graphViewerEdge = new Edge(graphNode.GraphViewerNode, toNode.GraphViewerNode, ConnectionToGraph.Connected);
+                        var graphViewerEdge = new Edge(graphNode.GraphViewerNode, toNode.GraphViewerNode, ConnectionToGraph.Connected)
+                        {
+                            LabelText = edge.Content
+                        };
                         if (!edge.IsDirected)
                         {
                             graphViewerEdge.Attr.ArrowheadAtSource = ArrowStyle.None;
@@ -82,6 +91,14 @@ namespace EdlinSoftware.Algorithms.Visualizers
     [Serializable]
     public class GraphNode
     {
+        public GraphNode(string id)
+        {
+            if (id == null) throw new ArgumentNullException(nameof(id));
+            Id = id;
+        }
+
+        public string Id { get; private set; }
+
         public string Content { get; set; }
 
         public IEnumerable<GraphEdge> Edges { get; set; }

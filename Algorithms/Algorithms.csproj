@@ -114,6 +114,8 @@
     <Compile Include="DataStructures\Heaps\HeapElement.cs" />
     <Compile Include="DataStructures\Heaps\IHeap.cs" />
     <Compile Include="DataStructures\Heaps\UniqueHeap.cs" />
+    <Compile Include="DataStructures\Strings\SuffixTree.cs" />
+    <Compile Include="DataStructures\Strings\Trie.cs" />
     <Compile Include="DataStructures\UnionFind.cs" />
     <Compile Include="ICanAdd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
