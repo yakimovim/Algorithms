@@ -102,7 +102,7 @@ namespace EdlinSoftware.DataStructures.Strings
 
             while (true)
             {
-                if (text[edgeIndex].Equals(text[suffixIndex]))
+                if (!text[edgeIndex].Equals(text[suffixIndex]))
                     break;
                 matchLength++;
                 edgeIndex++;
@@ -143,7 +143,7 @@ namespace EdlinSoftware.DataStructures.Strings
 
     public class SuffixTreeNodeDebuggerProxy
     {
-        public readonly GraphNode Node;
+        public GraphNode Node { get; }
 
         public SuffixTreeNodeDebuggerProxy([NotNull] object node)
         {
@@ -175,14 +175,14 @@ namespace EdlinSoftware.DataStructures.Strings
                 var length = Convert.ToInt32(edge.GetType().GetProperty("Length", BindingFlags.Instance | BindingFlags.Public).GetValue(edge));
                 var to = edge.GetType().GetProperty("To", BindingFlags.Instance | BindingFlags.Public).GetValue(edge);
 
-                var edgeText = string.Join("", text?.Skip(start - 1).Take(length).Select(s => s.ToString()).ToArray() ?? new string[0]);
+                var edgeText = string.Join("", text?.Skip(start).Take(length).Select(s => s.ToString()).ToArray() ?? new string[0]);
 
                 children.Add(new GraphEdge
                 {
                     IsDirected = true,
                     From = result,
                     Content = $"{start}:{length} {edgeText}",
-                    To = BuildNode(to)
+                    To = BuildNode(to, text)
                 });
             }
 
@@ -192,7 +192,7 @@ namespace EdlinSoftware.DataStructures.Strings
 
     public class SuffixTreeDebuggerProxy
     {
-        public readonly GraphNode Node;
+        public GraphNode Node { get; }
 
         public SuffixTreeDebuggerProxy([NotNull] object tree)
         {

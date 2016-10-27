@@ -9,7 +9,7 @@ namespace EdlinSoftware.Tests.DataStructures.Strings
         [TestMethod]
         public void Test()
         {
-            var suffixTree = new SuffixTree<char>("A#T$".ToCharArray());
+            var suffixTree = new SuffixTree<char>("AA#TT$".ToCharArray());
 
             Assert.IsNotNull(suffixTree);
         }

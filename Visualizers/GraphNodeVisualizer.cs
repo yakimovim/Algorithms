@@ -45,6 +45,7 @@ namespace EdlinSoftware.Algorithms.Visualizers
             {
                 LabelText = graphNode.Content
             };
+            graphNode.GraphViewerNode.Label.FontSize *= 0.5;
             graph.AddNode(graphNode.GraphViewerNode);
 
             while (stack.Count > 0)
@@ -64,6 +65,7 @@ namespace EdlinSoftware.Algorithms.Visualizers
                             {
                                 LabelText = toNode.Content
                             };
+                            toNode.GraphViewerNode.Label.FontSize *= 0.5;
                             graph.AddNode(toNode.GraphViewerNode);
                         }
 
@@ -71,6 +73,7 @@ namespace EdlinSoftware.Algorithms.Visualizers
                         {
                             LabelText = edge.Content
                         };
+                        graphViewerEdge.Label.FontSize *= 0.5;
                         if (!edge.IsDirected)
                         {
                             graphViewerEdge.Attr.ArrowheadAtSource = ArrowStyle.None;
@@ -97,7 +100,7 @@ namespace EdlinSoftware.Algorithms.Visualizers
             Id = id;
         }
 
-        public string Id { get; private set; }
+        public string Id { get; }
 
         public string Content { get; set; }
 
