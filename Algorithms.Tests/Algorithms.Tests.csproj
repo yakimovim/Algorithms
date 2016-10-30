@@ -116,6 +116,7 @@
     <Compile Include="DataStructures\Heaps\UniqueHeapTest.cs" />
     <Compile Include="DataStructures\KnapsackItem.cs" />
     <Compile Include="DataStructures\Scheduling\Job.cs" />
+    <Compile Include="DataStructures\Strings\StringCyclicRotationTest.cs" />
     <Compile Include="DataStructures\UnionFindTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
