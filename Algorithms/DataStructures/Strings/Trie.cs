@@ -13,7 +13,14 @@ namespace EdlinSoftware.DataStructures.Strings
     /// </summary>
     public class Trie<TSymbol>
     {
-        public readonly TrieNode<TSymbol> Root = new TrieNode<TSymbol>();
+        private readonly IComparer<TSymbol> _comparer;
+        public readonly TrieNode<TSymbol> Root;
+
+        public Trie(IComparer<TSymbol> comparer = null)
+        {
+            _comparer = comparer ?? Comparer<TSymbol>.Default;
+            Root = new TrieNode<TSymbol>(_comparer);
+        }
 
         public void Add(IEnumerable<TSymbol> pattern)
         {
@@ -28,11 +35,7 @@ namespace EdlinSoftware.DataStructures.Strings
                 }
                 else
                 {
-                    var edge = new TrieEdge<TSymbol>
-                    {
-                        Symbol = symbol,
-                        To = new TrieNode<TSymbol>()
-                    };
+                    var edge = new TrieEdge<TSymbol>(symbol, new TrieNode<TSymbol>(_comparer));
                     node.Edges.Add(symbol, edge);
                     node = edge.To;
                 }
@@ -48,7 +51,16 @@ namespace EdlinSoftware.DataStructures.Strings
     [DebuggerTypeProxy(typeof(TrieNodeDebuggerProxy))]
     public class TrieNode<TSymbol>
     {
-        private readonly Lazy<SortedDictionary<TSymbol, TrieEdge<TSymbol>>> _edges = new Lazy<SortedDictionary<TSymbol, TrieEdge<TSymbol>>>(() => new SortedDictionary<TSymbol, TrieEdge<TSymbol>>());
+        private readonly Lazy<SortedDictionary<TSymbol, TrieEdge<TSymbol>>> _edges;
+
+        /// <summary>
+        /// Initializes instance of <see cref="TrieNode{TSymbol}"/>
+        /// </summary>
+        /// <param name="comparer">Symbols comparer.</param>
+        public TrieNode([CanBeNull] IComparer<TSymbol> comparer = null)
+        {
+            _edges = new Lazy<SortedDictionary<TSymbol, TrieEdge<TSymbol>>>(() => new SortedDictionary<TSymbol, TrieEdge<TSymbol>>(comparer ?? Comparer<TSymbol>.Default));
+        }
 
         public SortedDictionary<TSymbol, TrieEdge<TSymbol>> Edges => _edges.Value;
 
@@ -60,8 +72,16 @@ namespace EdlinSoftware.DataStructures.Strings
     /// </summary>
     public class TrieEdge<TSymbol>
     {
-        public TSymbol Symbol { get; set; }
-        public TrieNode<TSymbol> To { get; set; }
+        public TrieEdge(TSymbol symbol, [NotNull] TrieNode<TSymbol> toNode)
+        {
+            if (toNode == null) throw new ArgumentNullException(nameof(toNode));
+
+            Symbol = symbol;
+            To = toNode;
+        }
+
+        public TSymbol Symbol { get; }
+        public TrieNode<TSymbol> To { get; }
     }
 
     public class TrieNodeDebuggerProxy
@@ -93,8 +113,10 @@ namespace EdlinSoftware.DataStructures.Strings
             var children = new List<GraphEdge>();
             result.Edges = children;
 
-            foreach (var edge in edges)
+            foreach (var edgePair in edges)
             {
+                var edge = edgePair.GetType().GetProperty("Value", BindingFlags.Instance | BindingFlags.Public).GetValue(edgePair);
+
                 var symbol = edge.GetType().GetProperty("Symbol", BindingFlags.Instance | BindingFlags.Public).GetValue(edge);
                 var to = edge.GetType().GetProperty("To", BindingFlags.Instance | BindingFlags.Public).GetValue(edge);
 

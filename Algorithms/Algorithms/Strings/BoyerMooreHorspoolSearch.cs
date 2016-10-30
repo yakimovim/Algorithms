@@ -7,28 +7,30 @@ namespace EdlinSoftware.Algorithms.Strings
     /// <summary>
     /// Represents implementation of Boyer-Moore-Horspool search algorithm of substring.
     /// </summary>
-    public static class BoyerMooreHorspoolSearch
+    /// <typeparam name="TSymbol">Type of symbols.</typeparam>
+    public static class BoyerMooreHorspoolSearch<TSymbol>
     {
         /// <summary>
         /// Returns enumeration of matches of <paramref name="pattern"/> in the <paramref name="toSearch"/> string.
         /// </summary>
         /// <param name="toSearch">String to search the <paramref name="pattern"/> in.</param>
         /// <param name="pattern">Pattern to search for.</param>
-        public static IEnumerable<StringSearchMatch> Search([NotNull] string toSearch, string pattern, IEqualityComparer<char> comparer = null)
+        /// <param name="comparer">Comparer of symbols.</param>
+        public static IEnumerable<StringSearchMatch> Search([NotNull] IReadOnlyList<TSymbol> toSearch, IReadOnlyList<TSymbol> pattern, IEqualityComparer<TSymbol> comparer = null)
         {
             if (toSearch == null) throw new ArgumentNullException(nameof(toSearch));
 
-            if(string.IsNullOrEmpty(pattern))
+            if(pattern == null || pattern.Count == 0)
                 yield break;
 
-            comparer = comparer ?? EqualityComparer<char>.Default;
+            comparer = comparer ?? EqualityComparer<TSymbol>.Default;
 
             var badMatchTable = ConstructBadMatchTable(pattern, comparer);
 
             int currentStartIndex = 0;
-            while (currentStartIndex <= toSearch.Length - pattern.Length)
+            while (currentStartIndex <= toSearch.Count - pattern.Count)
             {
-                int charactersLeftToMatch = pattern.Length - 1;
+                int charactersLeftToMatch = pattern.Count - 1;
 
                 while (charactersLeftToMatch >= 0 &&
                     comparer.Equals(pattern[charactersLeftToMatch], toSearch[currentStartIndex + charactersLeftToMatch]))
@@ -38,24 +40,24 @@ namespace EdlinSoftware.Algorithms.Strings
 
                 if (charactersLeftToMatch < 0)
                 {
-                    yield return new StringSearchMatch(currentStartIndex, pattern.Length);
-                    currentStartIndex += pattern.Length;
+                    yield return new StringSearchMatch(currentStartIndex, pattern.Count);
+                    currentStartIndex += pattern.Count;
                 }
                 else
                 {
-                    currentStartIndex += badMatchTable.GetOrDefault(toSearch[currentStartIndex + pattern.Length - 1],
-                        pattern.Length);
+                    currentStartIndex += badMatchTable.GetOrDefault(toSearch[currentStartIndex + pattern.Count - 1],
+                        pattern.Count);
                 }
             }
         }
 
-        private static IReadOnlyDictionary<char, int> ConstructBadMatchTable(string pattern, IEqualityComparer<char> comparer)
+        private static IReadOnlyDictionary<TSymbol, int> ConstructBadMatchTable(IReadOnlyList<TSymbol> pattern, IEqualityComparer<TSymbol> comparer)
         {
-            var distances = new Dictionary<char, int>(comparer);
+            var distances = new Dictionary<TSymbol, int>(comparer);
 
-            for (int i = 0; i < pattern.Length - 1; i++)
+            for (int i = 0; i < pattern.Count - 1; i++)
             {
-                distances[pattern[i]] = pattern.Length - i - 1;
+                distances[pattern[i]] = pattern.Count - i - 1;
             }
 
             return distances;

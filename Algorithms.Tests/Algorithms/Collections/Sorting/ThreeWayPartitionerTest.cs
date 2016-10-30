@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using EdlinSoftware.Algorithms.Collections.Sorting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
