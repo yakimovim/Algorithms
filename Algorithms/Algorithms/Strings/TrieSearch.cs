@@ -9,7 +9,7 @@ namespace EdlinSoftware.Algorithms.Strings
     /// Represents implementation of multiple exact pattern matching algorithm based on tries.
     /// </summary>
     /// <typeparam name="TSymbol">Type of symbols.</typeparam>
-    public class TrieSearch<TSymbol>
+    public static class TrieSearch<TSymbol>
     {
         /// <summary>
         /// Returns enumeration of matches of words in <paramref name="patterns"/> in the <paramref name="text"/> string.

@@ -78,6 +78,7 @@
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculator.cs" />
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearch.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
+    <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />
     <Compile Include="Algorithms\Strings\TrieSearch.cs" />
     <Compile Include="CommonExtensions.cs" />
     <Compile Include="DataStructures\Collections\ISequenceAlignment.cs" />

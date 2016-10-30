@@ -98,6 +98,7 @@
     <Compile Include="Algorithms\Scheduling\WeightedCompletionTimeMinimizerTest.cs" />
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculatorTest.cs" />
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearchTest.cs" />
+    <Compile Include="Algorithms\Strings\SuffixTreeSearchTest.cs" />
     <Compile Include="Algorithms\Strings\TrieSearchTest.cs" />
     <Compile Include="DataStructures\Codes\SymbolAndFrequency.cs" />
     <Compile Include="DataStructures\Graphs\GraphEdge.cs" />
@@ -115,7 +116,6 @@
     <Compile Include="DataStructures\Heaps\UniqueHeapTest.cs" />
     <Compile Include="DataStructures\KnapsackItem.cs" />
     <Compile Include="DataStructures\Scheduling\Job.cs" />
-    <Compile Include="DataStructures\Strings\SuffixTreeTest.cs" />
     <Compile Include="DataStructures\UnionFindTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
