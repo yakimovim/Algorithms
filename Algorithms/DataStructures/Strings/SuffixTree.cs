@@ -16,37 +16,6 @@ namespace EdlinSoftware.DataStructures.Strings
     [DebuggerTypeProxy(typeof(SuffixTreeDebuggerProxy))]
     public class SuffixTree<TSymbol>
     {
-        private class SymbolComparer : IComparer<TSymbol>
-        {
-            private readonly IComparer<TSymbol> _comparer;
-            private readonly TSymbol _stopSymbol;
-
-            public SymbolComparer([NotNull] IComparer<TSymbol> comparer, TSymbol stopSymbol)
-            {
-                if (comparer == null) throw new ArgumentNullException(nameof(comparer));
-                _comparer = comparer;
-                _stopSymbol = stopSymbol;
-            }
-
-            public int Compare(TSymbol x, TSymbol y)
-            {
-                if (IsStopSymbol(x) && IsStopSymbol(y))
-                    return 0;
-                if (IsStopSymbol(x))
-                    return -1;
-                if (IsStopSymbol(y))
-                    return 1;
-                return _comparer.Compare(x, y);
-            }
-
-            private bool IsStopSymbol(TSymbol symbol)
-            {
-                if (_stopSymbol == null)
-                    return symbol == null;
-                return _stopSymbol.Equals(symbol);
-            }
-        }
-
         public readonly IReadOnlyList<TSymbol> Text;
         private readonly IComparer<TSymbol> _comparer;
 
@@ -58,7 +27,7 @@ namespace EdlinSoftware.DataStructures.Strings
             [CanBeNull] IComparer<TSymbol> comparer = null)
         {
             Text = GetText(text, stopSymbol);
-            _comparer = new SymbolComparer(comparer ?? Comparer<TSymbol>.Default, stopSymbol);
+            _comparer = new StopSymbolFirstComparer<TSymbol>(comparer ?? Comparer<TSymbol>.Default, stopSymbol);
             Root = new SuffixTreeNode<TSymbol>(_comparer);
 
             for (uint i = 0; i < Text.Count; i++)

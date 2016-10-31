@@ -13,6 +13,8 @@ namespace EdlinSoftware.DataStructures.Strings
         private readonly IReadOnlyList<TSymbol> _text;
         private readonly int _offset;
 
+        public int Length => _text.Count;
+
         public StringCyclicRotation([NotNull] IReadOnlyList<TSymbol> text, int offset)
         {
             if (text == null) throw new ArgumentNullException(nameof(text));
@@ -27,6 +29,9 @@ namespace EdlinSoftware.DataStructures.Strings
 
         private TSymbol GetSymbolAt(int index)
         {
+            if(index < 0 || index >= _text.Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
             return _text[(index + _offset)%_text.Count];
         }
 
@@ -39,6 +44,36 @@ namespace EdlinSoftware.DataStructures.Strings
                     .Select(GetSymbolAt)
                     .Select(s => s.ToString())
                     .ToArray());
+        }
+    }
+
+    public class StringCyclicRotationComparer<TSymbol> : IComparer<StringCyclicRotation<TSymbol>>
+    {
+        private readonly IComparer<TSymbol> _symbolComparer;
+
+        public StringCyclicRotationComparer(IComparer<TSymbol> symbolComparer = null)
+        {
+            _symbolComparer = symbolComparer ?? Comparer<TSymbol>.Default;
+        }
+
+        public int Compare(StringCyclicRotation<TSymbol> x, StringCyclicRotation<TSymbol> y)
+        {
+            var minLength = Math.Min(x.Length, y.Length);
+
+            for (int i = 0; i < minLength; i++)
+            {
+                var symbolComparisonResult = _symbolComparer.Compare(x[i], y[i]);
+                if (symbolComparisonResult != 0)
+                    return symbolComparisonResult;
+            }
+
+            if (x.Length < y.Length)
+                return -1;
+
+            if (x.Length > y.Length)
+                return 1;
+
+            return 0;
         }
     }
 }

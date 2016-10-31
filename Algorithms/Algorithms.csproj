@@ -77,6 +77,7 @@
     <Compile Include="Algorithms\Statistics\QDigestPercentileCalculator.cs" />
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculator.cs" />
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearch.cs" />
+    <Compile Include="Algorithms\Strings\BurrowsWheelerTransformer.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />
     <Compile Include="Algorithms\Strings\TrieSearch.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="DataStructures\Heaps\HeapElement.cs" />
     <Compile Include="DataStructures\Heaps\IHeap.cs" />
     <Compile Include="DataStructures\Heaps\UniqueHeap.cs" />
+    <Compile Include="DataStructures\Strings\StopSymbolFirstComparer.cs" />
     <Compile Include="DataStructures\Strings\StringCyclicRotation.cs" />
     <Compile Include="DataStructures\Strings\SuffixTree.cs" />
     <Compile Include="DataStructures\Strings\Trie.cs" />
