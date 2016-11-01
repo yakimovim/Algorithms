@@ -77,6 +77,7 @@
     <Compile Include="Algorithms\Statistics\QDigestPercentileCalculator.cs" />
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculator.cs" />
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearch.cs" />
+    <Compile Include="Algorithms\Strings\BurrowsWheelerMatchCounter.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformer.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />

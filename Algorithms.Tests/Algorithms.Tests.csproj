@@ -98,6 +98,7 @@
     <Compile Include="Algorithms\Scheduling\WeightedCompletionTimeMinimizerTest.cs" />
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculatorTest.cs" />
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearchTest.cs" />
+    <Compile Include="Algorithms\Strings\BurrowsWheelerMatchCounterTest.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformerTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearchTest.cs" />
     <Compile Include="Algorithms\Strings\TrieSearchTest.cs" />
