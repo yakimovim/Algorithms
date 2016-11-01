@@ -44,5 +44,91 @@ namespace EdlinSoftware.Algorithms.Strings
             return text[text.Count - 1].Equals(stopSymbol) ? text : new List<TSymbol>(text) { stopSymbol };
         }
 
+
+        public static IReadOnlyList<TSymbol> InverseTransform(
+            [NotNull] IReadOnlyList<TSymbol> transformation,
+            TSymbol stopSymbol,
+            IComparer<TSymbol> comparer = null)
+        {
+            var lastColumn = transformation;
+            var firstColumn = GetFirstColumn(transformation, stopSymbol, comparer);
+
+            var lastToFirstMap = GetLastToFirstMap(lastColumn, firstColumn);
+
+            return GetInverseTransform(firstColumn, lastColumn, lastToFirstMap);
+        }
+
+        private static IReadOnlyList<TSymbol> GetFirstColumn(IReadOnlyList<TSymbol> transformation, TSymbol stopSymbol, IComparer<TSymbol> comparer)
+        {
+            var firstColumn = transformation.ToList();
+
+            var rnd = new Random((int)DateTime.UtcNow.Ticks);
+
+            var pivotSelector = new Func<IList<TSymbol>, int, int, int>((list, left, right) => 1 + rnd.Next(left - 1, right));
+
+            var sorter = new QuickSorter<TSymbol>(pivotSelector, new StopSymbolFirstComparer<TSymbol>(comparer ?? Comparer<TSymbol>.Default, stopSymbol));
+
+            sorter.Sort(firstColumn);
+
+            return firstColumn;
+        }
+
+        private static int[] GetLastToFirstMap(IReadOnlyList<TSymbol> lastColumn, IReadOnlyList<TSymbol> firstColumn)
+        {
+            var firstOccurencesOfSymbolsInTheFirstColumn = GetFirstOccurencesOfSymbolsInTheFirstColumn(firstColumn);
+
+            var lastToFirstMap = new int[lastColumn.Count];
+
+            var symbolsCount = new Dictionary<TSymbol, int>();
+
+            for (int i = 0; i < lastColumn.Count; i++)
+            {
+                var symbol = lastColumn[i];
+
+                int symbolCount;
+                if (!symbolsCount.TryGetValue(symbol, out symbolCount))
+                {
+                    symbolCount = 0;
+                }
+                symbolCount++;
+                symbolsCount[symbol] = symbolCount;
+
+                lastToFirstMap[i] = firstOccurencesOfSymbolsInTheFirstColumn[symbol] + symbolCount - 1;
+            }
+
+            return lastToFirstMap;
+        }
+
+        private static IReadOnlyDictionary<TSymbol, int> GetFirstOccurencesOfSymbolsInTheFirstColumn(IReadOnlyList<TSymbol> firstColumn)
+        {
+            var firstOccurencesOfSymbolsInTheFirstColumn = new Dictionary<TSymbol, int>();
+
+            for (int i = 0; i < firstColumn.Count; i++)
+            {
+                var symbol = firstColumn[i];
+
+                if(firstOccurencesOfSymbolsInTheFirstColumn.ContainsKey(symbol))
+                    continue;
+
+                firstOccurencesOfSymbolsInTheFirstColumn[symbol] = i;
+            }
+
+            return firstOccurencesOfSymbolsInTheFirstColumn;
+        }
+
+        private static IReadOnlyList<TSymbol> GetInverseTransform(IReadOnlyList<TSymbol> firstColumn, IReadOnlyList<TSymbol> lastColumn, int[] lastToFirstMap)
+        {
+            var originalText = new TSymbol[firstColumn.Count];
+            originalText[originalText.Length - 1] = firstColumn[0];
+            var currentRow = 0;
+
+            for (int i = originalText.Length - 2; i >= 0; i--)
+            {
+                originalText[i] = lastColumn[currentRow];
+                currentRow = lastToFirstMap[currentRow];
+            }
+
+            return originalText;
+        }
     }
 }
