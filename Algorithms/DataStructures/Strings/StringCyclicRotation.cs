@@ -8,10 +8,11 @@ namespace EdlinSoftware.DataStructures.Strings
     /// <summary>
     /// Represents cyclic rotation of string.
     /// </summary>
+    /// <typeparam name="TSymbol">Type of symbols in string.</typeparam>
     public class StringCyclicRotation<TSymbol>
     {
         private readonly IReadOnlyList<TSymbol> _text;
-        private readonly int _offset;
+        protected readonly int Offset;
 
         public int Length => _text.Count;
 
@@ -20,10 +21,10 @@ namespace EdlinSoftware.DataStructures.Strings
             if (text == null) throw new ArgumentNullException(nameof(text));
             if(text.Count == 0) throw new ArgumentException("Text should not be empty", nameof(text));
             _text = text;
-            _offset = offset;
-            while (_offset < 0)
+            Offset = offset;
+            while (Offset < 0)
             {
-                _offset += _text.Count;
+                Offset += _text.Count;
             }
         }
 
@@ -32,7 +33,7 @@ namespace EdlinSoftware.DataStructures.Strings
             if(index < 0 || index >= _text.Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
 
-            return _text[(index + _offset)%_text.Count];
+            return _text[(index + Offset)%_text.Count];
         }
 
         public TSymbol this[int index] => GetSymbolAt(index);
@@ -47,6 +48,10 @@ namespace EdlinSoftware.DataStructures.Strings
         }
     }
 
+    /// <summary>
+    /// Represents comparer for cyclic rotations of string.
+    /// </summary>
+    /// <typeparam name="TSymbol">Type of symbols in string.</typeparam>
     public class StringCyclicRotationComparer<TSymbol> : IComparer<StringCyclicRotation<TSymbol>>
     {
         private readonly IComparer<TSymbol> _symbolComparer;
@@ -56,7 +61,7 @@ namespace EdlinSoftware.DataStructures.Strings
             _symbolComparer = symbolComparer ?? Comparer<TSymbol>.Default;
         }
 
-        public int Compare(StringCyclicRotation<TSymbol> x, StringCyclicRotation<TSymbol> y)
+        public virtual int Compare(StringCyclicRotation<TSymbol> x, StringCyclicRotation<TSymbol> y)
         {
             var minLength = Math.Min(x.Length, y.Length);
 

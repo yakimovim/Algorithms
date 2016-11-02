@@ -80,6 +80,7 @@
     <Compile Include="Algorithms\Strings\BurrowsWheelerMatchCounter.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformer.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
+    <Compile Include="Algorithms\Strings\SuffixArrayCreator.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />
     <Compile Include="Algorithms\Strings\TrieSearch.cs" />
     <Compile Include="CommonExtensions.cs" />

@@ -100,6 +100,7 @@
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearchTest.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerMatchCounterTest.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformerTest.cs" />
+    <Compile Include="Algorithms\Strings\SuffixArrayCreatorTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearchTest.cs" />
     <Compile Include="Algorithms\Strings\TrieSearchTest.cs" />
     <Compile Include="DataStructures\Codes\SymbolAndFrequency.cs" />
