@@ -100,6 +100,9 @@
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearchTest.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerMatchCounterTest.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformerTest.cs" />
+    <Compile Include="Algorithms\Strings\CaseInsensitiveCharEqualityComparer.cs" />
+    <Compile Include="Algorithms\Strings\KnuthMorrisPrattSearchTest.cs" />
+    <Compile Include="Algorithms\Strings\PrefixFunctionTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreatorTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearchTest.cs" />
     <Compile Include="Algorithms\Strings\TrieSearchTest.cs" />

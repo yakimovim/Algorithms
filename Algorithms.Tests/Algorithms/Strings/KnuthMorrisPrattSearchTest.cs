@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace EdlinSoftware.Tests.Algorithms.Strings
 {
     [TestClass]
-    public class BoyerMooreHorspoolSearchTest
+    public class KnuthMorrisPrattSearchTest
     {
         [TestMethod, Owner("Ivan Yakimov")]
         public void SearchEmptyString_ForNonEmptyPattern()
@@ -84,6 +84,6 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
             Assert.AreEqual(5, searchResult[0].Length);
         }
 
-        private StringSearchMatch[] Search(string toSearchIn, string pattern, IEqualityComparer<char> comparer = null) => BoyerMooreHorspoolSearch<char>.Search(toSearchIn.ToCharArray(), pattern.ToCharArray(), comparer).ToArray();
+        private StringSearchMatch[] Search(string toSearchIn, string pattern, IEqualityComparer<char> comparer = null) => KnuthMorrisPrattSearch<char>.Search(toSearchIn.ToCharArray(), pattern.ToCharArray(), '$', comparer).ToArray();
     }
 }
