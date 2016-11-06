@@ -44,9 +44,9 @@ namespace EdlinSoftware.Algorithms.Collections.Sorting
             {
                 var value = array[i];
 
-                sortedArray[counts[value] - 1] = value;
-
                 counts[value]--;
+
+                sortedArray[counts[value]] = value;
             }
 
             return sortedArray;
