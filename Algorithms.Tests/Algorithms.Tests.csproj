@@ -105,6 +105,7 @@
     <Compile Include="Algorithms\Strings\KnuthMorrisPrattSearchTest.cs" />
     <Compile Include="Algorithms\Strings\PrefixFunctionTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreatorTest.cs" />
+    <Compile Include="Algorithms\Strings\SuffixArraySearchTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearchTest.cs" />
     <Compile Include="Algorithms\Strings\TrieSearchTest.cs" />
     <Compile Include="DataStructures\Codes\SymbolAndFrequency.cs" />

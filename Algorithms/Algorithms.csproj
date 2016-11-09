@@ -84,6 +84,7 @@
     <Compile Include="Algorithms\Strings\PrefixFunction.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreator.cs" />
+    <Compile Include="Algorithms\Strings\SuffixArraySearch.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />
     <Compile Include="Algorithms\Strings\TrieSearch.cs" />
     <Compile Include="CommonExtensions.cs" />

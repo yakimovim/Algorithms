@@ -80,6 +80,9 @@ namespace EdlinSoftware.Algorithms.Strings
                 if (patternIndex >= pattern.Length)
                     return edge;
 
+                if (matchLength < edge.Length)
+                    return null;
+
                 node = edge.To;
             }
 

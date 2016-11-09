@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using EdlinSoftware.Algorithms.Strings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace EdlinSoftware.Tests.Algorithms.Strings
 {
     [TestClass]
-    public class SuffixTreeSearchTest
+    public class SuffixArraySearchTest
     {
         [TestMethod, Owner("Ivan Yakimov")]
         public void SearchEmptyString_ForNonEmptyPattern()
@@ -20,7 +19,7 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
         {
             var searchResult = Search("AAA", new[] { "" });
 
-            Assert.AreEqual(3, searchResult.Length);
+            Assert.AreEqual(4, searchResult.Length);
 
             Assert.IsTrue(searchResult.All(m => m.Length == 0));
         }
@@ -93,20 +92,19 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
             var aMarches = searchResult.Where(m => m.Length == 1).ToArray();
             Assert.AreEqual(6, aMarches.Length);
 
-            CollectionAssert.AreEqual(new [] { 1, 7, 9 }, anaMarches.Select(m => m.Start).ToArray());
+            CollectionAssert.AreEqual(new[] { 1, 7, 9 }, anaMarches.Select(m => m.Start).ToArray());
             CollectionAssert.AreEqual(new[] { 2, 8, 10 }, naMarches.Select(m => m.Start).ToArray());
             CollectionAssert.AreEqual(new[] { 1, 3, 5, 7, 9, 11 }, aMarches.Select(m => m.Start).ToArray());
         }
 
-
         [TestMethod, Owner("Ivan Yakimov")]
         public void Search_NoMatch()
         {
-            var searchResult = Search("ATCATATGGT", new[] { "AA" });
+            var searchResult = Search("AAGTGGATCT", new[] { "AC" });
 
             Assert.AreEqual(0, searchResult.Length);
         }
 
-        private StringSearchMatch[] Search(string toSearchIn, string[] patterns, IComparer<char> comparer = null) => SuffixTreeSearch<char>.Search(toSearchIn.ToCharArray(), '$', patterns.Select(p => p.ToCharArray()), comparer).OrderBy(m => m.Start).ToArray();
+        private StringSearchMatch[] Search(string toSearchIn, string[] patterns, IComparer<char> comparer = null) => SuffixArraySearch<char>.Search(toSearchIn.ToCharArray(), '$', patterns.Select(p => p.ToCharArray()), comparer).OrderBy(m => m.Start).ToArray();
     }
 }
