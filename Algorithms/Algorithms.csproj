@@ -81,6 +81,7 @@
     <Compile Include="Algorithms\Strings\BurrowsWheelerMatchCounter.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformer.cs" />
     <Compile Include="Algorithms\Strings\KnuthMorrisPrattSearch.cs" />
+    <Compile Include="Algorithms\Strings\LcpArrayBuilder.cs" />
     <Compile Include="Algorithms\Strings\PrefixFunction.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreator.cs" />

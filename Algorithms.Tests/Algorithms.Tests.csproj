@@ -103,6 +103,7 @@
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformerTest.cs" />
     <Compile Include="Algorithms\Strings\CaseInsensitiveCharEqualityComparer.cs" />
     <Compile Include="Algorithms\Strings\KnuthMorrisPrattSearchTest.cs" />
+    <Compile Include="Algorithms\Strings\LcpArrayBuilderTest.cs" />
     <Compile Include="Algorithms\Strings\PrefixFunctionTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreatorTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixArraySearchTest.cs" />
