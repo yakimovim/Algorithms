@@ -17,126 +17,15 @@ namespace EdlinSoftware.DataStructures.Strings
     public class SuffixTree<TSymbol>
     {
         public readonly IReadOnlyList<TSymbol> Text;
-        private readonly IComparer<TSymbol> _comparer;
 
         public readonly SuffixTreeNode<TSymbol> Root;
 
-        public SuffixTree(
-            IReadOnlyList<TSymbol> text, 
-            TSymbol stopSymbol,
-            [CanBeNull] IComparer<TSymbol> comparer = null)
+        public SuffixTree([NotNull] IReadOnlyList<TSymbol> text, [NotNull] SuffixTreeNode<TSymbol> root)
         {
-            Text = GetText(text, stopSymbol);
-            _comparer = new StopSymbolFirstComparer<TSymbol>(comparer ?? Comparer<TSymbol>.Default, stopSymbol);
-            Root = new SuffixTreeNode<TSymbol>(_comparer);
-
-            for (uint i = 0; i < Text.Count; i++)
-            {
-                AddSuffix(Text, i);
-            }
-        }
-
-        private static IReadOnlyList<TSymbol> GetText(IReadOnlyList<TSymbol> text, TSymbol stopSymbol)
-        {
-            if(text.Count == 0)
-                return new List<TSymbol> { stopSymbol };
-
-            return text[text.Count - 1].Equals(stopSymbol) ? text : new List<TSymbol>(text) { stopSymbol };
-        }
-
-        private void AddSuffix(IReadOnlyList<TSymbol> text, uint startIndex)
-        {
-            var node = Root;
-            var index = startIndex;
-            var restLength = (uint)text.Count - index;
-
-            while (true)
-            {
-                var firstSymbol = text[(int)index];
-
-                var edge = FindEdge(node, firstSymbol);
-
-                if (edge == null)
-                {
-                    edge = new SuffixTreeEdge<TSymbol>
-                    {
-                        Start = index,
-                        Length = restLength,
-                        To = new SuffixTreeNode<TSymbol>(_comparer)
-                        {
-                            SuffixStart = startIndex
-                        }
-                    };
-                    node.Edges.Add(firstSymbol, edge);
-                    return;
-                }
-                else
-                {
-                    var matchLength = GetMatchLength(text, edge, index);
-                    if (matchLength == edge.Length)
-                    {
-                        node = edge.To;
-                        index += matchLength;
-                        restLength -= matchLength;
-                    }
-                    else
-                    {
-                        var edge1 = new SuffixTreeEdge<TSymbol>
-                        {
-                            Start = edge.Start,
-                            Length = matchLength,
-                            To = new SuffixTreeNode<TSymbol>(_comparer)
-                        };
-
-                        var edge2 = new SuffixTreeEdge<TSymbol>
-                        {
-                            Start = edge.Start + matchLength,
-                            Length = edge.Length - matchLength,
-                            To = edge.To
-                        };
-
-                        edge1.To.Edges.Add(text[(int)edge2.Start], edge2);
-                        node.Edges[firstSymbol] = edge1;
-
-                        node = edge1.To;
-                        index += matchLength;
-                        restLength -= matchLength;
-                    }
-                }
-            }
-        }
-
-        private SuffixTreeEdge<TSymbol> FindEdge(SuffixTreeNode<TSymbol> node, TSymbol symbol)
-        {
-            if (node.Edges.ContainsKey(symbol))
-            {
-                return node.Edges[symbol];
-            }
-
-            return null;
-        }
-
-        private uint GetMatchLength(IReadOnlyList<TSymbol> text, SuffixTreeEdge<TSymbol> edge, uint index)
-        {
-            var edgeIndex = (int)edge.Start;
-            var suffixIndex = (int)index;
-
-            var matchLength = 0U;
-
-            while (true)
-            {
-                if (!text[edgeIndex].Equals(text[suffixIndex]))
-                    break;
-                matchLength++;
-                edgeIndex++;
-                suffixIndex++;
-                if (edgeIndex >= edge.Start + edge.Length)
-                    break;
-                if (suffixIndex >= text.Count)
-                    break;
-            }
-
-            return matchLength;
+            if (text == null) throw new ArgumentNullException(nameof(text));
+            if (root == null) throw new ArgumentNullException(nameof(root));
+            Text = text;
+            Root = root;
         }
     }
 
@@ -156,9 +45,13 @@ namespace EdlinSoftware.DataStructures.Strings
             _edges = new Lazy<SortedDictionary<TSymbol, SuffixTreeEdge<TSymbol>>>(() => new SortedDictionary<TSymbol, SuffixTreeEdge<TSymbol>>(comparer));
         }
 
+        public SuffixTreeEdge<TSymbol> InEdge { get; internal set; }
+
         public SortedDictionary<TSymbol, SuffixTreeEdge<TSymbol>> Edges => _edges.Value;
 
-        public uint? SuffixStart { get; set; }
+        public uint StringDepth { get; internal set; }
+
+        public uint? SuffixStart { get; internal set; }
     }
 
     /// <summary>
@@ -167,9 +60,29 @@ namespace EdlinSoftware.DataStructures.Strings
     /// <typeparam name="TSymbol">Type of string symbol.</typeparam>
     public class SuffixTreeEdge<TSymbol>
     {
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private SuffixTreeNode<TSymbol> _to;
+
         public uint Start { get; internal set; }
         public uint Length { get; internal set; }
-        public SuffixTreeNode<TSymbol> To { get; internal set; }
+        public SuffixTreeNode<TSymbol> From { get; internal set; }
+
+        public SuffixTreeNode<TSymbol> To
+        {
+            [DebuggerStepThrough]
+            get {  return _to; }
+
+            [DebuggerStepThrough]
+            internal set
+            {
+                _to = value;
+                if (_to != null)
+                {
+                    _to.InEdge = this;
+                }
+            }
+        }
     }
 
     public class SuffixTreeNodeDebuggerProxy

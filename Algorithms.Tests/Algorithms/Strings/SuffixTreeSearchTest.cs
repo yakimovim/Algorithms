@@ -107,6 +107,28 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
             Assert.AreEqual(0, searchResult.Length);
         }
 
+        [TestMethod]
+        public void StressTest()
+        {
+            var rnd = new Random(12345);
+
+            var letters = new[] {'A', 'C', 'T', 'G'};
+
+            var textLength = 100;
+            var patternLength = 1;
+
+            while (true)
+            {
+                var text = Enumerable.Range(0, textLength).Select(i => letters[rnd.Next(letters.Length)]).ToArray();
+                var pattern = Enumerable.Range(0, patternLength).Select(i => letters[rnd.Next(letters.Length)]).ToArray();
+
+                var result1 = SuffixTreeSearch<char>.Search(text, '$', new[] {pattern}).Select(m => m.Start).ToArray();
+                var result2 = KnuthMorrisPrattSearch<char>.Search(text, pattern, '$').Select(m => m.Start).ToArray();
+
+                CollectionAssert.AreEquivalent(result1, result2);
+            }
+        }
+
         private StringSearchMatch[] Search(string toSearchIn, string[] patterns, IComparer<char> comparer = null) => SuffixTreeSearch<char>.Search(toSearchIn.ToCharArray(), '$', patterns.Select(p => p.ToCharArray()), comparer).OrderBy(m => m.Start).ToArray();
     }
 }

@@ -20,7 +20,7 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
         private int[] GetSuffixArray(string text)
         {
             return SuffixArrayCreator<char>.GetSuffixArrayFast(text.ToCharArray(),
-                new StopSymbolFirstComparer<char>(Comparer<char>.Default, '$'));
+                StopSymbolCharComparer.Instance);
         }
     }
 }

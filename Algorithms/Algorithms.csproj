@@ -81,12 +81,15 @@
     <Compile Include="Algorithms\Strings\BurrowsWheelerMatchCounter.cs" />
     <Compile Include="Algorithms\Strings\BurrowsWheelerTransformer.cs" />
     <Compile Include="Algorithms\Strings\KnuthMorrisPrattSearch.cs" />
-    <Compile Include="Algorithms\Strings\LcpArrayBuilder.cs" />
+    <Compile Include="Algorithms\Strings\LcpArrayCreator.cs" />
+    <Compile Include="Algorithms\Strings\NaiveSuffixTreeCreator.cs" />
     <Compile Include="Algorithms\Strings\PrefixFunction.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreator.cs" />
     <Compile Include="Algorithms\Strings\SuffixArraySearch.cs" />
+    <Compile Include="Algorithms\Strings\SuffixTreeCreator.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />
+    <Compile Include="Algorithms\Strings\TextExtensions.cs" />
     <Compile Include="Algorithms\Strings\TrieSearch.cs" />
     <Compile Include="CommonExtensions.cs" />
     <Compile Include="DataStructures\Collections\ISequenceAlignment.cs" />

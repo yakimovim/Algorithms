@@ -26,7 +26,7 @@ namespace EdlinSoftware.Algorithms.Strings
             if (patterns == null)
                 yield break;
 
-            var suffixTree = new SuffixTree<TSymbol>(text, stopSymbol, comparer);
+            var suffixTree = SuffixTreeCreator<TSymbol>.CreateSuffixTree(text, stopSymbol, comparer);
 
             foreach (var pattern in patterns)
             {

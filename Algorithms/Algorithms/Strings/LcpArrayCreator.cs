@@ -8,7 +8,7 @@ namespace EdlinSoftware.Algorithms.Strings
     /// Represents builder of LCP array for suffixes of text.
     /// </summary>
     /// <typeparam name="TSymbol">Type of symbols.</typeparam>
-    public static class LcpArrayBuilder<TSymbol>
+    public static class LcpArrayCreator<TSymbol>
     {
         /// <summary>
         /// Computes LCP array for suffixes of <paramref name="text"/>.
