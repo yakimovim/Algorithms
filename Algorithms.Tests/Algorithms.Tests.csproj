@@ -76,6 +76,8 @@
     <Compile Include="Algorithms\Collections\Sorting\TwoWayPartitionerTest.cs" />
     <Compile Include="Algorithms\Collections\Sorting\QuickSorterTest.cs" />
     <Compile Include="Algorithms\Geometry\ClosestPairSearcherTest.cs" />
+    <Compile Include="Algorithms\Graphs\Flows\BipartileMatchingTest.cs" />
+    <Compile Include="Algorithms\Graphs\Flows\EdmondsKarpMaxFlowFinderTest.cs" />
     <Compile Include="Algorithms\Graphs\GraphTestBase.cs" />
     <Compile Include="Algorithms\Graphs\MinimumSpanningTree\KruskalAlgorithmTest.cs" />
     <Compile Include="Algorithms\Graphs\MinimumSpanningTree\MinimumSpanningTreeAlgorithmTest.cs" />

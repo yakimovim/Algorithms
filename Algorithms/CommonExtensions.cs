@@ -46,5 +46,28 @@ namespace EdlinSoftware
             }
             return defaultValue;
         }
+
+        /// <summary>
+        /// Adds value to the dictionary of lists.
+        /// </summary>
+        /// <typeparam name="TKey">Type of key.</typeparam>
+        /// <typeparam name="TValue">Type of value.</typeparam>
+        /// <param name="dictionary">Dictionary of lists.</param>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value to add.</param>
+        public static void AddToDictionary<TKey, TValue>(
+            this IDictionary<TKey, List<TValue>> dictionary,
+            TKey key,
+            TValue value)
+        {
+            List<TValue> values;
+            if (!dictionary.TryGetValue(key, out values))
+            {
+                values = new List<TValue>();
+                dictionary[key] = values;
+            }
+
+            values.Add(value);
+        }
     }
 }

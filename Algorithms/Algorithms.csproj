@@ -66,6 +66,8 @@
     <Compile Include="Algorithms\Collections\Sorting\TwoWayPartitioner.cs" />
     <Compile Include="Algorithms\Collections\Sorting\QuickSorter.cs" />
     <Compile Include="Algorithms\Geometry\ClosestPairSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Flows\BipartileMatching.cs" />
+    <Compile Include="Algorithms\Graphs\Flows\EdmondsKarpMaxFlowFinder.cs" />
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcherBase.cs" />
     <Compile Include="Algorithms\Graphs\Paths\DijkstraShortestPathSearcher.cs" />

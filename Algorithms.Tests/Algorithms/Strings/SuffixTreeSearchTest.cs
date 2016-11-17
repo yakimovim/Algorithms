@@ -107,7 +107,7 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
             Assert.AreEqual(0, searchResult.Length);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void StressTest()
         {
             var rnd = new Random(12345);
