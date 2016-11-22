@@ -98,6 +98,7 @@
     <Compile Include="Algorithms\KnapsackArrayFillerTest.cs" />
     <Compile Include="Algorithms\KnapsackFillerTest.cs" />
     <Compile Include="Algorithms\KnapsackHashFillerTest.cs" />
+    <Compile Include="Algorithms\LinearProgramming\GaussianEliminationTest.cs" />
     <Compile Include="Algorithms\Scheduling\WeightedCompletionTimeMinimizerTest.cs" />
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculatorTest.cs" />
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearchTest.cs" />

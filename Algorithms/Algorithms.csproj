@@ -77,6 +77,7 @@
     <Compile Include="Algorithms\Graphs\Paths\JohnsonShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ShortestPath.cs" />
     <Compile Include="Algorithms\Graphs\Paths\YenBellmanFordShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\LinearProgramming\GaussianElimination.cs" />
     <Compile Include="Algorithms\Statistics\QDigestPercentileCalculator.cs" />
     <Compile Include="Algorithms\Statistics\WelfordMeanVarianceCalculator.cs" />
     <Compile Include="Algorithms\Strings\BoyerMooreHorspoolSearch.cs" />
