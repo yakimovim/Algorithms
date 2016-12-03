@@ -94,10 +94,11 @@ namespace EdlinSoftware.Algorithms.Graphs
 
                     currentComponent = new HashSet<long>();
 
+                    var component = currentComponent;
                     searcher.Search(node, connectedNodesProvider, args =>
                     {
                         visitedNodes.Add(args.TargetNode);
-                        currentComponent.Add(args.TargetNode);
+                        component.Add(args.TargetNode);
                     });
                 }
             }
