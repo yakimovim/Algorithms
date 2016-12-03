@@ -187,6 +187,9 @@ namespace EdlinSoftware.Algorithms.LinearProgramming
         }
     }
 
+    /// <summary>
+    /// Represents result of solving of system of linear equations.
+    /// </summary>
     public class SystemOfLinearEquationsResult
     {
         private readonly VariableResult[] _variableResults;
@@ -228,6 +231,9 @@ namespace EdlinSoftware.Algorithms.LinearProgramming
         public Tuple<int, decimal>[] FreeVariableParts { get; }
     }
 
+    /// <summary>
+    /// Types of solutions of system of linear equations.
+    /// </summary>
     public enum SystemOfLinearEquationsResultType
     {
         NoSolution,
