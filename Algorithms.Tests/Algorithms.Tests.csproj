@@ -68,6 +68,7 @@
     <Compile Include="Algorithms\Collections\Selection\RandomizedOrderStatisticSelectorTest.cs" />
     <Compile Include="Algorithms\Collections\SequenceAlignment\GlobalSequenceAlignerTest.cs" />
     <Compile Include="Algorithms\Collections\SequenceAlignment\LocalSequenceAlignerTest.cs" />
+    <Compile Include="Algorithms\Collections\SequenceAlignment\OverlapAlignerTest.cs" />
     <Compile Include="Algorithms\Collections\SequenceAlignment\SequenceAlignerTestBase.cs" />
     <Compile Include="Algorithms\Collections\Sorting\CountSorterTest.cs" />
     <Compile Include="Algorithms\Collections\Sorting\MergerTest.cs" />

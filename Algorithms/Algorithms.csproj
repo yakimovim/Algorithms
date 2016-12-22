@@ -58,6 +58,7 @@
     <Compile Include="Algorithms\Collections\Selection\OrderStatisticSelector.cs" />
     <Compile Include="Algorithms\Collections\Selection\RandomizedOrderStatisticSelector.cs" />
     <Compile Include="Algorithms\Collections\SequenceAlignment\GlobalSequenceAligner.cs" />
+    <Compile Include="Algorithms\Collections\SequenceAlignment\OverlapAligner.cs" />
     <Compile Include="Algorithms\Collections\SequenceAlignment\SequenceAligner.cs" />
     <Compile Include="Algorithms\Collections\Sorting\CountSorter.cs" />
     <Compile Include="Algorithms\Collections\Sorting\Merger.cs" />
