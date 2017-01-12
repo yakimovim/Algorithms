@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EdlinSoftware
 {
@@ -68,6 +69,43 @@ namespace EdlinSoftware
             }
 
             values.Add(value);
+        }
+    }
+
+    /// <summary>
+    /// Contains some extension methods for collections.
+    /// </summary>
+    public static class CollectionExtensions
+    {
+        /// <summary>
+        /// Returns element of collection with mininum key.
+        /// </summary>
+        /// <typeparam name="T">Type of collection elements.</typeparam>
+        /// <typeparam name="TKey">Type of key</typeparam>
+        /// <param name="collection">Collection of elements.</param>
+        /// <param name="keySelector">Selector of key from element.</param>
+        /// <param name="comparer">Comparer of keys.</param>
+        public static T MinBy<T, TKey>(
+            this IEnumerable<T> collection,
+            Func<T, TKey> keySelector,
+            IComparer<TKey> comparer)
+            where T : class
+        {
+            T bestElement = null;
+            TKey bestKey = default(TKey);
+
+            foreach (var element in collection)
+            {
+                var elementKey = keySelector(element);
+
+                if (bestElement == null || comparer.Compare(elementKey, bestKey) < 0)
+                {
+                    bestElement = element;
+                    bestKey = elementKey;
+                }
+            }
+
+            return bestElement;
         }
     }
 }
