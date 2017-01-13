@@ -7,22 +7,10 @@ using JetBrains.Annotations;
 namespace EdlinSoftware.DataStructures.Graphs
 {
     /// <summary>
-    /// Represents item with value.
-    /// </summary>
-    /// <typeparam name="TValue">Type of value stored in the node.</typeparam>
-    public interface IValued<out TValue>
-    {
-        /// <summary>
-        /// Gets value of the item.
-        /// </summary>
-        TValue Value { get; }
-    }
-
-    /// <summary>
     /// Represents one node of binary tree.
     /// </summary>
     /// <typeparam name="TNode">Type of nodes.</typeparam>
-    public interface IBinaryTreeNode<out TNode>
+    public interface IBinaryTreeNode<out TNode> : IPropertied
         where TNode : IBinaryTreeNode<TNode>
     {
         /// <summary>
@@ -35,13 +23,6 @@ namespace EdlinSoftware.DataStructures.Graphs
         /// </summary>
         [CanBeNull]
         TNode RightChild { get; }
-
-        /// <summary>
-        /// This property may be used by algorithms to store specific information.
-        /// One should provide only empty dictionary. Lazy initialization is welcomed.
-        /// </summary>
-        [NotNull]
-        IDictionary<string, object> Properties { get; }
     }
 
     public interface IValuedBinaryTreeNode<out TValue, out TNode> : IBinaryTreeNode<TNode>, IValued<TValue>

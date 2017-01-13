@@ -73,6 +73,7 @@
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\BellmanFordShortestPathSearcherBase.cs" />
     <Compile Include="Algorithms\Graphs\Paths\DijkstraShortestPathSearcher.cs" />
+    <Compile Include="Algorithms\Graphs\Paths\DirectedGraphEulerianCycleSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\FloydWarshallShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\IMultiSourceShortestPathSearcher.cs" />
     <Compile Include="Algorithms\Graphs\Paths\ISingleSourceShortestPathSearcher.cs" />
@@ -134,6 +135,8 @@
     <Compile Include="DataStructures\Heaps\HeapElement.cs" />
     <Compile Include="DataStructures\Heaps\IHeap.cs" />
     <Compile Include="DataStructures\Heaps\UniqueHeap.cs" />
+    <Compile Include="DataStructures\IPropertied.cs" />
+    <Compile Include="DataStructures\IValued.cs" />
     <Compile Include="DataStructures\Strings\StopSymbolFirstComparer.cs" />
     <Compile Include="DataStructures\Strings\StringCyclicRotation.cs" />
     <Compile Include="DataStructures\Strings\SuffixTree.cs" />

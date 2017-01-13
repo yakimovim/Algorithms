@@ -32,6 +32,9 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             long numberOfNodes,
             Func<long, IEnumerable<long>> edgesProvider)
         {
+            if (numberOfNodes <= 0)
+                return null;
+
             var adjacencyList = ConstructAdjacencyList(numberOfNodes, edgesProvider);
 
             var result = MarkCycles(adjacencyList);
@@ -53,7 +56,7 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
                 var edges = edgesProvider(currentNode) ?? new long[0];
 
-                foreach (var neighbor in edges.Where(n => n < currentNode))
+                foreach (var neighbor in edges.Where(n => n <= currentNode))
                 {
                     var edge = new Edge
                     {
@@ -90,13 +93,10 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
         private bool MarkCycle(long startNode, List<Edge>[] adjacencyList, long cycleIndex, bool[] finishedNodes)
         {
-            var stack = new Stack<long>();
-            stack.Push(startNode);
+            var currentNode = startNode;
 
-            while (stack.Count > 0)
+            while (true)
             {
-                var currentNode = stack.Pop();
-
                 var nodeEdges = adjacencyList[currentNode];
 
                 var nextEdge = nodeEdges.FirstOrDefault(e => e.CycleIndex == -1);
@@ -115,10 +115,14 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
                     : nextEdge.End1;
 
                 if (currentNode == startNode)
+                {
+                    if (adjacencyList[currentNode].All(e => e.CycleIndex >= 0))
+                    {
+                        finishedNodes[currentNode] = true;
+                    }
                     return true;
+                }
             }
-
-            return false;
         }
 
         private Tuple<long, long>[] ConstructEulerianCycle(List<Edge>[] adjacencyList)
@@ -132,7 +136,7 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             {
                 var nextEdge = adjacencyList[currentNode]
                     .Where(e => !e.Visited)
-                    .MinBy(e => e.CycleIndex, Comparer<long>.Default);
+                    .MaxBy(e => e.CycleIndex, Comparer<long>.Default);
                 if (nextEdge == null)
                     return null;
 

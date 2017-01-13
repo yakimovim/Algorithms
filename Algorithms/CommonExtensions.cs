@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EdlinSoftware
 {
@@ -91,21 +92,42 @@ namespace EdlinSoftware
             IComparer<TKey> comparer)
             where T : class
         {
-            T bestElement = null;
-            TKey bestKey = default(TKey);
-
-            foreach (var element in collection)
-            {
-                var elementKey = keySelector(element);
-
-                if (bestElement == null || comparer.Compare(elementKey, bestKey) < 0)
+            var bestPair = collection
+                .Select(e => Tuple.Create(e, keySelector(e)))
+                .Aggregate((Tuple<T, TKey>) null, (acc, pair) =>
                 {
-                    bestElement = element;
-                    bestKey = elementKey;
-                }
-            }
+                    if (acc == null || comparer.Compare(acc.Item2, pair.Item2) < 0)
+                        return pair;
+                    return acc;
+                });
 
-            return bestElement;
+            return bestPair?.Item1;
+        }
+
+        /// <summary>
+        /// Returns element of collection with mininum key.
+        /// </summary>
+        /// <typeparam name="T">Type of collection elements.</typeparam>
+        /// <typeparam name="TKey">Type of key</typeparam>
+        /// <param name="collection">Collection of elements.</param>
+        /// <param name="keySelector">Selector of key from element.</param>
+        /// <param name="comparer">Comparer of keys.</param>
+        public static T MaxBy<T, TKey>(
+            this IEnumerable<T> collection,
+            Func<T, TKey> keySelector,
+            IComparer<TKey> comparer)
+            where T : class
+        {
+            var bestPair = collection
+                .Select(e => Tuple.Create(e, keySelector(e)))
+                .Aggregate((Tuple<T, TKey>)null, (acc, pair) =>
+                {
+                    if (acc == null || comparer.Compare(acc.Item2, pair.Item2) > 0)
+                        return pair;
+                    return acc;
+                });
+
+            return bestPair?.Item1;
         }
     }
 }

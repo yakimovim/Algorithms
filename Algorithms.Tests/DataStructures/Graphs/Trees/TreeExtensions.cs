@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EdlinSoftware.DataStructures;
 using EdlinSoftware.DataStructures.Graphs;
 using EdlinSoftware.DataStructures.Graphs.Trees;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
