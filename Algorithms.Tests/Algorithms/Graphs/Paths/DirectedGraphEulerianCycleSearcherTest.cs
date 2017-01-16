@@ -24,7 +24,7 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         [TestMethod, Owner("Ivan Yakimov")]
         public void GetEulerianCycle_ForGraphWithoutEdges()
         {
-            Assert.IsNull(GetEulerianCycle(2));
+            Assert.AreEqual("", GetEulerianCycle(2));
         }
 
         [TestMethod, Owner("Ivan Yakimov")]
@@ -37,6 +37,25 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
         public void GetEulerianCycle_ForGraphWithSimpleCycle()
         {
             Assert.AreEqual("1-2,2-1", GetEulerianCycle(2, "1-2", "2-1"));
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetEulerianCycle_ForGraphWithOneNodeInSeveralCycles()
+        {
+            Assert.AreEqual("1-2,2-3,3-2,2-1", GetEulerianCycle(3, "1-2", "2-3", "3-2", "2-1"));
+            Assert.AreEqual("1-2,2-3,3-2,2-1", GetEulerianCycle(3, "1-2", "2-1", "2-3", "3-2"));
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetEulerianCycle_FourPetalFlower()
+        {
+            Assert.AreEqual("1-2,2-5,5-2,2-4,4-2,2-3,3-2,2-1", GetEulerianCycle(5, "2-1", "1-2", "2-3", "3-2", "2-4", "4-2", "2-5", "5-2"));
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetEulerianCycle_SeveralEdgesBetweenTwoNodes()
+        {
+            Assert.AreEqual("1-2,2-1,1-2,2-1", GetEulerianCycle(2, "1-2", "1-2", "2-1", "2-1"));
         }
 
         private string GetEulerianCycle(int numberOfNodes, params string[] edges)

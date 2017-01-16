@@ -19,15 +19,46 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             public long To { get; set; }
 
             public long CycleIndex { get; set; }
-
-            public bool Visited { get; set; }
         }
 
         private class NodeEdges
         {
+            private readonly LinkedList<Edge> _orderOfLeaving = new LinkedList<Edge>();
+            private LinkedListNode<Edge> _lastLeavingEdgeNode;
+            private LinkedListNode<Edge> _nextLeavingEdgeNode;
+
             public Edge[] Edges { get; set; }
             public long CurrentEdgeIndex { get; set; }
-            public bool IsComplete { get; set; }
+
+            public bool IsComplete => CurrentEdgeIndex >= Edges.LongLength;
+
+            public void AddLeavingEdge(Edge edge, long cycleIndex)
+            {
+                edge.CycleIndex = cycleIndex;
+
+                if (_lastLeavingEdgeNode == null || _lastLeavingEdgeNode.Value.CycleIndex < cycleIndex)
+                {
+                    _lastLeavingEdgeNode = _orderOfLeaving.AddFirst(edge);
+                }
+                else
+                {
+                    _lastLeavingEdgeNode = _orderOfLeaving.AddAfter(_lastLeavingEdgeNode, edge);
+                }
+            }
+
+            public Edge GetNextLeavingEdge()
+            {
+                if (_nextLeavingEdgeNode == null)
+                {
+                    _nextLeavingEdgeNode = _orderOfLeaving.First;
+                }
+
+                var result = _nextLeavingEdgeNode.Value;
+
+                _nextLeavingEdgeNode = _nextLeavingEdgeNode.Next;
+
+                return result;
+            }
         }
 
         public Tuple<long, long>[] GetEulerianCycle(long numberOfNodes, Func<long, IEnumerable<long>> edgesSelector)
@@ -44,32 +75,6 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             return ConstructEulerianCycle(adjuсencyList);
         }
 
-        private Tuple<long, long>[] ConstructEulerianCycle(NodeEdges[] adjuсencyList)
-        {
-            var numberOfEdges = adjuсencyList.SelectMany(n => n.Edges).Count();
-
-            var cycle = new List<Tuple<long, long>>();
-
-            long currentNode = 0;
-            while (cycle.Count < numberOfEdges)
-            {
-                var nodeEdges = adjuсencyList[currentNode];
-
-                var edge = nodeEdges.Edges
-                    .Last(e => !e.Visited);
-
-                edge.Visited = true;
-
-                var node = edge.To;
-
-                cycle.Add(Tuple.Create(currentNode, node));
-
-                currentNode = node;
-            }
-
-            return cycle.ToArray();
-        }
-
         private NodeEdges[] CreateAdjuсencyList(long numberOfNodes, Func<long, IEnumerable<long>> edgesSelector)
         {
             var adjuсencyList = new NodeEdges[numberOfNodes];
@@ -79,8 +84,8 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
                 var edges = edgesSelector(node);
 
                 adjuсencyList[node] = edges == null
-                    ? new NodeEdges {Edges = new Edge[0]}
-                    : new NodeEdges {Edges = edges.Select(n => new Edge {To = n}).ToArray()};
+                    ? new NodeEdges { Edges = new Edge[0] }
+                    : new NodeEdges { Edges = edges.Select(n => new Edge { To = n }).ToArray() };
             }
 
             return adjuсencyList;
@@ -114,23 +119,40 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             {
                 var nodeEdges = adjuсencyList[node];
                 if (nodeEdges.IsComplete)
-                    continue;
-
-                if (nodeEdges.CurrentEdgeIndex >= nodeEdges.Edges.LongLength)
                     return false;
 
                 var edge = nodeEdges.Edges[nodeEdges.CurrentEdgeIndex++];
 
-                edge.CycleIndex = cycleIndex;
+                nodeEdges.AddLeavingEdge(edge, cycleIndex);
 
                 node = edge.To;
-
-                if (nodeEdges.CurrentEdgeIndex == nodeEdges.Edges.LongLength)
-                    nodeEdges.IsComplete = true;
 
                 if (node == initialNode)
                     return true;
             }
+        }
+
+        private Tuple<long, long>[] ConstructEulerianCycle(NodeEdges[] adjuсencyList)
+        {
+            var numberOfEdges = adjuсencyList.SelectMany(n => n.Edges).Count();
+
+            var cycle = new List<Tuple<long, long>>();
+
+            long currentNode = 0;
+            while (cycle.Count < numberOfEdges)
+            {
+                var nodeEdges = adjuсencyList[currentNode];
+
+                var edge = nodeEdges.GetNextLeavingEdge();
+
+                var node = edge.To;
+
+                cycle.Add(Tuple.Create(currentNode, node));
+
+                currentNode = node;
+            }
+
+            return cycle.ToArray();
         }
     }
 }
