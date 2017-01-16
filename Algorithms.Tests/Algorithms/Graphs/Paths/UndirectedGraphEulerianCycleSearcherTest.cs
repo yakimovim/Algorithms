@@ -40,6 +40,25 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             Assert.AreEqual("1-2,2-1", eulerianCycle);
         }
 
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetEulerianCycle_ForGraphWithSimpleCycle()
+        {
+            Assert.AreEqual("1-2,2-1", GetEulerianCycle(2, "1-2", "2-1"));
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetEulerianCycle_ForGraphWithOneNodeInSeveralCycles()
+        {
+            Assert.AreEqual("1-2,2-3,3-2,2-1", GetEulerianCycle(3, "1-2", "2-3", "3-2", "2-1"));
+            Assert.AreEqual("1-2,2-3,3-2,2-1", GetEulerianCycle(3, "1-2", "2-1", "2-3", "3-2"));
+        }
+
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetEulerianCycle_FourPetalFlower()
+        {
+            Assert.AreEqual("1-2,2-5,5-2,2-4,4-2,2-3,3-2,2-1", GetEulerianCycle(5, "2-1", "1-2", "2-3", "3-2", "2-4", "4-2", "2-5", "5-2"));
+        }
+
         private string GetEulerianCycle(int numberOfNodes, params string[] edges)
         {
             var directedGraphNodes = GetUndirectedGraph(numberOfNodes, edges);
