@@ -78,9 +78,10 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             if (numberOfNodes <= 0)
                 return null;
 
-            var adjacencyList = ConstructAdjacencyList(numberOfNodes, edgesProvider);
+            var graphInfo = ConstructAdjacencyList(numberOfNodes, edgesProvider);
 
-            var numberOfEdges = adjacencyList.Select(ne => ne.NotVisitedEdges.Count).Sum() / 2;
+            var adjacencyList = graphInfo.Item1;
+            var numberOfEdges = graphInfo.Item2;
 
             var result = MarkCycles(adjacencyList);
             if (!result)
@@ -89,9 +90,11 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
             return ConstructEulerianCycle(numberOfEdges, adjacencyList);
         }
 
-        private NodeEdges[] ConstructAdjacencyList(long numberOfNodes, Func<long, IEnumerable<long>> edgesProvider)
+        private Tuple<NodeEdges[], int> ConstructAdjacencyList(long numberOfNodes, Func<long, IEnumerable<long>> edgesProvider)
         {
             var adjacencyList = new NodeEdges[numberOfNodes];
+
+            var numberOfEdges = 0;
 
             for (long node = 0; node < numberOfNodes; node++)
             {
@@ -103,6 +106,8 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
 
                 foreach (var neighbor in edges.Where(n => n <= currentNode))
                 {
+                    numberOfEdges++;
+
                     var edge = new Edge
                     {
                         End1 = currentNode,
@@ -114,8 +119,9 @@ namespace EdlinSoftware.Algorithms.Graphs.Paths
                 }
             }
 
-            return adjacencyList;
+            return Tuple.Create(adjacencyList, numberOfEdges);
         }
+
         private bool MarkCycles(NodeEdges[] adjacencyList)
         {
             var cycleIndex = 0L;

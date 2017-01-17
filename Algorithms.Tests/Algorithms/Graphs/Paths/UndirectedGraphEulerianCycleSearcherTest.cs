@@ -59,13 +59,22 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs.Paths
             Assert.AreEqual("1-2,2-5,5-2,2-4,4-2,2-3,3-2,2-1", GetEulerianCycle(5, "2-1", "1-2", "2-3", "3-2", "2-4", "4-2", "2-5", "5-2"));
         }
 
+        [TestMethod, Owner("Ivan Yakimov")]
+        public void GetEulerianCycle_Different()
+        {
+            Assert.AreEqual("1-2,2-2,2-3,3-1", GetEulerianCycle(3, "2-3", "2-2", "1-2", "3-1"));
+            Assert.IsNull(GetEulerianCycle(3, "1-3", "2-3", "1-2", "3-1"));
+            Assert.AreEqual("1-4,4-2,2-3,3-4,4-1,1-2,2-1", GetEulerianCycle(4, "1-2", "2-1", "1-4", "4-1", "2-4", "3-2", "4-3"));
+            Assert.AreEqual("1-3,3-2,2-4,4-2,2-3,3-4,4-1", GetEulerianCycle(4, "2-3", "3-4", "1-4", "3-1", "4-2", "2-3", "4-2"));
+        }
+
         private string GetEulerianCycle(int numberOfNodes, params string[] edges)
         {
-            var directedGraphNodes = GetUndirectedGraph(numberOfNodes, edges);
+            var undirectedGraphNodes = GetUndirectedGraph(numberOfNodes, edges);
 
             var cycle = _searcher.GetEulerianCycle(numberOfNodes, (node) =>
             {
-                var nodeEdges = directedGraphNodes[node].Edges;
+                var nodeEdges = undirectedGraphNodes[node].Edges;
 
                 return nodeEdges.Select(e =>
                 {

@@ -31,7 +31,8 @@ namespace EdlinSoftware.Tests.Algorithms.Graphs
                 var graphEdge = new GraphEdge { First = firstNode, Second = secondNode };
 
                 firstNode.Edges.Add(graphEdge);
-                secondNode.Edges.Add(graphEdge);
+                if (firstNode.Id != secondNode.Id)
+                { secondNode.Edges.Add(graphEdge); }
             }
 
             return nodes.ToArray();
