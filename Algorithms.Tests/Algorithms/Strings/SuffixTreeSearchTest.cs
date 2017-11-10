@@ -98,7 +98,6 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
             CollectionAssert.AreEqual(new[] { 1, 3, 5, 7, 9, 11 }, aMarches.Select(m => m.Start).ToArray());
         }
 
-
         [TestMethod, Owner("Ivan Yakimov")]
         public void Search_NoMatch()
         {

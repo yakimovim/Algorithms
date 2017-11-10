@@ -116,6 +116,7 @@
     <Compile Include="Algorithms\Strings\StopSymbolCharComparer.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreatorTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixArraySearchTest.cs" />
+    <Compile Include="Algorithms\Strings\SuffixTreeApproximateSearchTest.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearchTest.cs" />
     <Compile Include="Algorithms\Strings\TrieSearchTest.cs" />
     <Compile Include="DataStructures\Codes\SymbolAndFrequency.cs" />

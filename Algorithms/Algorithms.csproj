@@ -96,6 +96,7 @@
     <Compile Include="Algorithms\Strings\SuffixArrayCreator.cs" />
     <Compile Include="Algorithms\Strings\SuffixArraySearch.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeCreator.cs" />
+    <Compile Include="Algorithms\Strings\SuffixTreeApproximateSearch.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />
     <Compile Include="Algorithms\Strings\TextExtensions.cs" />
     <Compile Include="Algorithms\Strings\TrieSearch.cs" />
