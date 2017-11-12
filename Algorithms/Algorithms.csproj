@@ -92,9 +92,11 @@
     <Compile Include="Algorithms\Strings\LcpArrayCreator.cs" />
     <Compile Include="Algorithms\Strings\NaiveSuffixTreeCreator.cs" />
     <Compile Include="Algorithms\Strings\PrefixFunction.cs" />
+    <Compile Include="Algorithms\Strings\StringSearchApproximateMatch.cs" />
     <Compile Include="Algorithms\Strings\StringSearchMatch.cs" />
     <Compile Include="Algorithms\Strings\SuffixArrayCreator.cs" />
     <Compile Include="Algorithms\Strings\SuffixArraySearch.cs" />
+    <Compile Include="Algorithms\Strings\MultithreadedSuffixTreeApproximateSearch.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeCreator.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeApproximateSearch.cs" />
     <Compile Include="Algorithms\Strings\SuffixTreeSearch.cs" />

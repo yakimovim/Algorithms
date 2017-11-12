@@ -1,35 +1,42 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using EdlinSoftware.DataStructures.Strings;
 using JetBrains.Annotations;
 
 namespace EdlinSoftware.Algorithms.Strings
 {
     /// <summary>
-    /// Searches all matches of pattern strings in a text with a given number of errors.
+    /// Searches all matches of pattern strings in a text with a given number of errors
+    /// using multiple threads.
     /// </summary>
     /// <typeparam name="TSymbol">Type of symbols.</typeparam>
-    public static class SuffixTreeApproximateSearch<TSymbol>
+    public static class MultithreadedSuffixTreeApproximateSearch<TSymbol>
     {
         private class TaskDescription
         {
-            public TaskDescription(
-                SuffixTreeNode<TSymbol> startNode, 
-                IReadOnlyList<TSymbol> pattern, 
-                int patternStartIndex, 
-                uint numberOfErrors)
+            public TaskDescription(ConcurrentBag<StringSearchApproximateMatch<TSymbol>> resultsBag, Waiter waiter, SuffixTreeNode<TSymbol> startNode, IReadOnlyList<TSymbol> pattern, int patternStartIndex, IReadOnlyList<TSymbol> text, uint numberOfErrors, IComparer<TSymbol> comparer)
             {
+                ResultsBag = resultsBag;
+                Waiter = waiter;
                 StartNode = startNode;
                 Pattern = pattern;
                 PatternStartIndex = patternStartIndex;
+                Text = text;
                 NumberOfErrors = numberOfErrors;
+                Comparer = comparer;
             }
 
+            public ConcurrentBag<StringSearchApproximateMatch<TSymbol>> ResultsBag { get; }
+            public Waiter Waiter { get; }
             public SuffixTreeNode<TSymbol> StartNode { get; }
             public IReadOnlyList<TSymbol> Pattern { get; }
             public int PatternStartIndex { get; }
+            public IReadOnlyList<TSymbol> Text { get; }
             public uint NumberOfErrors { get; }
+            public IComparer<TSymbol> Comparer { get; }
         }
 
         private class EdgeMatch
@@ -42,6 +49,37 @@ namespace EdlinSoftware.Algorithms.Strings
 
             public int MatchLength { get; }
             public uint NumberOfErrors { get; }
+        }
+
+        private class Waiter
+        {
+            private readonly object _lock = new object();
+            private int _counter;
+
+            public void Increment()
+            {
+                lock (_lock)
+                {
+                    _counter++;
+                }
+            }
+
+            public void Decrement()
+            {
+                lock (_lock)
+                {
+                    _counter--;
+                }
+            }
+
+            public bool IsFinished()
+            {
+                lock (_lock)
+                {
+                    return _counter == 0;
+                }
+
+            }
         }
 
         /// <summary>
@@ -68,36 +106,36 @@ namespace EdlinSoftware.Algorithms.Strings
 
             var suffixTree = SuffixTreeCreator<TSymbol>.CreateSuffixTree(text, stopSymbol, comparer);
 
-            return patterns
-                .SelectMany(pattern => GetMatches(pattern.ToArray(), numberOfErrors, suffixTree, comparer));
-        }
+            var waiter = new Waiter();
 
-        private static IEnumerable<StringSearchApproximateMatch<TSymbol>> GetMatches(
-            IReadOnlyList<TSymbol> pattern, 
-            uint numberOfErrors, 
-            SuffixTree<TSymbol> suffixTree,
-            IComparer<TSymbol> comparer)
-        {
-            Queue<TaskDescription> queue = new Queue<TaskDescription>();
-            queue.Enqueue(new TaskDescription(
-                suffixTree.Root,
-                pattern,
-                0,
-                numberOfErrors));
+            var results = new ConcurrentBag<StringSearchApproximateMatch<TSymbol>>();
 
-            LinkedList<SuffixTreeNode<TSymbol>> foundNodes = new LinkedList<SuffixTreeNode<TSymbol>>();
-
-            while (queue.Count > 0)
+            foreach (var pattern in patterns)
             {
-                TaskDescription task = queue.Dequeue();
+                waiter.Increment();
 
-                ProcessSearchTask(queue, foundNodes, task, suffixTree.Text, comparer);
+                var task = new TaskDescription(
+                    results,
+                    waiter,
+                    suffixTree.Root,
+                    pattern.ToArray(),
+                    0,
+                    suffixTree.Text,
+                    numberOfErrors,
+                    comparer);
+
+                ThreadPool.QueueUserWorkItem(state =>
+                {
+                    ProcessSearchTask(task);
+                });
             }
 
-            return foundNodes
-                .SelectMany(GetSuffixStarts)
-                .Where(s => PatternDoesNotOverlapStopSymbol(s, pattern.Count, suffixTree.Text.Count))
-                .Select(s => new StringSearchApproximateMatch<TSymbol>(s, pattern));
+            while (!waiter.IsFinished())
+            {
+                Thread.Sleep(0);
+            }
+
+            return results;
         }
 
         private static bool PatternDoesNotOverlapStopSymbol(int startPosition, int patternLength, int textLength)
@@ -109,22 +147,21 @@ namespace EdlinSoftware.Algorithms.Strings
             return true;
         }
 
-        private static void ProcessSearchTask(
-            Queue<TaskDescription> queue, 
-            LinkedList<SuffixTreeNode<TSymbol>> foundNodes, 
-            TaskDescription task, 
-            IReadOnlyList<TSymbol> text,
-            IComparer<TSymbol> comparer)
+        private static void ProcessSearchTask(TaskDescription task)
         {
             if (task.PatternStartIndex >= task.Pattern.Count)
             {
-                foundNodes.AddLast(task.StartNode);
+                foreach (var start in GetSuffixStarts(task.StartNode).Where(s => PatternDoesNotOverlapStopSymbol(s, task.Pattern.Count, task.Text.Count)))
+                {
+                    task.ResultsBag.Add(new StringSearchApproximateMatch<TSymbol>(start, task.Pattern));
+                }
+                task.Waiter.Decrement();
                 return;
             }
 
             foreach (var edge in task.StartNode.Edges.Values)
             {
-                EdgeMatch edgeMatch = GetEdgeMatch(edge, text, task.Pattern, task.PatternStartIndex, comparer);
+                EdgeMatch edgeMatch = GetEdgeMatch(edge, task.Text, task.Pattern, task.PatternStartIndex, task.Comparer);
 
                 if(edgeMatch.NumberOfErrors > task.NumberOfErrors)
                     continue;
@@ -133,17 +170,33 @@ namespace EdlinSoftware.Algorithms.Strings
 
                 if (newPatternStartIndex >= task.Pattern.Count)
                 {
-                    foundNodes.AddLast(edge.To);
+                    foreach (var start in GetSuffixStarts(edge.To).Where(s => PatternDoesNotOverlapStopSymbol(s, task.Pattern.Count, task.Text.Count)))
+                    {
+                        task.ResultsBag.Add(new StringSearchApproximateMatch<TSymbol>(start, task.Pattern));
+                    }
                     continue;
                 }
-                
-                queue.Enqueue(new TaskDescription(
+
+                var newTask = new TaskDescription(
+                    task.ResultsBag,
+                    task.Waiter,
                     edge.To,
                     task.Pattern,
                     newPatternStartIndex,
-                    task.NumberOfErrors - edgeMatch.NumberOfErrors
-                    ));
+                    task.Text,
+                    task.NumberOfErrors - edgeMatch.NumberOfErrors,
+                    task.Comparer
+                    );
+
+                task.Waiter.Increment();
+
+                ThreadPool.QueueUserWorkItem(state =>
+                {
+                    ProcessSearchTask(newTask);
+                });
             }
+
+            task.Waiter.Decrement();
         }
 
         private static EdgeMatch GetEdgeMatch(

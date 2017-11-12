@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace EdlinSoftware.Tests.Algorithms.Strings
 {
     [TestClass]
-    public class SuffixTreeApproximateSearchTest
+    public class MultithreadedSuffixTreeApproximateSearchTest
     {
         [TestMethod, Owner("Ivan Yakimov")]
         public void SearchEmptyString_ForNonEmptyPattern_NoErrorsAllowed()
@@ -191,6 +191,6 @@ namespace EdlinSoftware.Tests.Algorithms.Strings
             CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4 }, searchResult.Select(m => m.Start).ToArray());
         }
 
-        private StringSearchApproximateMatch<char>[] Search(string toSearchIn, string[] patterns, uint numberOfErrors, IComparer<char> comparer = null) => SuffixTreeApproximateSearch<char>.Search(toSearchIn.ToCharArray(), '$', patterns.Select(p => p.ToCharArray()), numberOfErrors, comparer).OrderBy(m => m.Start).ToArray();
+        private StringSearchApproximateMatch<char>[] Search(string toSearchIn, string[] patterns, uint numberOfErrors, IComparer<char> comparer = null) => MultithreadedSuffixTreeApproximateSearch<char>.Search(toSearchIn.ToCharArray(), '$', patterns.Select(p => p.ToCharArray()), numberOfErrors, comparer).OrderBy(m => m.Start).ToArray();
     }
 }
