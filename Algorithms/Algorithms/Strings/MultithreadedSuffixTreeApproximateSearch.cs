@@ -17,26 +17,18 @@ namespace EdlinSoftware.Algorithms.Strings
     {
         private class TaskDescription
         {
-            public TaskDescription(ConcurrentBag<StringSearchApproximateMatch<TSymbol>> resultsBag, Waiter waiter, SuffixTreeNode<TSymbol> startNode, IReadOnlyList<TSymbol> pattern, int patternStartIndex, IReadOnlyList<TSymbol> text, uint numberOfErrors, IComparer<TSymbol> comparer)
+            public TaskDescription(SuffixTreeNode<TSymbol> startNode, IReadOnlyList<TSymbol> pattern, int patternStartIndex, uint numberOfErrors)
             {
-                ResultsBag = resultsBag;
-                Waiter = waiter;
                 StartNode = startNode;
                 Pattern = pattern;
                 PatternStartIndex = patternStartIndex;
-                Text = text;
                 NumberOfErrors = numberOfErrors;
-                Comparer = comparer;
             }
 
-            public ConcurrentBag<StringSearchApproximateMatch<TSymbol>> ResultsBag { get; }
-            public Waiter Waiter { get; }
             public SuffixTreeNode<TSymbol> StartNode { get; }
             public IReadOnlyList<TSymbol> Pattern { get; }
             public int PatternStartIndex { get; }
-            public IReadOnlyList<TSymbol> Text { get; }
             public uint NumberOfErrors { get; }
-            public IComparer<TSymbol> Comparer { get; }
         }
 
         private class EdgeMatch
@@ -58,27 +50,17 @@ namespace EdlinSoftware.Algorithms.Strings
 
             public void Increment()
             {
-                lock (_lock)
-                {
-                    _counter++;
-                }
+                lock (_lock) { _counter++; }
             }
 
             public void Decrement()
             {
-                lock (_lock)
-                {
-                    _counter--;
-                }
+                lock (_lock) { _counter--; }
             }
 
             public bool IsFinished()
             {
-                lock (_lock)
-                {
-                    return _counter == 0;
-                }
-
+                lock (_lock) { return _counter == 0; }
             }
         }
 
@@ -115,18 +97,14 @@ namespace EdlinSoftware.Algorithms.Strings
                 waiter.Increment();
 
                 var task = new TaskDescription(
-                    results,
-                    waiter,
                     suffixTree.Root,
                     pattern.ToArray(),
                     0,
-                    suffixTree.Text,
-                    numberOfErrors,
-                    comparer);
+                    numberOfErrors);
 
                 ThreadPool.QueueUserWorkItem(state =>
                 {
-                    ProcessSearchTask(task);
+                    ProcessSearchTask(results, waiter, suffixTree.Text, comparer, task);
                 });
             }
 
@@ -147,21 +125,18 @@ namespace EdlinSoftware.Algorithms.Strings
             return true;
         }
 
-        private static void ProcessSearchTask(TaskDescription task)
+        private static void ProcessSearchTask(ConcurrentBag<StringSearchApproximateMatch<TSymbol>> results, Waiter waiter, IReadOnlyList<TSymbol> text, IComparer<TSymbol> comparer, TaskDescription task)
         {
             if (task.PatternStartIndex >= task.Pattern.Count)
             {
-                foreach (var start in GetSuffixStarts(task.StartNode).Where(s => PatternDoesNotOverlapStopSymbol(s, task.Pattern.Count, task.Text.Count)))
-                {
-                    task.ResultsBag.Add(new StringSearchApproximateMatch<TSymbol>(start, task.Pattern));
-                }
-                task.Waiter.Decrement();
+                AddNodeMatches(results, task.StartNode, task.Pattern, text.Count);
+                waiter.Decrement();
                 return;
             }
 
             foreach (var edge in task.StartNode.Edges.Values)
             {
-                EdgeMatch edgeMatch = GetEdgeMatch(edge, task.Text, task.Pattern, task.PatternStartIndex, task.Comparer);
+                EdgeMatch edgeMatch = GetEdgeMatch(edge, text, task.Pattern, task.PatternStartIndex, comparer);
 
                 if(edgeMatch.NumberOfErrors > task.NumberOfErrors)
                     continue;
@@ -170,33 +145,34 @@ namespace EdlinSoftware.Algorithms.Strings
 
                 if (newPatternStartIndex >= task.Pattern.Count)
                 {
-                    foreach (var start in GetSuffixStarts(edge.To).Where(s => PatternDoesNotOverlapStopSymbol(s, task.Pattern.Count, task.Text.Count)))
-                    {
-                        task.ResultsBag.Add(new StringSearchApproximateMatch<TSymbol>(start, task.Pattern));
-                    }
+                    AddNodeMatches(results, edge.To, task.Pattern, text.Count);
                     continue;
                 }
 
                 var newTask = new TaskDescription(
-                    task.ResultsBag,
-                    task.Waiter,
                     edge.To,
                     task.Pattern,
                     newPatternStartIndex,
-                    task.Text,
-                    task.NumberOfErrors - edgeMatch.NumberOfErrors,
-                    task.Comparer
+                    task.NumberOfErrors - edgeMatch.NumberOfErrors
                     );
 
-                task.Waiter.Increment();
+                waiter.Increment();
 
                 ThreadPool.QueueUserWorkItem(state =>
                 {
-                    ProcessSearchTask(newTask);
+                    ProcessSearchTask(results, waiter, text, comparer, newTask);
                 });
             }
 
-            task.Waiter.Decrement();
+            waiter.Decrement();
+        }
+
+        private static void AddNodeMatches(ConcurrentBag<StringSearchApproximateMatch<TSymbol>> results, SuffixTreeNode<TSymbol> node, IReadOnlyList<TSymbol> pattern, int textLength)
+        {
+            foreach (var start in GetSuffixStarts(node).Where(s => PatternDoesNotOverlapStopSymbol(s, pattern.Count, textLength)))
+            {
+                results.Add(new StringSearchApproximateMatch<TSymbol>(start, pattern));
+            }
         }
 
         private static EdgeMatch GetEdgeMatch(
